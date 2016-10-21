@@ -1,39 +1,33 @@
+/*general*/
+body {
+ background-color: silver;
+ margin: 50px 15% 0 15%;
+}
+
 /*banner*/
 div.banner {
- height: 100%;
- width: 100% 
- overflow: hidden;
- position: relative;
+ 
 }
 div.banner img {
- position: absolute;
+ display: block;
+ margin-left: auto;
+ margin-right: auto;
  width: auto;
  height: 150px;
  margin: 0;
- line-height: 150px;
- text-align: center;
- /* Starting position */
- transform:translateX(100%);
- /* Apply animation to this element */	
- animation: banner 15s linear infinite;
 }
-/* Move it (define the animation) */
-@keyframes banner {
- 0%   { 
- transform: translateX(100%); 		
- }
- 100% { 
- transform: translateX(-100%); 
- }
-}
-
+ 
 /*navigation*/
 div.navigation {
  background-color: grey;
  color: black;
  list-style: none;
- text-align: center;
- padding: 20px 0 20px 0;
+ margin: 0;
+ text-align: right;
+ padding: 0;
+ position: fixed;
+ top: 0;
+ /*right: 0;*/
 }
 
 div.navigation  li{
@@ -47,5 +41,9 @@ div.navigation li a {
 }
 
 div.navigation li a:hover {
- color: dark grey;
+ color: darkgrey;
+}
+
+.main-content {
+background-color: white;
 }
