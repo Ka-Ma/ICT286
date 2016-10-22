@@ -19,34 +19,38 @@ div.banner img {
  
 /*navigation*/
 div.navigation {
- background-color: grey;
+ font-family: Tahoma, Geneva, sans-serif;
  width: 100%;
- color: black;
- list-style: none;
- 
- 
- padding: 0;
  position: fixed;
  top: 0;
  left: 0;
- /*right: 0;*/
 }
+
 div.navigation ul {
- 
+ list-style: none;
+ margin: 0;
+ overflow: hidden;
+ background-color: grey;
 }
 
 div.navigation  li{
  display: inline-block;
- padding: 0 25px 0 25px;
 }
 
 div.navigation li a {
+ display: block;
  text-decoration: none;
+ text-align: center;
+ padding: 15px;
  color: black;
 }
 
 div.navigation li a:hover {
  color: darkgrey;
+}
+
+.active {
+ background-color: teal;
 }
 
 .main-content {
