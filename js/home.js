@@ -1,3 +1,7 @@
+function loadNav() {
+	document.getElementById("navigation").innerHTML = "<ul> <li><a href='javascript:loadHome()'>Home</a></li><li><a href='javascript:loadAboutUs()'>About Us</a></li><li><a href='javascript:loadSearch()'>Search</a></li><li><a href='javascript:loadCart()'>Cart</a></li><li style= 'float: right'><a href='javascript:loadLIR()'>Login/Register</a></li></ul>";
+}
+
 function carousel() {
     var i;
     var x = document.getElementsByClassName("coInfo");

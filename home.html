@@ -15,20 +15,25 @@
 	<img class="coInfo" src="images/banner/banner-LTC-StateSchool.jpg">
   </div>
   <script> var slideIndex = 0; carousel();</script>
-  <div class = "navigation">
-    <ul>
+
+  <div class = "navigation" id="navigation">
+  
+    <!-- trying javascript nav load 
+	<ul>
 	  <!-- The nav buttons need to only show relevant links according to user status, so need javascript function to load relevant buttons -->
-	  <li class = ""><a href="javascript:loadHome()">Home</a></li> <!-- unregistered loggedIn staff-->
-	  <li class = ""><a href="javascript:loadAboutUs()">About Us</a></li> <!-- unregistered loggedIn staff-->
-	  <li class = ""><a href="javascript:loadSearch()">Search</a></li> <!--unregistered loggedIn staff -->
-	  <li class = ""><a href="javascript:loadTradeIn()">Trade In Request</a></li> <!--loggedIn staff -->
-	  <li class = ""><a href="javascript:loadAccount()">Account</a></li> <!--loggedIn staff -->
-	  <li class = ""><a href="javascript:loadCart()">Cart</a></li><!-- unregistered loggedIn staff-->
-	  <li class = ""><a href="javascript:loadAED()">Add/Edit/Delete</a></li><!-- staff staff-only-->
-	  <li class = ""><a href="javascript:loadLIR()">Login/Register</a></li><!--unregistered -->
+<!--	  <li class = ""><a href="javascript:loadHome()">Home</a></li> <!-- unregistered loggedIn staff-->
+<!--      <li class = ""><a href="javascript:loadAboutUs()">About Us</a></li> <!-- unregistered loggedIn staff-->
+<!--	  <li class = ""><a href="javascript:loadSearch()">Search</a></li> <!--unregistered loggedIn staff -->
+<!--	  <li class = ""><a href="javascript:loadTradeIn()">Trade In Request</a></li> <!--loggedIn staff -->
+<!--	  <li class = ""><a href="javascript:loadAccount()">Account</a></li> <!--loggedIn staff -->
+<!--	  <li class = ""><a href="javascript:loadCart()">Cart</a></li><!-- unregistered loggedIn staff-->
+<!--	  <li class = ""><a href="javascript:loadAED()">Add/Edit/Delete</a></li><!-- staff staff-only-->
+<!--	  <li style= "float: right"><a href="javascript:loadLIR()">Login/Register</a></li><!--unregistered -->
 	  <!-- Need to tweak somethign so only the one div is visible -->
-	</ul>
+<!--	</ul>
+	-->
   </div>
+  <script>loadNav();</script>
   <div class="main-content">
     <div id="home-page">
 	<p>home page div, on click of nav button, run javascript function to load this section</p>
