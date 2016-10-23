@@ -1,5 +1,5 @@
 function loadNav() {
-	document.getElementById("navigation").innerHTML = "<ul> <li><a id='home' class='active' href='javascript:loadPage(\"home-page\")'>Home</a></li><li><a id='aboutUs' href='javascript:loadPage(\"aboutUs-page\")'>About Us</a></li><li><a id='search'  href='javascript:loadPage(\"search-page\")'>Search</a></li><li><a id='cart'  href='javascript:loadPage(\"cart-page\")'>Cart</a></li><li style= 'float: right'><a id='login'  href='javascript:loadPage(\"LIR-page\")'>Login/Register</a></li></ul>";
+	document.getElementById("navigation").innerHTML = "<ul> <li><a id='home' class='active' href='javascript:loadPage(\"home-page\")'>Home</a></li><li><a id='aboutUs' href='javascript:loadPage(\"aboutUs-page\")'>About Us</a></li><li><a id='search'  href='javascript:loadPage(\"search-page\")'>Search</a></li><li><a id='cart'  href='javascript:loadPage(\"cart-page\")'>Cart</a></li><li style= 'float: right'><a id='LIR'  href='javascript:loadPage(\"LIR-page\")'>Login/Register</a></li></ul>";
 }
 
 function carousel() {
@@ -16,8 +16,9 @@ function carousel() {
 
 function loadPage(page) {
 	//make div visible
-	console.log(page); //need to take -page off the end
-	
+		
+	//need to take -page off the end to updateActive
+	page= page.slice(0, -5);
 	updateActive(page);
 }
 
@@ -25,10 +26,7 @@ function updateActive(current) {
 	var oldPg = document.getElementsByClassName("active");
 	var oldPgId = oldPg[0].getAttribute("id");
 	var curPg = document.getElementById(current);
-	console.log(current);
-	console.log(oldPg);
-	console.log(oldPgId);
-		
+	
 	document.getElementById(oldPgId).removeAttribute("class");
 	curPg.setAttribute("class", "active");
 }
@@ -55,7 +53,6 @@ function showRecentBooks() {
 	var dateSQL = date.getFullYear() +"-"+ dM +"-" + date.getDate();
 			
 	var xhr = new XMLHttpRequest();
-	console.log("readyState after creation: "+xhr.readyState);
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var result = xhr.responseText;
