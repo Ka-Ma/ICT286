@@ -56,3 +56,22 @@ div.navigation li a:hover {
 .main-content {
 background-color: white;
 }
+
+div.float-left {
+ float: left;
+ width: 50%;
+}
+
+div.float-right {
+ float: right;
+ width: 50%;
+}
+
+div.quote img {
+ display: block;
+ margin-left: auto;
+ margin-right: auto;
+ width: auto;
+ height: auto;
+ margin: 0;
+}
