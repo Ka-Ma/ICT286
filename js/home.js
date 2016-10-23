@@ -32,3 +32,36 @@ function updateActive(current) {
 	document.getElementById(oldPgId).removeAttribute("class");
 	curPg.setAttribute("class", "active");
 }
+
+function showBookOfWk(bookID) {
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status == 200){
+			var result = xhr.responseText;
+			
+			document.getElementById("bookOfWk").innerHTML = "<h1>Book of the Week</h1>" + result;
+		}
+	}
+	xhr.open("GET", "php/getBook.php?bookID=" + bookID, true);
+	xhr.send();
+}
+
+function showRecentBooks() {
+	var date = new Date();
+	date.setDate(date.getDate() - 7); // set date to 7 days ago
+	console.log("date " + date);
+
+	
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatecharge = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			
+			console.log("result "+result);
+			
+			document.getElementById("recentBks").innerHTML = result;
+		}
+	}
+	xhr.open("GET", "php/getRecentBk.php?date="+date, true);
+	xhr.send();
+}
