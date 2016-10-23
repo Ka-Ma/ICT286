@@ -14,7 +14,7 @@
 	<img class="coInfo" src="images/banner/banner-mypongaPS.jpg">
 	<img class="coInfo" src="images/banner/banner-LTC-StateSchool.jpg">
   </div>
-  <script>carousel(0, "coInfo");</script>
+  <script>var slideIndex = 0; carousel();</script>
 
   <div class = "navigation" id="navigation">
   
@@ -37,21 +37,21 @@
   
   <div class="main-content">
     <div id="home-page">
-		<div id="bookOfWk" style="50%">
+		<div><div id="bookOfWk" class="float-left">
 			<script>showBookOfWk(11111111);</script>
 			book of the week (in this case bookID = 11111111) js to get the book
 			image thumbnail href to book page, synopsis on right 
 		</div>
 		
-		<div id="quote" style="50%">
+		<div id="quote" class="float-right">
 			<img class="aQuote" src="images/aQuote/1.jpg">
 			<img class="aQuote" src="images/aQuote/2.jpg">
 			<img class="aQuote" src="images/aQuote/3.jpg">
 			<img class="aQuote" src="images/aQuote/4.jpg">
 			<img class="aQuote" src="images/aQuote/5.jpg">
 		</div>
-		<script>carousel(0, "aQuote");</script>
-		
+		<script>var quoteIndex = 0; displayQuotes();</script>
+		</div>
 		<div id="recentBooks">
 			<script>showRecentBooks();</script>
 			books just added, 3 thumbnails of youngest books, click on image to open book page -- NOTE: for some annoying and frustratingly elusive reason this XMLHTTPresponse does not get written into the div.
@@ -63,6 +63,10 @@
 	</div>
 	<div id="aboutUs-page">
 	<p>about us div, on click of nav button, run javascript function to load this section</p>
+	</div>
+	<div id="cart-page">
+	</div>
+	<div id="LIR-page">
 	</div>
 	<!--etc-->
   </div>

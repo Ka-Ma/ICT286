@@ -1,11 +1,10 @@
 function loadNav() {
-	document.getElementById("navigation").innerHTML = "<ul> <li><a id='home' class='active' href='javascript:loadHome()'>Home</a></li><li><a id='aboutUs' href='javascript:loadAboutUs()'>About Us</a></li><li><a id='search'  href='javascript:loadSearch()'>Search</a></li><li><a id='cart'  href='javascript:loadCart()'>Cart</a></li><li style= 'float: right'><a id='login'  href='javascript:loadLIR()'>Login/Register</a></li></ul>";
+	document.getElementById("navigation").innerHTML = "<ul> <li><a id='home' class='active' href='javascript:loadPage(\"home-page\")'>Home</a></li><li><a id='aboutUs' href='javascript:loadPage(\"aboutUs-page\")'>About Us</a></li><li><a id='search'  href='javascript:loadPage(\"search-page\")'>Search</a></li><li><a id='cart'  href='javascript:loadPage(\"cart-page\")'>Cart</a></li><li style= 'float: right'><a id='login'  href='javascript:loadPage(\"LIR-page\")'>Login/Register</a></li></ul>";
 }
 
-function carousel(indx, classNm) {
-	var slideIndex = indx;
+function carousel() {
     var i;
-    var x = document.getElementsByClassName(classNm);
+    var x = document.getElementsByClassName("coInfo");
     for (i = 0; i < x.length; i++) {
       x[i].style.display = "none"; 
     }
@@ -15,18 +14,18 @@ function carousel(indx, classNm) {
     setTimeout(carousel, 3000); // Change image every 3 seconds
 }
 
-function loadAboutUs() {
-	console.log("Loading about us");
-	document.getElementById("aboutUs-page").innerHTML = "<p>I have loaded the About Us page</p>";
+function loadPage(page) {
+	//make div visible
+	console.log(page); //need to take -page off the end
 	
-	updateActive("aboutUs");
+	updateActive(page);
 }
 
 function updateActive(current) {
 	var oldPg = document.getElementsByClassName("active");
 	var oldPgId = oldPg[0].getAttribute("id");
 	var curPg = document.getElementById(current);
-	
+	console.log(current);
 	console.log(oldPg);
 	console.log(oldPgId);
 		
@@ -58,7 +57,6 @@ function showRecentBooks() {
 	var xhr = new XMLHttpRequest();
 	console.log("readyState after creation: "+xhr.readyState);
 	xhr.onreadystatechange = function () {
-		console.log("readystate = " + xhr.readyState);
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var result = xhr.responseText;
 			
@@ -68,4 +66,16 @@ function showRecentBooks() {
 	}
 	xhr.open("GET", "php/getRecentBk.php?date=" + dateSQL, true);
 	xhr.send();
+}
+
+function displayQuotes() {
+    var i;
+    var x = document.getElementsByClassName("aQuote");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none"; 
+    }
+    quoteIndex++;
+    if (quoteIndex > x.length) {quoteIndex = 1} 
+    x[quoteIndex-1].style.display = "block"; 
+    setTimeout(displayQuotes, 10000); // Change image every 10 seconds
 }
