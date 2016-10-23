@@ -8,25 +8,20 @@
 	
 	//put submitted date in variable
 	$date = ($_GET['date']);
-	
-	//prevent SQL injection
-	$date = mysql_real_escape_string($date);
-	
+			
 	//query
-	$q = "SELECT * FROM StockBook WHERE DateAdded > UNIX_TIMESTAMP('$date') LIMIT 5";
+	$q = "SELECT * FROM StockBook WHERE DateAdded > '$date' ORDER BY DateAdded DESC LIMIT 3";
 	$result = mysql_query($q);
 	
 	//returning
 	echo "<table>";
+	echo "<tr>";
 	while ($row=mysql_fetch_array($result)) {
-		echo "<tr>";
-		echo "<td> <img src='";
+		echo "<td> <img src=\"";
 		echo $row['CoverImage'];
-		echo "'</img></td>";
-		echo "<td> ";
-		echo $row['Synopsis'];
-		echo "</td></tr>";
+		echo "\"</img></td>";
 	}
+	echo "</tr>";
 	echo "</table>";
 	
 	//clearing up

@@ -24,6 +24,7 @@
 		echo $row['CoverImage'];
 		echo "'</img></td>";
 		echo "<td> ";
+		echo $row['DateAdded'];
 		echo $row['Synopsis'];
 		echo "</td></tr>";
 	}

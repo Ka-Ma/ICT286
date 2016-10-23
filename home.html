@@ -14,7 +14,7 @@
 	<img class="coInfo" src="images/banner/banner-mypongaPS.jpg">
 	<img class="coInfo" src="images/banner/banner-LTC-StateSchool.jpg">
   </div>
-  <script> var slideIndex = 0; carousel();</script>
+  <script>carousel(0, "coInfo");</script>
 
   <div class = "navigation" id="navigation">
   
@@ -32,18 +32,34 @@
 	  <!-- Need to tweak somethign so only the one div is visible -->
 <!--	</ul>
 	-->
-  </div>
   <script>loadNav();</script>
+  </div>
+  
   <div class="main-content">
     <div id="home-page">
-	<div id="bookOfWk">
-	<script>showBookOfWk(11111111);</script>
-	book of the week (in this case bookID = 11111111) js to get the book
-	image thumbnail href to book page, synopsis on right </div>
-	<div id="recentBks">
-	<script>showRecentBooks()</script>
-	books just added, 3 thumbnails of youngest books, click on image to open book page</div>
-	<p>random books, 1 random from each category, scrolling gallery of thumbnails, click image to go to book page</p>
+		<div id="bookOfWk" style="50%">
+			<script>showBookOfWk(11111111);</script>
+			book of the week (in this case bookID = 11111111) js to get the book
+			image thumbnail href to book page, synopsis on right 
+		</div>
+		
+		<div id="quote" style="50%">
+			<img class="aQuote" src="images/aQuote/1.jpg">
+			<img class="aQuote" src="images/aQuote/2.jpg">
+			<img class="aQuote" src="images/aQuote/3.jpg">
+			<img class="aQuote" src="images/aQuote/4.jpg">
+			<img class="aQuote" src="images/aQuote/5.jpg">
+		</div>
+		<script>carousel(0, "aQuote");</script>
+		
+		<div id="recentBooks">
+			<script>showRecentBooks();</script>
+			books just added, 3 thumbnails of youngest books, click on image to open book page -- NOTE: for some annoying and frustratingly elusive reason this XMLHTTPresponse does not get written into the div.
+		</div>
+		
+		<div id="randBk">
+			random books, 1 random from each category, scrolling gallery of thumbnails, click image to go to book page			
+		</div>
 	</div>
 	<div id="aboutUs-page">
 	<p>about us div, on click of nav button, run javascript function to load this section</p>
