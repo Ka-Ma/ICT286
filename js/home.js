@@ -15,7 +15,15 @@ function carousel() {
 }
 
 function loadPage(page) {
-	//make div visible
+	//finding old div's id
+	var oldDiv = document.getElementsByClassName("active");
+	var oldDivID = oldDiv[0].getAttribute("id") + "-page";
+	
+	//make old div invisible
+	document.getElementById(oldDivID).style.display = "none";
+	
+	//make this div visible
+	document.getElementById(page).style.display = "block";
 		
 	//need to take -page off the end to updateActive
 	page= page.slice(0, -5);
