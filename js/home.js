@@ -15,10 +15,33 @@ function carousel(indx, classNm) {
     setTimeout(carousel, 3000); // Change image every 3 seconds
 }
 
+function loadHome() {
+	console.log("Loading home page");
+	//document.getElementById("home-page").innerHTML ="";
+		
+	updateActive("aboutUs");
+}
+
 function loadAboutUs() {
 	console.log("Loading about us");
-	document.getElementById("aboutUs-page").innerHTML = "<p>I have loaded the About Us page</p>";
-	
+	/*document.getElementById("aboutUs-page").innerHTML = 
+	"<p>Books Matters, Mann!</p>" +
+	"<p>123 Pretend Street, Pretenderton, WA, 6210</p>" +
+        "<p>Phone: 9123 8765</p>" +
+	"<p>Email: <a href = \"mailto:admin@bmm.com.au\"> admin@bmm.com.au </a></p>" +
+	"<p>Romeo and Juliette embraced their love of fiction and opened 'Books Matters, Mann!' in 1999, and it " + 
+	"has been a family business ever since. Romeo and Juliette were both avid readers, seeking to read " +
+	"as many books, from as wide a variety of genres as they could. After many years of fulfilling this dream, " +
+	"they came up with another dream. To share the wonderful world of fiction with as many people as they " +
+	"could. 17 years down the track and 'Books Matters, Mann!' is still fulfilling this dream. BMM is a small " +
+	"business with a big heart. BMM provides homes for both new and used books. All of our used books are " +
+	"traded to us by our loyal customers in exchange for credits, which they can use online or in store to " +
+	"purchase from our wide range of books. We also stock new books from a variety of authors so that they " +
+	"too may find a welcoming home. BMM is also a proud donator of used books to local schools, where " +
+	"students of all ages may enjoy the stories they have to tell. For every 10 books that are purchased " +
+	"from BMM, online or in store, we donate 1 used book. We have already donated over 4000 books to this " +
+	"date. </p>";*/
+
 	updateActive("aboutUs");
 }
 

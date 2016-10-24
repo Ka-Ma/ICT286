@@ -55,6 +55,8 @@ div.navigation li a:hover {
 
 .main-content {
 background-color: white;
+padding-bottom: 1px;
+margin-bottom: 20px;
 }
 
 div.float-left {
@@ -74,4 +76,46 @@ div.quote img {
  width: auto;
  height: auto;
  margin: 0;
+}
+
+/* titles and headers */
+h1 {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 250%;
+ font-weight: 700;
+ font-style: italic;
+ margin-left: 10px;
+}
+
+h2 {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 200%;
+ font-weight: 600;
+ font-style: italic;
+ margin-left: 10px;
+}
+
+h3 {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 175%;
+ font-weight: 450;
+ font-style: italic;
+ margin-left: 10px;
+}
+
+p.header {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 150%;
+ font-weight: 300;
+ margin-left: 10px;
+}
+
+p.text {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 110%;
+ font-weight: 200;
+ margin-left: 10px;
+ margin-right: 10px;
+ margin-bottom: 20px;
+ text-align: justify;
 }
