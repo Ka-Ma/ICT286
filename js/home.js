@@ -96,6 +96,8 @@ function getBookDetail(bookID) {
 	
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";
+	//need to make a backBtn to oldDivID
+	var backBtn = "<button type='button' onclick='javascript:loadPage(oldDivID)'>Continue Browsing</button>";
 	
 	//make this div visible
 	document.getElementById("book-page").style.display = "block";
@@ -105,13 +107,23 @@ function getBookDetail(bookID) {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var result = xhr.responseText;
 			
-			document.getElementById("book-page").innerHTML = result;
+			document.getElementById("book-page").innerHTML = result + backBtn;
 		}
 	}
 	xhr.open("GET", "php/getBookDetail.php?bookID=" + bookID, true);
 	xhr.send();
 }
 //***** end functions for book-page *****
+
+//***** start functions for trade-in page *****
+function validateTradeIn() {
+	console.log("children need to be tucked in");
+	//fields required title, author, isbn, photos of front, back, spine & pubinfo
+	//files must be smaller than 100kb
+	//description but be less than x chars long
+	
+}
+//***** end functions for trade-in page *****
 
 //***** start function for cart *****
 function addCart(bookID){
