@@ -1,7 +1,4 @@
-function loadNav() {
-	document.getElementById("navigation").innerHTML = "<ul> <li><a id='home' class='active' href='javascript:loadPage(\"home-page\")'>Home</a></li><li><a id='aboutUs' href='javascript:loadPage(\"aboutUs-page\")'>About Us</a></li><li><a id='search'  href='javascript:loadPage(\"search-page\")'>Search</a></li><li><a id='cart'  href='javascript:loadPage(\"cart-page\")'>Cart</a></li><li style= 'float: right'><a id='LIR'  href='javascript:loadPage(\"LIR-page\")'>Login/Register</a></li></ul>";
-}
-
+//for banner
 function carousel() {
     var i;
     var x = document.getElementsByClassName("coInfo");
@@ -14,6 +11,7 @@ function carousel() {
     setTimeout(carousel, 3000); // Change image every 3 seconds
 }
 
+//to make div's visibile/hidden
 function loadPage(page) {
 	//finding old div's id
 	var oldDiv = document.getElementsByClassName("active");
@@ -30,6 +28,7 @@ function loadPage(page) {
 	updateActive(page);
 }
 
+//to change the background color of navbar link to be current page
 function updateActive(current) {
 	var oldPg = document.getElementsByClassName("active");
 	var oldPgId = oldPg[0].getAttribute("id");
@@ -39,6 +38,7 @@ function updateActive(current) {
 	curPg.setAttribute("class", "active");
 }
 
+//***** start functions for home page *****
 function showBookOfWk(bookID) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
@@ -84,3 +84,62 @@ function displayQuotes() {
     x[quoteIndex-1].style.display = "block"; 
     setTimeout(displayQuotes, 10000); // Change image every 10 seconds
 }
+//***** end functions for home page *****
+
+//***** start functions for book-page *****
+function getBookDetail(bookID) {
+	//finding old div's id
+	var oldDiv = document.getElementsByClassName("active");
+	var oldDivID = oldDiv[0].getAttribute("id") + "-page";
+	
+	//make old div invisible
+	document.getElementById(oldDivID).style.display = "none";
+	
+	//make this div visible
+	document.getElementById("book-page").style.display = "block";
+	
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			
+			document.getElementById("book-page").innerHTML = result;
+		}
+	}
+	xhr.open("GET", "php/getBookDetail.php?bookID=" + bookID, true);
+	xhr.send();
+}
+//***** end functions for book-page *****
+
+//***** start function for car *****
+function addCart(bookID){
+	console.log("i added the book, " + bookID + ", to the cart, yay me");
+	//stub so my links don't break stuff
+}
+
+
+//****** for testing, login to display certain navbar links ******
+function login(type) {
+	console.log("in login function");
+	console.log(type);
+	
+	if (type =="staff"){
+		console.log("in staff if statement");
+		//navbar button visibility
+		document.getElementById("tradeIn").style.display="block";
+		document.getElementById("AED").style.display="block";
+		document.getElementById("account").style.display="block";
+		document.getElementById("LIR").style.display="none";
+		
+		//page parts visibility (add staff elements to account & trade in pages)
+	}
+	else if (type =="user") {
+		console.log("in user if statement");
+		//navbar button visibility
+		document.getElementById("tradeIn").style.display="block";
+		document.getElementById("account").style.display="block";
+		document.getElementById("LIR").style.display="none";
+	}
+		
+}
+

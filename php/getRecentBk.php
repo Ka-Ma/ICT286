@@ -10,16 +10,21 @@
 	$date = ($_GET['date']);
 			
 	//query
-	$q = "SELECT * FROM StockBook WHERE DateAdded > '$date' ORDER BY DateAdded DESC LIMIT 3";
+	$q = "SELECT * FROM StockBook WHERE DateAdded > '$date' ORDER BY DateAdded DESC LIMIT 5";
 	$result = mysql_query($q);
 	
 	//returning
 	echo "<table>";
 	echo "<tr>";
 	while ($row=mysql_fetch_array($result)) {
-		echo "<td> <img src=\"";
+		echo "<td> <a href=\"javascript:getBookDetail(";
+		echo $row['BookID'];
+		echo ")\"> <img src=\"";
 		echo $row['CoverImage'];
-		echo "\"</img></td>";
+		echo "\"</img></a></br>";
+		echo "<button type='button' onclick='javascript:addCart(";
+		echo $row['BookID'];
+		echo ")'>Add to Cart</button></td>";
 	}
 	echo "</tr>";
 	echo "</table>";
