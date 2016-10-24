@@ -85,3 +85,7 @@ div.quote img {
  height: auto;
  margin: 0;
 }
+
+table {
+ width: 100%;
+}

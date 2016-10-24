@@ -19,21 +19,32 @@
   <div class = "navigation" id="navigation">
     <!-- having trouble with the changing "visibility" display from none to block (works the other way round :( )-->
     <ul>
-	  <li><a id="home" class="active" href="javascript:loadPage('home-page')">Home</a>
+	  <li>
+	    <a id="home" class="active" href="javascript:loadPage('home-page')">Home</a>
 	  </li>
-	  <li><a id="aboutUs" href="javascript:loadPage('aboutUs-page')">About Us</a>
+	  <li>
+	    <a id="aboutUs" href="javascript:loadPage('aboutUs-page')">About Us</a>
 	  </li>
-	  <li><a id="search"  href="javascript:loadPage('search-page')">Search</a>
+	  <li>
+	    <a id="search"  href="javascript:loadPage('search-page')">Search</a>
 	  </li>
-	  <li style="display: none"><a id="tradeIn" href="javascript:loadPage('tradeIn-page')">Trade-In Request</a>
+	  <li>
+	    <a id="tradeIn" style="display: none" href="javascript:loadPage('tradeIn-page')">Trade-In Request</a>
 	  </li>
-	  <li style="display: none"><a id="AED" href="javascript:loadPage('AED-page')">Add/Edit/Delete Books</a>
+	  <li>
+	    <a id="AED" style="display: none" href="javascript:loadPage('AED-page')">Add/Edit/Delete Books</a>
 	  </li>
-	  <li style="float: right"><a id="LIR"  href="javascript:loadPage('LIR-page')">Login/Register</a>
+	  <li style="float: right">
+	    <a id="LO" style="display: none" href="">Logout</a> <!-- need to add this ability -->
 	  </li>
-	  <li style="display: none" style="float: right"><a id="account" href="javascript:loadPage('account-page')">Account</a>
+	  <li style="float: right">
+	    <a id="LIR"  href="javascript:loadPage('LIR-page')">Login/Register</a>
 	  </li>
-	  <li style="float: right"><a id="cart"  href="javascript:loadPage('cart-page')">Cart</a>
+	  <li style="float: right">
+	    <a id="account" style="display: none" href="javascript:loadPage('account-page')">Account</a>
+	  </li>
+	  <li style="float: right">
+	    <a id="cart"  href="javascript:loadPage('cart-page')">Cart</a>
 	  </li>
 	</ul>
   </div>
@@ -74,7 +85,7 @@
 	</div>
 	
 	<div id="LIR-page" style="display: none">
-	for testing
+	for testing but i think that the customer/staff number will have to be put in a cookie or something for account/tradein pages
 	<form id="login">
 	  <button type="button" onclick="javascript:login('staff')">Staff Login</button>
 	  <button type="button" onclick="javascript:login('user')">Customer Login</button>

@@ -131,6 +131,7 @@ function login(type) {
 		document.getElementById("tradeIn").style.display="block";
 		document.getElementById("AED").style.display="block";
 		document.getElementById("account").style.display="block";
+		document.getElementById("LO").style.display="block";
 		document.getElementById("LIR").style.display="none";
 		
 		//page parts visibility (add staff elements to account & trade in pages)
@@ -140,6 +141,7 @@ function login(type) {
 		//navbar button visibility
 		document.getElementById("tradeIn").style.display="block";
 		document.getElementById("account").style.display="block";
+		document.getElementById("LO").style.display="block";
 		document.getElementById("LIR").style.display="none";
 	}
 		
