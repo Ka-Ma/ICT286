@@ -42,9 +42,9 @@
   
     <div id="home-page" style="display: block">
 		
-		<div><div id="bookOfWk" class="float-left">
+		<div id="bookOfWk" class="float-left">
 			<script>showBookOfWk(11111111);</script>
-			book of the week (in this case bookID = 11111111) js to get the book image thumbnail href to book page, synopsis on right  Need to add button to allow user to add it to cart
+			book of the week (in this case bookID = 11111111)
 		</div>
 		
 		<div id="quote" class="float-right">
@@ -55,16 +55,12 @@
 			<img class="aQuote" src="images/aQuote/5.jpg">
 		</div>
 		<script>var quoteIndex = 0; displayQuotes();</script>
-		</div>
-		<div id="recentBooks">
+				
+		<div id="recentBooks" class="fullwidth">
 			<script>showRecentBooks();</script>
-			books just added, 3 thumbnails of youngest books, click on image to open book page -- NOTE: for some annoying and frustratingly elusive reason this XMLHTTPresponse does not get written into the div.
-			need to add buttons to add book to cart
+			books just added, 5 thumbnails of youngest books, click on image to open book page
 		</div>
 		
-		<div id="randBk">
-			<p>random books, 1 random from each category, scrolling gallery of thumbnails, click image to go to book page</p>
-		</div>
 	</div>
 	
 	<div id="aboutUs-page" style="display: none">
@@ -88,18 +84,50 @@
 	<div id="book-page" style="display: none">
 	this page loads when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart
 	table with image that spans rows and right side is other details plus button to cart it. 
-	Needs a button to go back to previous page
+	Needs a button to go back to previous page which means need to somehow indicate in URL which "page" we are on or something.
 	</div>
 	
 	<div id="account-page" style="display: none">
-	the customer details plus opportunity to update
+	the customer details (when logged in) plus opportunity to update
+	
 	</div>
 	
 	<div id="tradeIn-page" style="display: none">
-	where the customer can enter the details & photos of a book they would like to trade in
+		<div id="ti-pending">
+		list of trade ins for this customer and their status
+		</div>
+		
+		<div id="ti-request">
+		where the customer can enter the details & photos of a book they would like to trade in
+		
+		<form>
+		  hidden cust id, today's date, status
+		  title*
+		  author*
+		  isbn
+		  description (of condition)
+		  form
+		  frontImage*
+		  backImage*
+		  spineImage*
+		  pubInfoImage*
+		  otherImage
+		  
+		  *required
+		  onsubmit php adds to database.
+		</form>
+		
+		</div>
+		
+		<div id="ti-accept"> <!-- will include style="display: none" unless staff logged in --> 
+		staff can provisionally accept tradein and offer a price which triggers email to customer with offer details
+		
+		staff can indicate receipt of book and absolute acceptence of trade in which triggers adding credit to customer account and email to customer.
+		
+		</div>
 	</div>
 	
-	<!--etc-->
+	
   </div>
 </body>
 </html>

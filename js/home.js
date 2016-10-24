@@ -19,6 +19,8 @@ function loadPage(page) {
 	
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";
+	//incase it's the book-page
+	document.getElementById("book-page").style.display = "none";
 	
 	//make this div visible
 	document.getElementById(page).style.display = "block";
@@ -111,7 +113,7 @@ function getBookDetail(bookID) {
 }
 //***** end functions for book-page *****
 
-//***** start function for car *****
+//***** start function for cart *****
 function addCart(bookID){
 	console.log("i added the book, " + bookID + ", to the cart, yay me");
 	//stub so my links don't break stuff
