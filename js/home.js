@@ -138,6 +138,7 @@ function login(username, password) {
 	xhr.onreadystatechange = function () {
 		if(xhr.readyState == 4 && xhr.status == 200) {
 			var result = xhr.responseText;
+//			document.writeln(result);
 			//display error if incorrect data
 			document.getElementById("logFail").innerHTML = "Incorrect Username or Password.";
 			
