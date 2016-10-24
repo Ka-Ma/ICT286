@@ -117,29 +117,39 @@ function addCart(bookID){
 	//stub so my links don't break stuff
 }
 
+function login(username, password) {
+	var staffMember = "staff";
+	var cust = "customer";	
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			//display error if incorrect data
+			document.getElementById("logFail").innerHTML = "Incorrect Username or Password.";
+			
+			//signed in as a customer
+			if(result == "customer"){
+				document.getElementById("logFail").innerHTML = "Successfully logged in as Customer.";
+				console.log("in user if statement");
+                		//navbar button visibility
+                		document.getElementById("tradeIn").style.display="block";
+        		        document.getElementById("account").style.display="block";
+		                document.getElementById("LIR").style.display="none";
+			}
+			//signed in as a staff member
+			if(result == "staff"){
+				document.getElementById("logFail").innerHTML = "Successfully logged in as Staff.";
+				console.log("in staff if statement");
+                                //navbar button visibility
+                                document.getElementById("tradeIn").style.display="block";
+                                document.getElementById("AED").style.display="block";
+                                document.getElementById("account").style.display="block";
+                                document.getElementById("LIR").style.display="none";
 
-//****** for testing, login to display certain navbar links ******
-function login(type) {
-	console.log("in login function");
-	console.log(type);
-	
-	if (type =="staff"){
-		console.log("in staff if statement");
-		//navbar button visibility
-		document.getElementById("tradeIn").style.display="block";
-		document.getElementById("AED").style.display="block";
-		document.getElementById("account").style.display="block";
-		document.getElementById("LIR").style.display="none";
-		
-		//page parts visibility (add staff elements to account & trade in pages)
+                                //page parts visibility (add staff elements to account & trade in pages)
+			}
+		}
 	}
-	else if (type =="user") {
-		console.log("in user if statement");
-		//navbar button visibility
-		document.getElementById("tradeIn").style.display="block";
-		document.getElementById("account").style.display="block";
-		document.getElementById("LIR").style.display="none";
-	}
-		
+	xhr.open("GET", "php/login.php?username="+username+"&password="+password, true);
+	xhr.send();
 }
-
