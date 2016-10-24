@@ -1,7 +1,9 @@
+<<<<<<< HEAD
 /*general*/
 body {
  background-color: silver;
  margin: 50px 15% 0 15%;
+ padding: 0;
 }
 
 /*banner*/
@@ -60,16 +62,22 @@ div.navigation li a:hover {
  margin-bottom: 20px;
 }
 
-
-
 div.float-left {
  float: left;
  width: 50%;
+ max-height: 400px;
 }
 
 div.float-right {
  float: right;
  width: 50%;
+ max-height: 400px;
+}
+
+div.fullwidth {
+ display: block;
+ width: 100%;
+ height: 100%;
 }
 
 div.quote img {
@@ -79,6 +87,10 @@ div.quote img {
  width: auto;
  height: auto;
  margin: 0;
+}
+
+table {
+ width: 100%;
 }
 
 /* titles and headers */
@@ -122,4 +134,3 @@ p.text {
  margin-bottom: 20px;
  text-align: justify;
 }
-

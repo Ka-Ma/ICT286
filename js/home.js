@@ -19,6 +19,8 @@ function loadPage(page) {
 	
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";
+	//incase it's the book-page
+	document.getElementById("book-page").style.display = "none";
 	
 	//make this div visible
 	document.getElementById(page).style.display = "block";
@@ -94,6 +96,8 @@ function getBookDetail(bookID) {
 	
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";
+	//need to make a backBtn to oldDivID
+	var backBtn = "<button type='button' onclick='javascript:loadPage("+oldDivID+")'>Continue Browsing</button>";
 	
 	//make this div visible
 	document.getElementById("book-page").style.display = "block";
@@ -103,7 +107,7 @@ function getBookDetail(bookID) {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var result = xhr.responseText;
 			
-			document.getElementById("book-page").innerHTML = result;
+			document.getElementById("book-page").innerHTML = result + backBtn;
 		}
 	}
 	xhr.open("GET", "php/getBookDetail.php?bookID=" + bookID, true);
@@ -111,7 +115,17 @@ function getBookDetail(bookID) {
 }
 //***** end functions for book-page *****
 
-//***** start function for car *****
+//***** start functions for trade-in page *****
+function validateTradeIn() {
+	console.log("children need to be tucked in");
+	//fields required title, author, isbn, photos of front, back, spine & pubinfo
+	//files must be smaller than 100kb
+	//description but be less than x chars long
+	
+}
+//***** end functions for trade-in page *****
+
+//***** start function for cart *****
 function addCart(bookID){
 	console.log("i added the book, " + bookID + ", to the cart, yay me");
 	//stub so my links don't break stuff
@@ -134,6 +148,7 @@ function login(username, password) {
                 		//navbar button visibility
                 		document.getElementById("tradeIn").style.display="block";
         		        document.getElementById("account").style.display="block";
+						document.getElementById("LO").style.display="block";
 		                document.getElementById("LIR").style.display="none";
 			}
 			//signed in as a staff member
@@ -144,6 +159,7 @@ function login(username, password) {
                                 document.getElementById("tradeIn").style.display="block";
                                 document.getElementById("AED").style.display="block";
                                 document.getElementById("account").style.display="block";
+								document.getElementById("LO").style.display="block";
                                 document.getElementById("LIR").style.display="none";
 
                                 //page parts visibility (add staff elements to account & trade in pages)
