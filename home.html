@@ -97,12 +97,39 @@
 	
 	<div id="LIR-page" style="display: none">
 	for testing
-	<form id="login">
-	  <button type="button" onclick="javascript:login('staff')">Staff Login</button>
-	  <button type="button" onclick="javascript:login('user')">Customer Login</button>
-	</form>
+	<table>
+	<caption class = "loginTable"></caption>
+	<thead><tr>
+		<th> Register </th>
+		<th> Login </th>
+	</tr></thead>
+	<tbody><tr><td>
+			<form id =register" method = "POST" action = "php/register.php">
+                        <p class = "text">
+                        <label>Username: <input type = "text" name = "regUsername"></input></label><br />
+                        <label>Password: <input type = "password" name = "regPassword"></input></label><br />
+			<label>First Name: <input type = "text" name = "fname"></input></label><br />             
+			<label>Last Name: <input type = "text" name = "lname"></input></label><br />
+			<label>Address: <input type = "text" name = "address"></input></label><br />
+			<label>Email: <input type = "text" name = "email"></input></label><br />
+			<label>Phone: <input type = "number" name = "phone"></input></label><br />
+			<input type = "submit" value = "Submit"></input>
+                        </p>
+			<p class = text id = "regFail"></p>
+                        </form>
+		</td><td>
+			<form id =login" method = "POST" action = "php/login.php">
+			<p class = "text">
+			<label>Username: <input type = "text" name = "loginUsername"></input></label><br />
+			<label>Password: <input type = "password" name = "loginPassword"></input></label><br />
+			<button type = "button" onclick = "javascript:login(this.form.loginUsername.value, this.form.loginPassword.value)">Submit</button>
+			</p>
+			<p class = text id = "logFail"></p>
+			</form>
+		</td></tr></thead>
+	</table>
 	</div>
-	
+
 	<div id="book-page" style="display: none">
 	this page loads when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart
 	table with image that spans rows and right side is other details plus button to cart it. 

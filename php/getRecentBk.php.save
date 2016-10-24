@@ -19,6 +19,7 @@
 	while ($row=mysql_fetch_array($result)) {
 		echo "<td> <a href=\"javascript:getBookDetail(";
 		echo $row['BookID'];
+exit
 		echo ")\"> <img src=\"";
 		echo $row['CoverImage'];
 		echo "\"</img></a></br>";
