@@ -17,30 +17,34 @@
   <script>var slideIndex = 0; carousel();</script>
 
   <div class = "navigation" id="navigation">
-  
-    <!-- trying javascript nav load 
-	<ul>
-	  <!-- The nav buttons need to only show relevant links according to user status, so need javascript function to load relevant buttons -->
-<!--	  <li class = ""><a href="javascript:loadHome()">Home</a></li> <!-- unregistered loggedIn staff-->
-<!--      <li class = ""><a href="javascript:loadAboutUs()">About Us</a></li> <!-- unregistered loggedIn staff-->
-<!--	  <li class = ""><a href="javascript:loadSearch()">Search</a></li> <!--unregistered loggedIn staff -->
-<!--	  <li class = ""><a href="javascript:loadTradeIn()">Trade In Request</a></li> <!--loggedIn staff -->
-<!--	  <li class = ""><a href="javascript:loadAccount()">Account</a></li> <!--loggedIn staff -->
-<!--	  <li class = ""><a href="javascript:loadCart()">Cart</a></li><!-- unregistered loggedIn staff-->
-<!--	  <li class = ""><a href="javascript:loadAED()">Add/Edit/Delete</a></li><!-- staff staff-only-->
-<!--	  <li style= "float: right"><a href="javascript:loadLIR()">Login/Register</a></li><!--unregistered -->
-	  <!-- Need to tweak somethign so only the one div is visible -->
-<!--	</ul>
-	-->
-  <script>loadNav();</script>
+    <!-- having trouble with the changing "visibility" display from none to block (works the other way round :( )-->
+    <ul>
+	  <li><a id="home" class="active" href="javascript:loadPage('home-page')">Home</a>
+	  </li>
+	  <li><a id="aboutUs" href="javascript:loadPage('aboutUs-page')">About Us</a>
+	  </li>
+	  <li><a id="search"  href="javascript:loadPage('search-page')">Search</a>
+	  </li>
+	  <li style="display: none"><a id="tradeIn" href="javascript:loadPage('tradeIn-page')">Trade-In Request</a>
+	  </li>
+	  <li style="display: none"><a id="AED" href="javascript:loadPage('AED-page')">Add/Edit/Delete Books</a>
+	  </li>
+	  <li style="float: right"><a id="LIR"  href="javascript:loadPage('LIR-page')">Login/Register</a>
+	  </li>
+	  <li style="display: none" style="float: right"><a id="account" href="javascript:loadPage('account-page')">Account</a>
+	  </li>
+	  <li style="float: right"><a id="cart"  href="javascript:loadPage('cart-page')">Cart</a>
+	  </li>
+	</ul>
   </div>
   
   <div class="main-content">
-    <div id="home-page" display="block">
+  
+    <div id="home-page" style="display: block">
+		
 		<div><div id="bookOfWk" class="float-left">
 			<script>showBookOfWk(11111111);</script>
-			book of the week (in this case bookID = 11111111) js to get the book
-			image thumbnail href to book page, synopsis on right 
+			book of the week (in this case bookID = 11111111) js to get the book image thumbnail href to book page, synopsis on right  Need to add button to allow user to add it to cart
 		</div>
 		
 		<div id="quote" class="float-right">
@@ -55,21 +59,46 @@
 		<div id="recentBooks">
 			<script>showRecentBooks();</script>
 			books just added, 3 thumbnails of youngest books, click on image to open book page -- NOTE: for some annoying and frustratingly elusive reason this XMLHTTPresponse does not get written into the div.
+			need to add buttons to add book to cart
 		</div>
 		
 		<div id="randBk">
-			random books, 1 random from each category, scrolling gallery of thumbnails, click image to go to book page			
+			<p>random books, 1 random from each category, scrolling gallery of thumbnails, click image to go to book page</p>
 		</div>
 	</div>
-	<div id="aboutUs-page" display="none">
-	<p>about us div, on click of nav button, run javascript function to load this section</p>
+	
+	<div id="aboutUs-page" style="display: none">
+	<p>about us div, on click of nav button, run javascript function to display this section</p>
 	</div>
-	<div id="cart-page" display="none">
+	
+	<div id="cart-page" style="display: none">
 	</div>
-	<div id="search-page" display="none">
+	
+	<div id="search-page" style="display: none">
 	</div>
-	<div id="LIR-page" display="none">
+	
+	<div id="LIR-page" style="display: none">
+	for testing
+	<form id="login">
+	  <button type="button" onclick="javascript:login('staff')">Staff Login</button>
+	  <button type="button" onclick="javascript:login('user')">Customer Login</button>
+	</form>
 	</div>
+	
+	<div id="book-page" style="display: none">
+	this page loads when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart
+	table with image that spans rows and right side is other details plus button to cart it. 
+	Needs a button to go back to previous page
+	</div>
+	
+	<div id="account-page" style="display: none">
+	the customer details plus opportunity to update
+	</div>
+	
+	<div id="tradeIn-page" style="display: none">
+	where the customer can enter the details & photos of a book they would like to trade in
+	</div>
+	
 	<!--etc-->
   </div>
 </body>
