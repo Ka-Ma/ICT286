@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang = "en" xmlns = "http://www.w3.org/1999/xhtml">
 <head>
@@ -17,7 +18,6 @@
   <script>var slideIndex = 0; carousel();</script>
 
   <div class = "navigation" id="navigation">
-    <!-- having trouble with the changing "visibility" display from none to block (works the other way round :( )-->
     <ul>
 	  <li>
 	    <a id="home" class="active" href="javascript:loadPage('home-page')">Home</a>
@@ -75,7 +75,25 @@
 	</div>
 	
 	<div id="aboutUs-page" style="display: none">
-	<p>about us div, on click of nav button, run javascript function to display this section</p>
+	<h1>About Us</h1>
+        <p class = "header">Books Matters, Mann!</p>
+        <p class = "header">123 Pretend Street, Pretenderton, WA, 6210</p>
+        <p class = "header">Phone: 9123 8765</p>
+        <p class = "header">Email: <a href = \"mailto:admin@bmm.com.au\"> admin@bmm.com.au </a></p>
+        <p class = "text">Romeo and Juliette embraced their love of fiction and opened 'Books Matters, Mann!' in 199$
+        and it has been a family business ever since. Romeo and Juliette were both avid readers, seeking to read
+        as many books, from as wide a variety of genres as they could. After many years of fulfilling this dream,
+        they came up with another dream. To share the wonderful world of fiction with as many people as they
+        could. 17 years down the track and 'Books Matters, Mann!' is still fulfilling this dream. BMM is a small
+        business with a big heart. BMM provides homes for both new and used books. All of our used books are
+        traded to us by our loyal customers in exchange for credits, which they can use online or in store to
+        purchase from our wide range of books. We also stock new books from a diverse range of authors so that they
+        too may find a welcoming home. BMM is also a proud donator of used books to local schools, where
+        students of all ages may enjoy the stories they have to tell. For every 10 books that are purchased
+        from BMM, online or in store, we donate 1 used book to a public school. Over 4000 books have already been
+        generously donated to this date. Our staff members all share Romeo and Juliette's love for books and their
+        dream to share the world of fiction. It is through their hard work and dedication that BMM is still able
+	to continue striving to fulfill this wonderful dream. </p>
 	</div>
 	
 	<div id="cart-page" style="display: none">
@@ -85,11 +103,38 @@
 	</div>
 	
 	<div id="LIR-page" style="display: none">
-	for testing but i think that the customer/staff number will have to be put in a cookie or something for account/tradein pages
-	<form id="login">
-	  <button type="button" onclick="javascript:login('staff')">Staff Login</button>
-	  <button type="button" onclick="javascript:login('user')">Customer Login</button>
-	</form>
+	for testing
+	<table>
+	<caption class = "loginTable"></caption>
+	<thead><tr>
+		<th> Register </th>
+		<th> Login </th>
+	</tr></thead>
+	<tbody><tr><td>
+			<form id =register" method = "POST" action = "php/register.php">
+                        <p class = "text">
+                        <label>Username: <input type = "text" name = "regUsername"></input></label><br />
+                        <label>Password: <input type = "password" name = "regPassword"></input></label><br />
+			<label>First Name: <input type = "text" name = "fname"></input></label><br />             
+			<label>Last Name: <input type = "text" name = "lname"></input></label><br />
+			<label>Address: <input type = "text" name = "address"></input></label><br />
+			<label>Email: <input type = "text" name = "email"></input></label><br />
+			<label>Phone: <input type = "number" name = "phone"></input></label><br />
+			<input type = "submit" value = "Submit"></input>
+                        </p>
+			<p class = text id = "regFail"></p>
+                        </form>
+		</td><td>
+			<form id =login" method = "POST" action = "php/login.php">
+			<p class = "text">
+			<label>Username: <input type = "text" name = "loginUsername"></input></label><br />
+			<label>Password: <input type = "password" name = "loginPassword"></input></label><br />
+			<button type = "button" onclick = "javascript:login(this.form.loginUsername.value, this.form.loginPassword.value)">Submit</button>
+			</p>
+			<p class = text id = "logFail"></p>
+			</form>
+		</td></tr></thead>
+	</table>
 	</div>
 	
 	<div id="book-page" style="display: none">
