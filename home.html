@@ -44,7 +44,7 @@
 	    <a id="account" style="display: none" href="javascript:loadPage('account-page')">Account</a>
 	  </li>
 	  <li style="float: right">
-	    <a id="cart"  href="javascript:loadPage('cart-page')">Cart</a>
+	    <a id="cart"  href="javascript:loadPage('cart-page')" onclick = "javascript:displayCart()">Cart</a>
 	  </li>
 	</ul>
   </div>
@@ -97,6 +97,7 @@
 	</div>
 	
 	<div id="cart-page" style="display: none">
+	<p id = "showCart"></p>
 	</div>
 	
 	<div id="search-page" style="display: none">

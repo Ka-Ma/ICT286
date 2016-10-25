@@ -164,7 +164,6 @@ button.type1 {
 
 tr.search {
  text-align: left;
- width: 25%;
 }
 
 td.search {
@@ -181,3 +180,22 @@ table.search {
  width: 100%;
  border-collapse: collapse;
 }
+
+table.cart {
+ width: 98%;
+ border-collapse: collapse;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+th.cart {
+ width: 14%;
+}
+
+td.cart {
+ padding: 10px;
+ border: 1px solid #ddd;
+ vertical-align: center;
+}
+
+
