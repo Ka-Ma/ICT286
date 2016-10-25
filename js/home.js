@@ -131,6 +131,7 @@ function addCart(bookID){
 	//stub so my links don't break stuff
 }
 
+//login as a staff or customer
 function login(username, password) {
 	var staffMember = "staff";
 	var cust = "customer";	
@@ -138,7 +139,6 @@ function login(username, password) {
 	xhr.onreadystatechange = function () {
 		if(xhr.readyState == 4 && xhr.status == 200) {
 			var result = xhr.responseText;
-//			document.writeln(result);
 			//display error if incorrect data
 			document.getElementById("logFail").innerHTML = "Incorrect Username or Password.";
 			
@@ -168,5 +168,33 @@ function login(username, password) {
 		}
 	}
 	xhr.open("GET", "php/login.php?username="+username+"&password="+password, true);
+	xhr.send();
+}
+
+//search for books (genres[0] - genres[18] [19 genres])
+function search() {
+	
+	//find which genres were checked
+	var genre;
+	var genres = document.getElementById("SearchForm").elements;
+	var checked = new Array();
+	//document.writeln(checked);
+	for (var i = 0; i < genres.length; i++) {
+		if(genres[i].checked) {
+			//add checked genres to array
+			genre = genres[i].value;
+			checked.push(genre);
+		}
+	}
+
+	//get books with checked genres from database and display them
+	var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			document.getElementById("searchBooks").innerHTML = result;
+		}
+	}
+	xhr.open("GET", "php/search.php?checked=" + JSON.stringify(checked), true);
 	xhr.send();
 }

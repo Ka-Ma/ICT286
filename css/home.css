@@ -133,3 +133,51 @@ p.text {
  margin-bottom: 20px;
  text-align: justify;
 }
+
+p.bookSearch {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 100%;
+ font-weight: 200;
+ text-align: justify;
+}
+
+
+label {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 110%;
+ font-weight: 200;
+ margin-left: 10px;
+ margin-right: 10px;
+ margin-bottom: 20px;
+ text-align: justify;
+}
+
+button.type1 {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 110%;
+ font-weight: 200;
+ margin-left: 10px;
+ margin-right: 10px;
+ margin-bottom: 20px;
+ text-align: justify;
+}
+
+tr.search {
+ text-align: left;
+ width: 25%;
+}
+
+td.search {
+ padding: 10px;
+ border-bottom: 1px solid #ddd;
+ vertical-align: top;
+}
+
+th.search {
+ width: 25%;
+}
+
+table.search {
+ width: 100%;
+ border-collapse: collapse;
+}
