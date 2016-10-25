@@ -100,6 +100,58 @@
 	</div>
 	
 	<div id="search-page" style="display: none">
+	<form id = "SearchForm">
+		<table>
+		<caption class = "searchTable"></caption>
+		<p class = "text">
+		<tbody><tr><td>
+			<label>Drama: <input type = "checkbox" value = "Drama" name = "genre" /></label>
+		</td><td>
+			<label>Fantasy: <input type = "checkbox" value = "Fantasy" name = "genre" /></label>
+		</td><td>
+			<label>Mystery: <input type = "checkbox" value = "Mystery" name = "genre" /></label>
+		</td><td>
+			<label>Thriller: <input type = "checkbox" value = "Thriller" name = "genre" /></label>
+		</td><td>
+                        <label>Bildungsroman: <input type = "checkbox" value = "Bildungsroman" name = "genre" /></label>
+		</td></tr>
+		<tr><td>
+		 	<label>Young Adult Fiction: <input type = "checkbox" value = "Young Adult Fiction" name = "genre" /></label>
+                </td><td>
+                        <label>Children's Fiction: <input type = "checkbox" value = "Children's Fiction" name = "genre" /></label>
+                </td><td>
+                        <label>Adventure: <input type = "checkbox" value = "Adventure" name = "genre" /></label>
+                </td><td>
+                        <label>Animals: <input type = "checkbox" value = "Animals" name = "genre" /></label>
+		</td><td>
+                        <label>Humour: <input type = "checkbox" value = "Humour" name = "genre" /></label>
+                </td></tr>
+                <tr><td>
+                        <label>Classic: <input type = "checkbox" value = "Classic" name = "genre" /></label>
+                </td><td>
+                        <label>Short Stories: <input type = "checkbox" value = "Short Stories" name = "genre" /></label>
+                </td><td>
+                        <label>Traditional: <input type = "checkbox" value = "Traditional" name = "genre" /></label>
+                </td><td>
+                        <label>Children's: <input type = "checkbox" value = "Children's "name = "genre" /></label>
+                </td><td>
+                        <label>Historical Fiction: <input type = "checkbox" value = "Historical Fiction" name = "genre" /></label>
+                </td></tr>
+		<tr><td>
+                        <label>Philosophical Fiction: <input type = "checkbox" value = "Philosophical Fiction" name = "genre" /></label>
+                </td><td>
+                        <label>Science Fiction: <input type = "checkbox" value = "Science Fiction" name = "genre" /></label>
+                </td><td>
+                        <label>Romance: <input type = "checkbox" value = "Romance" name = "genre" /></label>
+                </td><td>
+                        <label>Horror: <input type = "checkbox" value = "Horror" name = "genre" /></label>
+                </td><td>
+		</td></tr></tbody>
+		</table>	
+	<button class = "type1" type = "button" value = "Submit" onclick = "javascript:search()">Search</button>
+	</p>
+	</form>
+	<p class = "text" id = "searchBooks"></p>
 	</div>
 	
 	<div id="LIR-page" style="display: none">
@@ -111,7 +163,7 @@
 		<th> Login </th>
 	</tr></thead>
 	<tbody><tr><td>
-			<form id =register" method = "POST" action = "php/register.php">
+			<form id ="register" method = "POST" action = "php/register.php">
                         <p class = "text">
                         <label>Username: <input type = "text" name = "regUsername"></input></label><br />
                         <label>Password: <input type = "password" name = "regPassword"></input></label><br />
@@ -125,7 +177,7 @@
 			<p class = text id = "regFail"></p>
                         </form>
 		</td><td>
-			<form id =login" method = "POST" action = "php/login.php">
+			<form id ="login">
 			<p class = "text">
 			<label>Username: <input type = "text" name = "loginUsername"></input></label><br />
 			<label>Password: <input type = "password" name = "loginPassword"></input></label><br />
@@ -133,7 +185,7 @@
 			</p>
 			<p class = text id = "logFail"></p>
 			</form>
-		</td></tr></thead>
+		</td></tr></tbody>
 	</table>
 	<form action = "php/test.php">
 		<input type = "submit" value = "test" />
