@@ -1,3 +1,6 @@
+//global array for cart
+var Cart = [];
+
 //for banner
 function carousel() {
     var i;
@@ -127,8 +130,60 @@ function validateTradeIn() {
 
 //***** start function for cart *****
 function addCart(bookID){
-	console.log("i added the book, " + bookID + ", to the cart, yay me");
-	//stub so my links don't break stuff
+	console.log("Book added");
+
+	//make sure bookID is integer
+	var number = parseInt(bookID);
+
+	//add book to cart if not already in there
+	if(Cart.indexOf(number) == -1)
+		Cart.push(number);
+
+	//get number of books in cart and display in header
+	var num = Cart.length;
+
+	if(Cart.length == 0) {
+		document.getElementById("cart").innerHTML = "Cart";
+	}
+	else {
+		document.getElementById("cart").innerHTML = "Cart (" + num + ")";
+	}
+}
+
+function remove(bookID) {
+	//make sure bookID is an integer
+	var number = parseInt(bookID);
+	
+	//find index of book to remove, remove it
+	var index = Cart.indexOf(number);
+	Cart.splice(index, 1);
+	
+	//get number of books in cart and display in header
+        var num = Cart.length;
+
+        if(Cart.length == 0) {
+                document.getElementById("cart").innerHTML = "Cart";
+        }
+        else {
+                document.getElementById("cart").innerHTML = "Cart (" + num + ")";
+        }
+	
+	//redisplay the cart
+	displayCart();
+}
+
+function displayCart() {
+	console.log("Viewing cart");
+
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+			document.getElementById("showCart").innerHTML = result;
+		}
+	}
+	xhr.open("GET", "php/showCart.php?Cart=" + JSON.stringify(Cart), true);
+        xhr.send();
 }
 
 //login as a staff or customer
@@ -177,7 +232,7 @@ function search() {
 	//find which genres were checked
 	var genre;
 	var genres = document.getElementById("SearchForm").elements;
-	var checked = new Array();
+	var checked = [];
 	//document.writeln(checked);
 	for (var i = 0; i < genres.length; i++) {
 		if(genres[i].checked) {
