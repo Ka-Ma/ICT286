@@ -61,6 +61,11 @@ div.navigation li a:hover {
  margin-bottom: 20px;
 }
 
+img.book {
+ height: 250px;
+ width: auto;
+}
+
 div.float-left {
  float: left;
  width: 50%;

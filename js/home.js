@@ -59,8 +59,7 @@ function showBookOfWk(bookID) {
 
 function showRecentBooks() {
 	var date = new Date(); //today's date
-	date.setDate(date.getDate() - 7); // set date to 7 days ago
-	
+		
 	//convert date to string for sql
 	var dM = date.getMonth() + 1;
 	var dateSQL = date.getFullYear() +"-"+ dM +"-" + date.getDate();
@@ -100,7 +99,7 @@ function getBookDetail(bookID) {
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";
 	//need to make a backBtn to oldDivID
-	var backBtn = "<button type='button' onclick='javascript:loadPage("+oldDivID+")'>Continue Browsing</button>";
+	var backBtn = "<button type='button' onclick='javascript:loadPage(\""+oldDivID+"\")'>Continue Browsing</button>";
 	
 	//make this div visible
 	document.getElementById("book-page").style.display = "block";
@@ -128,8 +127,44 @@ function validateTradeIn() {
 }
 //***** end functions for trade-in page *****
 
+//***** start functions for account page *****
+function getAccountInfo() {
+	var username = getCookie(username); 
+	var id = getCookie(id);
+	
+	var xhr= new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if(xhr.readyState = 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			
+			console.log(result);
+		}
+	}
+	xhr.open("GET", "php/getAccountDetails.php?username="+username+"&id="+id, true);
+	xhr.send();
+}
+
+//from w3schools, returns the value of a cookie named in the parameter
+function getCookie(cname) { 
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+}
+
+//***** end functions for account page *****
+
+//***** start function for cart *****
 //checks to see if book is in stock.
-//if yes, add to and update cart count, else display error message
+//if yes, add to and update cart count, else display error message working on it
 function addCart(bookID){
 	//check that book is in stock
 	var xhr = new XMLHttpRequest();

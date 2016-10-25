@@ -279,6 +279,7 @@
 	</div>
 	
 	<div id="account-page" style="display: none">
+	<script>getAccountInfo();</script> <!-- this needs to happen after log in -->
 	<p id="aWelcome"></p> <!-- if staff option to select customer otherwise welcome customer by first name -->
 	<form id="accDetails" action="">
 	  first name
@@ -289,11 +290,16 @@
 	  postcode
 	  phone
 	  email
-	  creditBalance
-	  password
+	  
 	</form>
 	
-	
+	  creditBalance (no changies)
+	  
+	<form id="passwordChange" action="">  
+	  oldPassword
+	  newPassword
+	  newPasswordAgain
+	</form>
 	</div>
 	
 	<div id="tradeIn-page" style="display: none">
@@ -323,7 +329,7 @@
 		  <fieldset>
 		    <legend>Condition Information</legend>
 			Description<br>
-		    <textarea name="ti-desc" rows="10" cols="40"><br>
+		    <textarea name="ti-desc" rows="10" cols="40"></textarea><br>
 			Photo of the front of the book*<br>
 		    <input type="file" name="ti-frontImage" accept="image/*" onblur="viewImage('ti-frontImage')">
 			<img src="images\1477319710_picture.png" id="ti-fi" ></img><br>
@@ -348,6 +354,9 @@
 		</div>
 		
 		<div id="ti-accept"> <!-- will include style="display: none" unless staff logged in --> 
+		shows list of ALL trade-in requests by status
+		tradeInID(link to detail), custNmae, title, author 
+		
 		staff can provisionally accept tradein and offer a price which triggers email to customer with offer details
 		
 		staff can indicate receipt of book and absolute acceptence of trade in which triggers adding credit to customer account and email to customer.

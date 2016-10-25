@@ -22,7 +22,7 @@
 		echo "<tr><th>Title:</th><td>";
 		echo $row['Title'];
 		echo "</td>";
-		echo "<td rowspan='6'> <img src='";
+		echo "<td rowspan='6'> <img class \"book\" src='";
 		echo $row['CoverImage'];
 		echo "'</img></td></tr>";
 		echo "<tr><th>Author:</th><td>";
