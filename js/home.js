@@ -160,12 +160,18 @@ function checkFileSize(file) {
 	var oFile = document.getElementById(file).files[0]; 
 	if (oFile.size > 100000) //100kb
 	{
-		return false;
+		return true;
 	}
 }
 
 function viewImage(image) {
-	document.getElementById(image).src = document.getElementsByName(image).value; //undefined?
+	//get value from file field
+	var imageLink = document.getElementsByName(image).value; //undefined?
+	
+	console.log(image);
+	console.log(imageLink);
+	
+	document.getElementById(image).src = imageLink;
 }
 //***** end functions for trade-in page *****
 
@@ -173,6 +179,9 @@ function viewImage(image) {
 function getAccountDetailsByStored() {
 	var username = sessionStorage.username;  
 	var id = sessionStorage.id;  
+	
+	console.log("username = "+username);
+	console.log("id = "+id);
 	
 	getAccountInfo(username, id);
 }
@@ -198,13 +207,16 @@ function getAccountInfo(cUsername, cId) {
 
 function validateAccDetsChange(formObj) {
 	//if any null discontinue
-	console.log("validating Account Details change ")+formObj;
+	console.log("validating Account Details change ");
+	console.log(formObj);
 }
 
 function validatePasswordChange(formObj) {
 	var nPW = formObj[0].value;
 	var nPWA = formObj[1].value;
 	var oPW = formObj[2].value;
+	
+	console.log("will be comparing to: "+sessionStorage.forChecking);
 	
 	if(oPW!=sessionStorage.forChecking)
 	{
@@ -214,7 +226,11 @@ function validatePasswordChange(formObj) {
 	{
 		alert("Please choose a new password");
 	}
-	else if (nPw == nPWA) //success, update db
+	else if (nPw != nPWA) 
+	{
+		alert("Please make sure the two new passwords are the same");
+	}
+	else //success, update db
 	{
 		updatePWD(nPw);
 	}
