@@ -24,6 +24,9 @@ function loadPage(page) {
 	document.getElementById(oldDivID).style.display = "none";
 	//incase it's the book-page
 	document.getElementById("book-page").style.display = "none";
+	//incase purchase page
+	document.getElementById("purchase-page").style.display = "none";
+
 	
 	//make this div visible
 	document.getElementById(page).style.display = "block";
@@ -59,7 +62,8 @@ function showBookOfWk(bookID) {
 
 function showRecentBooks() {
 	var date = new Date(); //today's date
-		
+	date.setDate(date.getDate() - 7); // set date to 7 days ago
+	
 	//convert date to string for sql
 	var dM = date.getMonth() + 1;
 	var dateSQL = date.getFullYear() +"-"+ dM +"-" + date.getDate();
@@ -99,7 +103,7 @@ function getBookDetail(bookID) {
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";
 	//need to make a backBtn to oldDivID
-	var backBtn = "<button type='button' onclick='javascript:loadPage(\""+oldDivID+"\")'>Continue Browsing</button>";
+	var backBtn = "<button type='button' onclick='javascript:loadPage("+oldDivID+")'>Continue Browsing</button>";
 	
 	//make this div visible
 	document.getElementById("book-page").style.display = "block";
@@ -118,189 +122,17 @@ function getBookDetail(bookID) {
 //***** end functions for book-page *****
 
 //***** start functions for trade-in page *****
-//function validateTradeIn(tititle, tiauthor, tiisbn, tiform, tidesc, tifrontImage, tibackImage, tispineImage, tipubInfoImage, tiotherImage) {
-function validateTradeIn(formObj) {
-	var t = formObj[0].value; //tititle;
-	var a = formObj[1].value; //tiauthor;
-	var i = formObj[2].value; //tiisbn;
-	var f = formObj[3].value; //tiform;
-	var d = formObj[4].value; //tidesc;
-	var fi = formObj[5].value; //tifrontImage;
-	var bi = formObj[6].value; //tibackImage;
-	var si = formObj[7].value; //tispineImage;
-	var pi = formObj[8].value; //tipubInfoImage;
-	var oi = formObj[9].value; //tiotherImage;
-	
-	console.log("validate trade in: title "+t);
-	
-	//fields required: title, author, isbn, photos of front, back, spine & pubinfo
-	if (t=="" || a=="" || i=="" || fi=="" || bi=="" || si=="" || pi=="")
-	{ 
-		alert("Title, Author, ISBN, and images for front, back, spine and publication information are required");
-		return false;
-	}
+function validateTradeIn() {
+	console.log("children need to be tucked in");
+	//fields required title, author, isbn, photos of front, back, spine & pubinfo
 	//files must be smaller than 100kb
-	else if (checkFileSize(fi)||checkFileSize(bi)||checkFileSize(si)||checkFileSize(pi)||checkFileSize(oi))
-	{
-		alert("File size too large, must be less than 100kb");
-		return false;
-	}
-	//submit to db
-	else 
-	{
-		console.log("children need to be tucked in");
-		
-	}
+	//description but be less than x chars long
 	
-	
-	
-}
-
-function checkFileSize(file) {
-	var oFile = document.getElementById(file).files[0]; 
-	if (oFile.size > 100000) //100kb
-	{
-		return true;
-	}
-}
-
-function viewImage(image) {
-	//get value from file field
-	var imageLink = document.getElementsByName(image).value; //undefined?
-	
-	console.log(image);
-	console.log(imageLink);
-	
-	document.getElementById(image).src = imageLink;
 }
 //***** end functions for trade-in page *****
 
-//***** start functions for account page *****
-function getAccountDetailsByStored() {
-	var username = sessionStorage.username;  
-	var id = sessionStorage.id;  
-	
-	console.log("username = "+username);
-	console.log("id = "+id);
-	
-	getAccountInfo(username, id);
-}
-
-function getAccountInfo(cUsername, cId) {
-	var username = cUsername; // customer username
-	var id = cId;  //customer id
-	
-	console.log("username = "+username);
-	console.log("id = "+id);
-	
-	var xhr= new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if(xhr.readyState = 4 && xhr.status == 200) {
-			var result = xhr.responseText.split("^");
-			
-			document.getElementById("accDetails").innerHTML = result[0];
-			document.getElementById("aWelcome").innerHTML = result[1];
-			sessionStorage.forChecking = result[2];
-			
-			console.log("forchecking "+result[2]);
-			
-			sessionStorage.balance = result[3];
-			
-			console.log("balance "+result[3]);
-		
-		}
-	}
-	xhr.open("GET", "php/getAccountDetails.php?username="+username+"&id="+id, true);
-	xhr.send();
-}
-
-function validateAccDetsChange(formObj) {
-	var st = formObj[0].value;
-	var sub = formObj[1].value;
-	var state = formObj[2].value;
-	var pc = formObj[3].value;
-	var ph = formObj[4].value;
-	var e = formObj[5].value;
-	
-	console.log("validating Account Details change ");
-	
-	//if any null discontinue
-	if(st==""||sub==""||state==""||pc==""||ph==""||e=="")
-	{
-		alert("All fields must be complete");
-	}
-	else {
-		updateAccountDetails(sessionStorage.username, st, sub, state, pc, ph, e);
-	}
-}
-
-function updateAccountDetails(username, st, sub, state, pc, ph, e) {
-		
-	var xhr= new XMLHttpRequest();
-
-	xhr.onreadystatechange = function () {
-		if(xhr.readyState = 4 && xhr.status == 200) {
-			var result = xhr.responseText;
-			
-			console.log(result);
-			document.getElementById("accUpdated").innerHTML = result;
-		}
-	}
-	
-	xhr.open("GET", "php/updateAccountDetails.php?username="+username+"&st="+st+"&sub="+sub+"&state="+state+"&pc="+pc+"&ph="+ph+"&e="+e, true);
-	xhr.send();
-}
-
-function validatePasswordChange(formObj) {
-	var oPW = formObj[0].value;
-	var nPW = formObj[1].value;
-	var nPWA = formObj[2].value;
-	
-	console.log(formObj);
-	console.log(formObj[0].value);
-	console.log(formObj[1].value);
-	console.log(formObj[2].value);
-
-	console.log("will be comparing "+oPW+" to "+sessionStorage.forChecking);
-	
-	if(oPW != sessionStorage.forChecking)
-	{
-		alert("If you have forgotten your password please contact our friendly staff during office hours");
-	}
-	else if (nPW==oPW) //failed attempt
-	{
-		alert("Please choose a new password");
-	}
-	else if (nPW != nPWA) 
-	{
-		alert("Please make sure the two new passwords are the same");
-	}
-	else //success, update db
-	{
-		updatePWD(nPW);
-	}
-	
-}
-
-function updatePWD(nPwd) {
-	var nPwd = nPwd;
-	
-	var xhr= new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if(xhr.readyState = 4 && xhr.status == 200) {
-		var result = xhr.responseText;
-		
-		document.getElementById("passwordChange").innerHTML = result;
-		}
-	}
-	xhr.open("GET", "php/updatePwd.php?nPwd="+nPwd+"&username="+sessionStorage.username, true);
-	xhr.send();
-}
-//***** end functions for account page *****
-
-//***** start function for cart *****
 //checks to see if book is in stock.
-//if yes, add to and update cart count, else display error message working on it
+//if yes, add to and update cart count, else display error message
 function addCart(bookID){
 	//check that book is in stock
 	var xhr = new XMLHttpRequest();
@@ -506,6 +338,81 @@ function purchase() {
 	}
 }
 
+//register to site
+function register() {
+	var error = "Error!<br />"
+        var err;
+
+	//ensure all required fields have input
+	var username = document.getElementById("register").regUsername.value;
+	var pw = document.getElementById("register").regPassword.value;
+	var fn = document.getElementById("register").fname.value;
+	var ln = document.getElementById("register").lname.value;
+	var str = document.getElementById("register").street.value;
+	var sub = document.getElementById("register").suburb.value;
+	var sta = document.getElementById("register").state.value;
+	var pc = document.getElementById("register").postcode.value;
+	var em = document.getElementById("register").email.value;
+        var ph = document.getElementById("register").phone.value;
+
+	if(username.length == 0){
+                err = "Please input a Username <br />";
+                error = error.concat(err);
+        }
+	if(pw.length == 0){
+                err = "Please input a Password <br />";
+                error = error.concat(err);
+        }
+	if(fn.length == 0){
+                err = "Please input a First Name <br />";
+                error = error.concat(err);
+        }
+	if(ln.length == 0){
+                err = "Please input a Last Name <br />";
+                error = error.concat(err);
+        }
+	if(str.length == 0){
+                err = "Please input a Street <br />";
+                error = error.concat(err);
+        }
+	if(sub.length == 0){
+                err = "Please input a Suburb <br />";
+                error = error.concat(err);
+        }
+	if(sta.length == 0){
+                err = "Please input a State <br />";
+                error = error.concat(err);
+        }
+	if(pc.length == 0){
+                err = "Please input a Postcode <br />";
+                error = error.concat(err);
+        }
+
+	//display errors OR send data to database
+	if(error.length > 12)//initial size of error
+                document.getElementById("regFail").innerHTML = error;
+        else{
+		data = "un="+username+"&pw="+pw+"&fn="+fn+"&ln="+ln+"&str="+str+"&sub="+sub+"&sta="+sta+"&pc="+pc+"&em="+em+"&ph="+ph;
+		var xhr = new XMLHttpRequest();
+        	xhr.onreadystatechange = function () {
+                	if(xhr.readyState == 4 && xhr.status == 200) {
+				var result = xhr.responseText;
+				
+				if(result == "taken")
+					document.getElementById("regFail").innerHTML = "Error!<br /> Username taken, please choose another one";
+				else
+					document.getElementById("regFail").innerHTML = result;
+			}
+		}
+		xhr.open("POST", "php/register.php", true);
+	
+		//Send the proper header information along with the request
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        
+		xhr.send(data);
+	}
+}
+
 //login as a staff or customer
 function login(username, password) {
 	var staffMember = "staff";
@@ -536,10 +443,6 @@ function login(username, password) {
         		        document.getElementById("account").style.display="block";
 						document.getElementById("LO").style.display="block";
 		                document.getElementById("LIR").style.display="none";
-						
-						//page functions & visibility
-						//accounts page
-						getAccountDetailsByStored();
 			}
 			//signed in as a staff member
 			if(user == "staff"){
@@ -553,9 +456,6 @@ function login(username, password) {
                                 document.getElementById("LIR").style.display="none";
 
                                 //page parts visibility (add staff elements to account & trade in pages)
-								//accounts page
-								document.getElementById("accSearch").style.display="block";
-								document.getElementById("updateCB").style.display="block";
 			}
 		}
 	}

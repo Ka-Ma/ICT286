@@ -16,7 +16,6 @@ div.banner img {
  width: auto;
  height: 150px;
  margin: 0;
- padding: 0 25% 0 25%
 }
  
 /*navigation*/
@@ -62,40 +61,31 @@ div.navigation li a:hover {
  margin-bottom: 20px;
 }
 
-img.book {
- height: 250px;
- width: auto;
-}
-
 div.float-left {
  float: left;
- width: 49%;
- max-height: 500px;
- padding: 0.5%;
+ width: 50%;
+ max-height: 400px;
 }
 
 div.float-right {
  float: right;
- width: 49%;
- max-height: 500px;
- padding: 0.5%;
+ width: 50%;
+ max-height: 400px;
 }
 
 div.fullwidth {
  display: block;
- padding: 10px;
  width: 100%;
  height: 100%;
- overflow: auto;
 }
 
-img.aQuote {
+div.quote img {
  display: block;
  margin-left: auto;
  margin-right: auto;
- width: 100%;
+ width: auto;
  height: auto;
- padding: 5px 0 5px 0;
+ margin: 0;
 }
 
 table {

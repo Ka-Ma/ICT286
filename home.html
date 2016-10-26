@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang = "en" xmlns = "http://www.w3.org/1999/xhtml">
 <head>
@@ -155,7 +156,6 @@
 	</div>
 	
 	<div id="LIR-page" style="display: none">
-	for testing
 	<table>
 	<caption class = "loginTable"></caption>
 	<thead><tr>
@@ -169,10 +169,13 @@
                         <label>Password: <input type = "password" name = "regPassword"></input></label><br />
 			<label>First Name: <input type = "text" name = "fname"></input></label><br />             
 			<label>Last Name: <input type = "text" name = "lname"></input></label><br />
-			<label>Address: <input type = "text" name = "address"></input></label><br />
+			<label>Street: <input type = "text" name = "street"></input></label><br />
+			<label>Suburb: <input type = "text" name = "suburb"></input></label><br />
+			<label>State: <input type = "text" name = "state"></input></label><br />
+			<label>Postcode: <input type = "text" name = "postcode"></input></label><br />
 			<label>Email: <input type = "text" name = "email"></input></label><br />
 			<label>Phone: <input type = "number" name = "phone"></input></label><br />
-			<input type = "submit" value = "Submit"></input>
+			<button type = "button" onclick = "javascript:register()">Submit</button>
                         </p>
 			<p class = text id = "regFail"></p>
                         </form>
@@ -187,12 +190,7 @@
 			</form>
 		</td></tr></tbody>
 	</table>
-	php<form action = "php/test.php">
-		<input type = "submit" value = "test" />
-	</form>
-	
 	</div>
-
 
 	<div id="purchase-page" style="display: none">
 	<form id = "purchasing">
@@ -273,79 +271,29 @@
 	</form>
 	<p id = "payError" class = "payError"></p>
         </div>
-
-	<div id="AED-page" style="display: none">
-	</div>
 	
 	<div id="book-page" style="display: none">
-	<!-- this div becomes visible and populated when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart, there is also a back button to return from whence they came -->
+	this page loads when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart
+	 
+	Needs a button to go back to previous page which means need to somehow indicate which "page" we have come from or something.
 	</div>
 	
 	<div id="account-page" style="display: none">
-		<div id="accSearch" style="display: none">
-			<!-- search for particular customer, choose from link list, populate "accDetails"  -->
-			<p>To search for a customer please enter one of the following fields:</p>
-			<form id="custSearch">
-			  Customers Username: 
-			  <input type="text" id="csUN"></br>
-			  Customers Last Name:
-			  <input type="text" id="csLN"></br>
-			  Customers Phone:
-			  <input type="text" id="csPH"></br>
-			  <button type="button" id="custSearch" onclick="javascript:customerSearch(this.form)">Search</button>
-			</form>
-		</div>
-		<div id="accSResults" style="display: none">
-		</div>
-		
-		<div id="aWelcome">
-		</div>
-		
-		<div id="accDetails">
-		  first name
-		  last name
-		  street
-		  suburb
-		  state
-		  postcode
-		  phone
-		  email
-		  creditBalance (no changies for customer)
-		</div>
-	  
-		<div id="accUpdated">
-		</div>
-	  
-		<div id="passwordChange">  
-		<p></p>
-		  <form name="passwordChangeReq">
-			  Old Password:<input type="password" id="oldPassword">
-			  New Password:<input type="password" id="newPassword">
-			  New Password Again:<input type="password" id="newPasswordAgain">
-			  <button type="button" id="subPWChange"  onclick="javascript:validatePasswordChange(this.form)">Submit Change</button>
-		  </form>
-		</div>
+	the customer details (when logged in) plus opportunity to update
 	
-		<div id="updateCB" style="display: none">
-			<form id="fUpdateCB" action="">
-				Adjust Credit Balance to:
-				<input type="text" id="newCredBal">
-				<button type="button" id="adjustCred" onclick="javascript:updateCredit(this.form.newCredBal)">Adjust Credit Balance</button>
-			</form>
-		</div>
 	</div>
 	
 	<div id="tradeIn-page" style="display: none">
-		<h1>Trade in request</h1>
 		<div id="ti-past"> 
-		<!--list of trade ins for this customer and their status
-		hide if none or user is staff (they have their own access)-->
+		<h1>Your trade in requests</h1>
+		list of trade ins for this customer and their status
+		hide if none or user is staff (they have their own access)
 		</div>
 		
 		<div id="ti-request"> <!-- hide if staff -->
 		<p>Please enter the details & photos of the book you would like to trade in. We will email you a price within 5 working days.</p>
 		
-		<form id="tradeIn-form"> <!-- don't want page to reload so going to have a button that launches javascript that will submit the data to the database pending validation -->
+		<form id="tradeIn-form" action=""> <!-- don't want page to reload so going to have a button that launches javascript that will submit the data to the database pending validation -->
 		  <!-- cust id, today's date, status needed but not shown -->
 		  <fieldset>
 		    <legend>Publication Information</legend>
@@ -362,10 +310,10 @@
 		  <fieldset>
 		    <legend>Condition Information</legend>
 			Description<br>
-		    <textarea name="ti-desc" rows="10" cols="40"></textarea><br>
+		    <textarea name="ti-desc" rows="10" cols="40"><br>
 			Photo of the front of the book*<br>
 		    <input type="file" name="ti-frontImage" accept="image/*" onblur="viewImage('ti-frontImage')">
-			<img src="images\1477319710_picture.png" id="ti-frontImage" ></img><br>
+			<img src="images\1477319710_picture.png" id="ti-fi" ></img><br>
 			Photo of the back of the book*<br>
 		    <input type="file" name="ti-backImage" accept="image/*" onblur="viewImage('ti-backImage')">
 			<img src="images\1477319710_picture.png" id="ti-bi">Back Image</img><br>
@@ -380,18 +328,13 @@
 			<img src="images\1477319710_picture.png" id="ti-oi">Other Image</img>
 		  </fieldset>
 		  *required fields<br>
-		  <button type="button" onclick="javascript:validateTradeIn(this.form)">Submit Trade In Request</button>
-		  <!-- internet hates my button 
-		  <button type="button" onclick="javascript:validateTradeIn(this.form.ti-title.value, this.form.ti-author.value, this.form.ti-isbn.value, this.form.ti-form.value, this.form.ti-desc.value, this.form.ti-frontImage.value, this.form.ti-backImage.value, this.form.ti-spineImage.value, this.form.ti-pubInfoImage.value, this.form.ti-otherImage.value)">Sumbit Trade In Request</button>-->
+		  <button type="button" onclick="validateTradeIn()">Sumbit Trade In Request</button>
 		  on button click, if it passes validation, javascript sends to php and adds it to the database then this page is changed to show the customers tradeins by status.
 		</form>
 		
 		</div>
 		
 		<div id="ti-accept"> <!-- will include style="display: none" unless staff logged in --> 
-		shows list of ALL trade-in requests by status
-		tradeInID(link to detail), custNmae, title, author 
-		
 		staff can provisionally accept tradein and offer a price which triggers email to customer with offer details
 		
 		staff can indicate receipt of book and absolute acceptence of trade in which triggers adding credit to customer account and email to customer.

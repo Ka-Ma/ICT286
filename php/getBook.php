@@ -22,7 +22,7 @@
 		echo "<tr>";
 		echo "<td>";
 		echo "<a href=\"javascript:getBookDetail('$bookID')\">";
-		echo "<img class=\"book\" src='";
+		echo "<img src='";
 		echo $row['CoverImage'];
 		echo "'</img></a></br>";
 		echo "<button type='button' onclick=\"javascript:addCart('$bookID')\">Add to Cart</button></td>";
