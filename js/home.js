@@ -118,17 +118,20 @@ function getBookDetail(bookID) {
 //***** end functions for book-page *****
 
 //***** start functions for trade-in page *****
-function validateTradeIn(tititle, tiauthor, tiisbn, tiform, tidesc, tifrontImage, tibackImage, tispineImage, tipubInfoImage, tiotherImage) {
-	var t = tititle;
-	var a = tiauthor;
-	var i = tiisbn;
-	var f = tiform;
-	var d = tidesc;
-	var fi = tifrontImage;
-	var bi = tibackImage;
-	var si = tispineImage;
-	var pi = tipubInfoImage;
-	var oi = tiotherImage;
+//function validateTradeIn(tititle, tiauthor, tiisbn, tiform, tidesc, tifrontImage, tibackImage, tispineImage, tipubInfoImage, tiotherImage) {
+function validateTradeIn(formObj) {
+	var t = formObj[0].value; //tititle;
+	var a = formObj[1].value; //tiauthor;
+	var i = formObj[2].value; //tiisbn;
+	var f = formObj[3].value; //tiform;
+	var d = formObj[4].value; //tidesc;
+	var fi = formObj[5].value; //tifrontImage;
+	var bi = formObj[6].value; //tibackImage;
+	var si = formObj[7].value; //tispineImage;
+	var pi = formObj[8].value; //tipubInfoImage;
+	var oi = formObj[9].value; //tiotherImage;
+	
+	console.log("validate trade in: title "+t);
 	
 	//fields required: title, author, isbn, photos of front, back, spine & pubinfo
 	if (t=="" || a=="" || i=="" || fi=="" || bi=="" || si=="" || pi=="")
@@ -162,14 +165,14 @@ function checkFileSize(file) {
 }
 
 function viewImage(image) {
-	document.getElementById(image).src = document.getElementByName(image).value;
+	document.getElementById(image).src = document.getElementsByName(image).value; //undefined?
 }
 //***** end functions for trade-in page *****
 
 //***** start functions for account page *****
 function getAccountDetailsByStored() {
-	var username = "user1";  //until can get from somewhere
-	var id = "11111111";  //until i can get from somewhere
+	var username = sessionStorage.username;  
+	var id = sessionStorage.id;  
 	
 	getAccountInfo(username, id);
 }
@@ -186,26 +189,51 @@ function getAccountInfo(cUsername, cId) {
 			document.getElementById("accDetails").innerHTML = result[0];
 			document.getElementById("aWelcome").innerHTML = result[1];
 			sessionStorage.forChecking = result[2];
+			sessionStorage.balance = result[3];
 		}
 	}
 	xhr.open("GET", "php/getAccountDetails.php?username="+username+"&id="+id, true);
 	xhr.send();
 }
 
-function validateAccDetsChange() {
+function validateAccDetsChange(formObj) {
+	//if any null discontinue
+	console.log("validating Account Details change ")+formObj;
+}
+
+function validatePasswordChange(formObj) {
+	var nPW = formObj[0].value;
+	var nPWA = formObj[1].value;
+	var oPW = formObj[2].value;
+	
+	if(oPW!=sessionStorage.forChecking)
+	{
+		alert("If you have forgotten your password please contact our friendly staff during office hours");
+	}
+	else if (nPW==oPW || oPW==sessionStorage.forChecking) //failed attempt
+	{
+		alert("Please choose a new password");
+	}
+	else if (nPw == nPWA) //success, update db
+	{
+		updatePWD(nPw);
+	}
 	
 }
 
-function validatePasswordChange() {
-	var nPW = document.getElementById("newPassword");
-	var nPWA = document.getElementById("newPasswordAgain");
-	var oPW = document.getElementById("oldPassword");
+function updatePWD(nPwd) {
+	var nPwd = nPwd;
 	
-	if (nPW==oPW) //failed attempt
-	{return false;}
-	if (nPw == nPWA) //success, update db
-	{return true;}
-	
+	var xhr= new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if(xhr.readyState = 4 && xhr.status == 200) {
+		var result = xhr.responseText;
+		
+		document.getElementById("passwordChange").innerHTML = result;
+		}
+	}
+	xhr.open("GET", "php/updatePwd.php?nPwd="+nPwd+"&username="+sessionStorage.username+"&id="+sessionStorage.id, true);
+	xhr.send();
 }
 //***** end functions for account page *****
 

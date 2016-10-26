@@ -20,7 +20,7 @@
 	
 	//returning
 	while ($row=mysql_fetch_array($result)) {
-		echo "<form name = 'accInfo' action='javascript:updateAccDets(nSt,nSub,nState,nPC,nPh, nE)' onsubmit='return validateAccDetsChange()'>";
+		echo "<form name = 'accInfo'>";
 		echo "Address: <input type='text' id='nSt' value='";
 		echo $row['Street'];
 		echo "'></br>";
@@ -35,7 +35,7 @@
 		echo "'></br>Email:<input type ='email' id='nE' value='";
 		echo $row['email'];
 		echo "'></br>";
-		echo "<button type='submit' id='subChange'>Submit changes</button>";
+		echo "<button type='button' id='subChange' onclick='javascript:validateAccDetsChange(this.form)'>Submit changes</button>";
 		echo "</form>";
 		echo ";";
 		echo "<p>Details for ";
@@ -45,6 +45,8 @@
 		echo ".</p>";
 		echo ";";
 		echo $row['password'];
+		echo ";";
+		echo $row['CreditBalance'];
 	}
 		
 	//clearing up

@@ -195,6 +195,7 @@
 	</form>
 	</div>
 
+
 	<div id="purchase-page" style="display: none">
 	<form id = "purchasing">
 		<br /><p class = "text"> Payment Method: </p>
@@ -274,6 +275,9 @@
 	</form>
 	<p id = "payError" class = "payError"></p>
         </div>
+
+	<div id="AED-page" style="display: none">
+	</div>
 	
 	<div id="book-page" style="display: none">
 	<!-- this div becomes visible and populated when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart, there is also a back button to return from whence they came -->
@@ -281,7 +285,18 @@
 	
 	<div id="account-page" style="display: none">
 		<div id="accSearch" style="display: none">
-			<!-- search for particular customer, when find get their account Details and populate "accDetails" link stuff nec-->
+			<!-- search for particular customer, choose from link list, populate "accDetails"  -->
+			<p>To search for a customer please enter one of the following fields:</p>
+			<form id="custSearch">
+			  Customers Username: 
+			  <input type="text" id="csUN"></br>
+			  Customers Last Name:
+			  <input type="text" id="csLN"></br>
+			  Customers Phone:
+			  <input type="text" id="csPH"></br>
+			  <button type="button" id="custSearch" onclick="javascript:customerSearch(this.form)">Search</button>
+		</div>
+		<div id="accSResults" style="display: none">
 		</div>
 		
 		<div id="aWelcome">
@@ -301,11 +316,11 @@
 	  
 		<div id="passwordChange">  
 		<p></p>
-		  <form name="passwordChangeReq" action="javascript:updatePWD(opw,npw,npwa)" onsubmit="return validatePasswordChange()" method="POST">
+		  <form name="passwordChangeReq">
 			  Old Password:<input type="password" id="oldPassword">
 			  New Password:<input type="password" id="newPassword">
 			  New Password Again:<input type="password" id="newPasswordAgain">
-			  <button type="submit" id="subPWChange">Submit Change</button>
+			  <button type="button" id="subPWChange"  onclick="javascript:validatePasswordChange(this.form)">Submit Change</button>
 		  </form>
 		</div>
 	
@@ -313,7 +328,7 @@
 			<form id="fUpdateCB" action="">
 				Adjust Credit Balance to:
 				<input type="text" id="newCredBal">
-				<button type="button" id="adjustCred">Adjust Credit Balance</button>
+				<button type="button" id="adjustCred" onclick="javascript:update>Adjust Credit Balance</button>
 			</form>
 		</div>
 	</div>
@@ -363,8 +378,9 @@
 			<img src="images\1477319710_picture.png" id="ti-oi">Other Image</img>
 		  </fieldset>
 		  *required fields<br>
-		  <!-- internet hates my button -->
-		  <button type="button" onclick="validateTradeIn(this.form.ti-title.value, this.form.ti-author.value, this.form.ti-isbn.value, this.form.ti-form.value, this.form.ti-desc.value, this.form.ti-frontImage.value, this.form.ti-backImage.value, this.form.ti-spineImage.value, this.form.ti-pubInfoImage.value, this.form.ti-otherImage.value)">Sumbit Trade In Request</button>
+		  <button type="button" onclick="javascript:validateTradeIn(this.form)">Submit Trade In Request</button>
+		  <!-- internet hates my button 
+		  <button type="button" onclick="javascript:validateTradeIn(this.form.ti-title.value, this.form.ti-author.value, this.form.ti-isbn.value, this.form.ti-form.value, this.form.ti-desc.value, this.form.ti-frontImage.value, this.form.ti-backImage.value, this.form.ti-spineImage.value, this.form.ti-pubInfoImage.value, this.form.ti-otherImage.value)">Sumbit Trade In Request</button>-->
 		  on button click, if it passes validation, javascript sends to php and adds it to the database then this page is changed to show the customers tradeins by status.
 		</form>
 		
