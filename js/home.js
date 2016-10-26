@@ -169,6 +169,24 @@ function addCart(bookID){
         xhr.send();
 }
 
+function clearCart() {
+	//clear cart count on screen
+	document.getElementById("cart").innerHTML = "Cart";
+
+	//reduce book quantity by 1 for each book in cart
+	var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+		}
+	}
+	xhr.open("GET", "php/bookSold.php?Cart=" + JSON.stringify(Cart), true);
+        xhr.send();
+
+	//clear the cart
+	while(Cart.length)
+		Cart.pop();
+}
+
 function remove(bookID) {
 	//make sure bookID is an integer
 	var number = parseInt(bookID);
@@ -205,7 +223,11 @@ function displayCart() {
         xhr.send();
 }
 
-function purchase(totalPrice) {
+//shows checkout/purchase page
+function checkout(totalPrice) {
+	//remove any previous notifications
+        document.getElementById("payError").innerHTML = "";
+
 	//finding old div's id
         var oldDiv = document.getElementsByClassName("active");
         var oldDivID = oldDiv[0].getAttribute("id") + "-page";
@@ -214,7 +236,103 @@ function purchase(totalPrice) {
 
         //make this div visible
 	document.getElementById("purchase-page").style.display = "block";
-//      document.getElementById("purchase-page").style.display = "none";
+	
+	document.getElementById("payForm").innerHTML = "Total price = $" + totalPrice;
+}
+
+//handles the payment form
+//checks for correct input before processing
+function purchase() {
+	var error = "Error!<br />"
+	var err;
+	var success = "Payment Successful!";
+
+	//ensure a card has been selected
+	var card = document.getElementById("purchasing").method;
+	var cardSelect;
+
+	for (var i=0;i<card.length; i++) {
+		if (card[i].checked) {
+			cardSelect = card[i].value;
+			break;
+		}
+	} 
+
+	//add to error message if card not selected
+	if(cardSelect == undefined){
+		err = "Please select a Payment Method <br />";
+		error = error.concat(err);
+	}
+
+	//check all text fields
+	var fname = document.getElementById("purchasing").fName.value;
+	var lname = document.getElementById("purchasing").lName.value;
+
+	if(fname.length == 0){
+		err = "Please input a First Name <br />";
+                error = error.concat(err);
+	}
+	if(lname.length == 0){
+		err = "Please input a Last Name <br />";
+                error = error.concat(err);
+        }
+
+	//check card details (crad must = 16 digits, CVV must = 3 digits)
+	var card = document.getElementById("purchasing").cardNum.value;
+        var cvv = document.getElementById("purchasing").cvv.value;
+	if(card.toString().length !== 16) {
+		err = "Please input a valid Card Number <br />";
+                error = error.concat(err);
+	}
+	if(cvv.toString().length !== 3){
+		err = "Please input a valid CVV <br />";
+                error = error.concat(err);
+	}	
+
+	//expiration must be => current date
+	var date = new Date();
+	var day = date.getDate();
+	var month = date.getMonth();
+	var year = date.getFullYear();
+	var index;
+	var cardDay = document.getElementById("purchasing").expDay;
+	var cardMonth = document.getElementById("purchasing").expMonth;
+	var cardYear = document.getElementById("purchasing").expYear;
+
+	index = cardYear.selectedIndex;
+	var y = cardYear.options[index].text;
+	if(y > year){}//do nothing
+	else{
+		index = cardMonth.selectedIndex;
+                if(index > month+1) {}//do nothing
+                else {
+			index = cardDay.selectedIndex;
+                        if(index < day-1){
+                                err = "Please input a valid expiration date <br />";
+                                error = error.concat(err);
+                        }
+                }
+	}
+
+	//show errors or success message and navigate back to home page
+	if(error.length > 12)//initial size of error
+		document.getElementById("payError").innerHTML = error;
+	else{
+		alert(success);
+
+		//call function to remove 1 quantity of each book just purchased, and clear cart
+		clearCart();
+
+		//clear form for next time
+		document.getElementById("purchasing").reset();
+
+	        //make old div invisible
+	        document.getElementById("purchase-page").style.display = "none";
+
+	        //navigate to home page after delay
+	        document.getElementById("home-page").style.display = "block";
+		updateActive("home");
+	}
 }
 
 //login as a staff or customer

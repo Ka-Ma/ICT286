@@ -141,6 +141,17 @@ p.bookSearch {
  text-align: justify;
 }
 
+p.payError {
+ font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+ font-size: 110%;
+ font-weight: 200;
+ margin-left: 10px;
+ margin-right: 10px;
+ margin-bottom: 20px;
+ text-align: justify;
+ color: red;
+}
+
 label {
  font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
  font-size: 110%;
