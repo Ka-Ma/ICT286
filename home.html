@@ -276,9 +276,7 @@
         </div>
 	
 	<div id="book-page" style="display: none">
-	this page loads when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart
-	 
-	Needs a button to go back to previous page which means need to somehow indicate which "page" we have come from or something.
+	<!-- this div becomes visible and populated when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart, there is also a back button to return from whence they came -->
 	</div>
 	
 	<div id="account-page" style="display: none">
@@ -302,18 +300,18 @@
 		</div>
 	  
 		<div id="passwordChange">  
-		  oldPassword
-		  newPassword
-		  newPasswordAgain
-		  
-		  if oldPassword == db.password
-		  AND newPassword==newPasswordAgain
-		  then update db.password
+		<p></p>
+		  <form name="passwordChangeReq" action="javascript:updatePWD(opw,npw,npwa)" onsubmit="return validatePasswordChange()" method="POST">
+			  Old Password:<input type="password" id="oldPassword">
+			  New Password:<input type="password" id="newPassword">
+			  New Password Again:<input type="password" id="newPasswordAgain">
+			  <button type="submit" id="subPWChange">Submit Change</button>
+		  </form>
 		</div>
 	
 		<div id="updateCB" style="display: none">
 			<form id="fUpdateCB" action="">
-				Adjust Credit Balance to
+				Adjust Credit Balance to:
 				<input type="text" id="newCredBal">
 				<button type="button" id="adjustCred">Adjust Credit Balance</button>
 			</form>
@@ -321,16 +319,16 @@
 	</div>
 	
 	<div id="tradeIn-page" style="display: none">
+		<h1>Trade in request</h1>
 		<div id="ti-past"> 
-		<h1>Your trade in requests</h1>
-		list of trade ins for this customer and their status
-		hide if none or user is staff (they have their own access)
+		<!--list of trade ins for this customer and their status
+		hide if none or user is staff (they have their own access)-->
 		</div>
 		
 		<div id="ti-request"> <!-- hide if staff -->
 		<p>Please enter the details & photos of the book you would like to trade in. We will email you a price within 5 working days.</p>
 		
-		<form id="tradeIn-form" action=""> <!-- don't want page to reload so going to have a button that launches javascript that will submit the data to the database pending validation -->
+		<form id="tradeIn-form"> <!-- don't want page to reload so going to have a button that launches javascript that will submit the data to the database pending validation -->
 		  <!-- cust id, today's date, status needed but not shown -->
 		  <fieldset>
 		    <legend>Publication Information</legend>
@@ -350,7 +348,7 @@
 		    <textarea name="ti-desc" rows="10" cols="40"></textarea><br>
 			Photo of the front of the book*<br>
 		    <input type="file" name="ti-frontImage" accept="image/*" onblur="viewImage('ti-frontImage')">
-			<img src="images\1477319710_picture.png" id="ti-fi" ></img><br>
+			<img src="images\1477319710_picture.png" id="ti-frontImage" ></img><br>
 			Photo of the back of the book*<br>
 		    <input type="file" name="ti-backImage" accept="image/*" onblur="viewImage('ti-backImage')">
 			<img src="images\1477319710_picture.png" id="ti-bi">Back Image</img><br>
@@ -365,7 +363,8 @@
 			<img src="images\1477319710_picture.png" id="ti-oi">Other Image</img>
 		  </fieldset>
 		  *required fields<br>
-		  <button type="button" onclick="validateTradeIn()">Sumbit Trade In Request</button>
+		  <!-- internet hates my button -->
+		  <button type="button" onclick="validateTradeIn(this.form.ti-title.value, this.form.ti-author.value, this.form.ti-isbn.value, this.form.ti-form.value, this.form.ti-desc.value, this.form.ti-frontImage.value, this.form.ti-backImage.value, this.form.ti-spineImage.value, this.form.ti-pubInfoImage.value, this.form.ti-otherImage.value)">Sumbit Trade In Request</button>
 		  on button click, if it passes validation, javascript sends to php and adds it to the database then this page is changed to show the customers tradeins by status.
 		</form>
 		

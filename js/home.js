@@ -118,22 +118,58 @@ function getBookDetail(bookID) {
 //***** end functions for book-page *****
 
 //***** start functions for trade-in page *****
-function validateTradeIn() {
-	console.log("children need to be tucked in");
-	//fields required title, author, isbn, photos of front, back, spine & pubinfo
-	//files must be smaller than 100kb
-	//description but be less than x chars long
+function validateTradeIn(tititle, tiauthor, tiisbn, tiform, tidesc, tifrontImage, tibackImage, tispineImage, tipubInfoImage, tiotherImage) {
+	var t = tititle;
+	var a = tiauthor;
+	var i = tiisbn;
+	var f = tiform;
+	var d = tidesc;
+	var fi = tifrontImage;
+	var bi = tibackImage;
+	var si = tispineImage;
+	var pi = tipubInfoImage;
+	var oi = tiotherImage;
 	
+	//fields required: title, author, isbn, photos of front, back, spine & pubinfo
+	if (t=="" || a=="" || i=="" || fi=="" || bi=="" || si=="" || pi=="")
+	{ 
+		alert("Title, Author, ISBN, and images for front, back, spine and publication information are required");
+		return false;
+	}
+	//files must be smaller than 100kb
+	else if (checkFileSize(fi)||checkFileSize(bi)||checkFileSize(si)||checkFileSize(pi)||checkFileSize(oi))
+	{
+		alert("File size too large, must be less than 100kb");
+		return false;
+	}
+	//submit to db
+	else 
+	{
+		console.log("children need to be tucked in");
+		
+	}
+	
+	
+	
+}
+
+function checkFileSize(file) {
+	var oFile = document.getElementById(file).files[0]; 
+	if (oFile.size > 100000) //100kb
+	{
+		return false;
+	}
+}
+
+function viewImage(image) {
+	document.getElementById(image).src = document.getElementByName(image).value;
 }
 //***** end functions for trade-in page *****
 
 //***** start functions for account page *****
-function getAccountDetailsByCookie() {
-	var username = getCookie("username"); 
-	var id = getCookie("id");
-	
-	console.log("get acnt info by cookie username: "+username);
-	console.log("get acnt info by cookie id: "+id);
+function getAccountDetailsByStored() {
+	var username = "user1";  //until can get from somewhere
+	var id = "11111111";  //until i can get from somewhere
 	
 	getAccountInfo(username, id);
 }
@@ -142,9 +178,6 @@ function getAccountInfo(cUsername, cId) {
 	var username = cUsername; // customer username
 	var id = cId;  //customer id
 	
-	console.log("get acnt info username: "+username);
-	console.log("get acnt info id: "+id);
-	
 	var xhr= new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if(xhr.readyState = 4 && xhr.status == 200) {
@@ -152,44 +185,28 @@ function getAccountInfo(cUsername, cId) {
 			
 			document.getElementById("accDetails").innerHTML = result[0];
 			document.getElementById("aWelcome").innerHTML = result[1];
+			sessionStorage.forChecking = result[2];
 		}
 	}
 	xhr.open("GET", "php/getAccountDetails.php?username="+username+"&id="+id, true);
 	xhr.send();
 }
 
-//from w3schools, returns the value of a cookie named in the parameter
-function getCookie(cname) { 
-	var name = cname + "=";
-	var ca = document.cookie.split(';');
+function validateAccDetsChange() {
 	
-	console.log("get cookie for "+name);
-	
-	for(var i = 0; i < ca.length; i++) {
-		
-		console.log("is it: "+ca[i]);
-		
-		var c = ca[i];
-		while (c.charAt(0)==' ') {
-			c = c.substring(1);
-		}
-		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-	
-	return "";
 }
 
-function test () {
-	var cookie = document.cookie;
+function validatePasswordChange() {
+	var nPW = document.getElementById("newPassword");
+	var nPWA = document.getElementById("newPasswordAgain");
+	var oPW = document.getElementById("oldPassword");
 	
-	console.log("javascript test "+cookie);
+	if (nPW==oPW) //failed attempt
+	{return false;}
+	if (nPw == nPWA) //success, update db
+	{return true;}
 	
-	document.cookie = "username=John Doe";
-	console.log("javascript test 2 "+document.cookie);
 }
-
 //***** end functions for account page *****
 
 //***** start function for cart *****
@@ -433,8 +450,7 @@ function login(username, password) {
 						
 						//page functions & visibility
 						//accounts page
-						getAccountDetailsByCookie();
-						document.getElementById("aWelcome").style.display="none";
+						getAccountDetailsByStored();
 			}
 			//signed in as a staff member
 			if(user == "staff"){

@@ -20,20 +20,31 @@
 	
 	//returning
 	while ($row=mysql_fetch_array($result)) {
-		echo "<form>";
-		echo "Street: <input type='text' id='nSt' value='";
+		echo "<form name = 'accInfo' action='javascript:updateAccDets(nSt,nSub,nState,nPC,nPh, nE)' onsubmit='return validateAccDetsChange()'>";
+		echo "Address: <input type='text' id='nSt' value='";
 		echo $row['Street'];
 		echo "'></br>";
-		echo "Suburb: <input type='text' id='nSub' value='";
+		echo "<input type='text' id='nSub' value='";
 		echo $row['Suburb'];
+		echo "'><input type='text' id='nState' value='";
+		echo $row['State'];
+		echo "'><input type ='text' id='nPC' value='";
+		echo $row['PostCode'];
+		echo "'></br>Phone:<input type ='text' id='nPh' value='";
+		echo $row['phone'];
+		echo "'></br>Email:<input type ='email' id='nE' value='";
+		echo $row['email'];
 		echo "'></br>";
+		echo "<button type='submit' id='subChange'>Submit changes</button>";
 		echo "</form>";
 		echo ";";
-		echo "<p>Welcome, ";
+		echo "<p>Details for ";
 		echo $row['FirstName'];
 		echo " ";
 		echo $row['LastName'];
-		echo "!</p>";
+		echo ".</p>";
+		echo ";";
+		echo $row['password'];
 	}
 		
 	//clearing up
