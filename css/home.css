@@ -141,7 +141,6 @@ p.bookSearch {
  text-align: justify;
 }
 
-
 label {
  font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
  font-size: 110%;
@@ -198,4 +197,10 @@ td.cart {
  vertical-align: center;
 }
 
+label.buy {
+ display: inline-block
+}
 
+input.buy {
+ display: block;
+}
