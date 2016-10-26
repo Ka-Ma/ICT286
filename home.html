@@ -196,17 +196,17 @@
 	<div id="purchase-page" style="display: none">
 	<form id = "purchasing">
 		<br /><p class = "text"> Payment Method: </p>
-		<label>American Express: <input type = "radio" name = "method" /></label><br />
-		<label>Mastercard: <input type = "radio" name = "method" /></label><br />
-		<label>Visa: <input type = "radio" name = "method" /></label><br />
-		<label>Paypal: <input type = "radio" name = "method" /></label><br />
+		<label>American Express: <input type = "radio" value = "AE" name = "method" /></label><br />
+		<label>Mastercard: <input type = "radio" value = "MC" name = "method" /></label><br />
+		<label>Visa: <input type = "radio" value = "V" name = "method" /></label><br />
+		<label>Paypal: <input type = "radio" value = "PP" name = "method" /></label><br />
 		<br /><p class = "text"> Card Details: </p>
 		<label class = "buy">First Name <input class = "buy" type = "text" name = "fName" /></label>
 		<label class = "buy">Last Name<input class = "buy" type = "text" name = "lName" /></label><br />
 		<label class = "buy">Credit Card Number:<input class = "buy" type = "number" name = "cardNum" /></label>
 		<label class = "buy">CVV:<input class = "buy" type = "number" name = "cvv" /></label><br />
 		<label class = "buy">Expiration:
-		<select name = "expday">
+		<select name = "expDay">
                         <option>01</option>
 			<option>02</option>
 			<option>03</option>
@@ -254,6 +254,7 @@
                         <option>Dec</option>
 		</select>
 		<select name = "expYear">
+			<option>2015</option>
                         <option>2016</option>
 			<option>2017</option>
 			<option>2018</option>
@@ -266,8 +267,10 @@
 			<option>2025</option>
 			<option>2026</option>
                 </select></label>
+		<p class = "text" id = payForm></p>
+		<button class = "type1" type = "button" onclick = "javascript:purchase()">Submit Payment</button>
 	</form>
-	<p id = buy></p>
+	<p id = "payError" class = "payError"></p>
         </div>
 	
 	<div id="book-page" style="display: none">
