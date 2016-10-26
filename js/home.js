@@ -190,15 +190,24 @@ function getAccountInfo(cUsername, cId) {
 	var username = cUsername; // customer username
 	var id = cId;  //customer id
 	
+	console.log("username = "+username);
+	console.log("id = "+id);
+	
 	var xhr= new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if(xhr.readyState = 4 && xhr.status == 200) {
-			var result = xhr.responseText.split(";");
+			var result = xhr.responseText.split("^");
 			
 			document.getElementById("accDetails").innerHTML = result[0];
 			document.getElementById("aWelcome").innerHTML = result[1];
 			sessionStorage.forChecking = result[2];
+			
+			console.log("forchecking "+result[2]);
+			
 			sessionStorage.balance = result[3];
+			
+			console.log("balance "+result[3]);
+		
 		}
 	}
 	xhr.open("GET", "php/getAccountDetails.php?username="+username+"&id="+id, true);
@@ -212,27 +221,32 @@ function validateAccDetsChange(formObj) {
 }
 
 function validatePasswordChange(formObj) {
-	var nPW = formObj[0].value;
-	var nPWA = formObj[1].value;
-	var oPW = formObj[2].value;
+	var oPW = formObj[0].value;
+	var nPW = formObj[1].value;
+	var nPWA = formObj[2].value;
 	
-	console.log("will be comparing to: "+sessionStorage.forChecking);
+	console.log(formObj);
+	console.log(formObj[0].value);
+	console.log(formObj[1].value);
+	console.log(formObj[2].value);
+
+	console.log("will be comparing "+oPW+" to "+sessionStorage.forChecking);
 	
-	if(oPW!=sessionStorage.forChecking)
+	if(oPW != sessionStorage.forChecking)
 	{
 		alert("If you have forgotten your password please contact our friendly staff during office hours");
 	}
-	else if (nPW==oPW || oPW==sessionStorage.forChecking) //failed attempt
+	else if (nPW==oPW) //failed attempt
 	{
 		alert("Please choose a new password");
 	}
-	else if (nPw != nPWA) 
+	else if (nPW != nPWA) 
 	{
 		alert("Please make sure the two new passwords are the same");
 	}
 	else //success, update db
 	{
-		updatePWD(nPw);
+		updatePWD(nPW);
 	}
 	
 }
@@ -248,7 +262,7 @@ function updatePWD(nPwd) {
 		document.getElementById("passwordChange").innerHTML = result;
 		}
 	}
-	xhr.open("GET", "php/updatePwd.php?nPwd="+nPwd+"&username="+sessionStorage.username+"&id="+sessionStorage.id, true);
+	xhr.open("GET", "php/updatePwd.php?nPwd="+nPwd+"&username="+sessionStorage.username, true);
 	xhr.send();
 }
 //***** end functions for account page *****

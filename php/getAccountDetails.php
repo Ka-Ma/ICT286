@@ -37,15 +37,15 @@
 		echo "'></br>";
 		echo "<button type='button' id='subChange' onclick='javascript:validateAccDetsChange(this.form)'>Submit changes</button>";
 		echo "</form>";
-		echo ";";
+		echo "^";
 		echo "<p>Details for ";
 		echo $row['FirstName'];
 		echo " ";
 		echo $row['LastName'];
 		echo ".</p>";
-		echo ";";
-		echo $row['password'];
-		echo ";";
+		echo "^";
+		echo $row['Password'];
+		echo "^";
 		echo $row['CreditBalance'];
 	}
 		
