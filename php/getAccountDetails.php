@@ -20,16 +20,20 @@
 	
 	//returning
 	while ($row=mysql_fetch_array($result)) {
+		echo "<form>";
+		echo "Street: <input type='text' id='nSt' value='";
+		echo $row['Street'];
+		echo "'></br>";
+		echo "Suburb: <input type='text' id='nSub' value='";
+		echo $row['Suburb'];
+		echo "'></br>";
+		echo "</form>";
+		echo ";";
 		echo "<p>Welcome, ";
 		echo $row['FirstName'];
 		echo " ";
 		echo $row['LastName'];
-		echo "!</p></br>";
-		echo "<form>";
-		echo "Street: <input type='text' id='nFN' value='"
-		echo $row['Street'];
-		echo "'></br>"
-		echo "</form>";
+		echo "!</p>";
 	}
 		
 	//clearing up

@@ -187,7 +187,10 @@
 			</form>
 		</td></tr></tbody>
 	</table>
-	<form action = "php/test.php">
+	php<form action = "php/test.php">
+		<input type = "submit" value = "test" />
+	</form>
+	js<form action = "javascript:test()">
 		<input type = "submit" value = "test" />
 	</form>
 	</div>
@@ -279,27 +282,42 @@
 	</div>
 	
 	<div id="account-page" style="display: none">
-	<script>getAccountInfo();</script> <!-- this needs to happen after log in -->
-	<p id="aWelcome"></p> <!-- if staff option to select customer otherwise welcome customer by first name -->
-	<form id="accDetails" action="">
-	  first name
-	  last name
-	  street
-	  suburb
-	  state
-	  postcode
-	  phone
-	  email
+		<div id="accSearch" style="display: none">
+			<!-- search for particular customer, when find get their account Details and populate "accDetails" link stuff nec-->
+		</div>
+		
+		<div id="aWelcome">
+		</div>
+		
+		<div id="accDetails">
+		  first name
+		  last name
+		  street
+		  suburb
+		  state
+		  postcode
+		  phone
+		  email
+		  creditBalance (no changies for customer)
+		</div>
 	  
-	</form>
+		<div id="passwordChange">  
+		  oldPassword
+		  newPassword
+		  newPasswordAgain
+		  
+		  if oldPassword == db.password
+		  AND newPassword==newPasswordAgain
+		  then update db.password
+		</div>
 	
-	  creditBalance (no changies)
-	  
-	<form id="passwordChange" action="">  
-	  oldPassword
-	  newPassword
-	  newPasswordAgain
-	</form>
+		<div id="updateCB" style="display: none">
+			<form id="fUpdateCB" action="">
+				Adjust Credit Balance to
+				<input type="text" id="newCredBal">
+				<button type="button" id="adjustCred">Adjust Credit Balance</button>
+			</form>
+		</div>
 	</div>
 	
 	<div id="tradeIn-page" style="display: none">

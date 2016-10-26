@@ -128,16 +128,30 @@ function validateTradeIn() {
 //***** end functions for trade-in page *****
 
 //***** start functions for account page *****
-function getAccountInfo() {
-	var username = getCookie(username); 
-	var id = getCookie(id);
+function getAccountDetailsByCookie() {
+	var username = getCookie("username"); 
+	var id = getCookie("id");
+	
+	console.log("get acnt info by cookie username: "+username);
+	console.log("get acnt info by cookie id: "+id);
+	
+	getAccountInfo(username, id);
+}
+
+function getAccountInfo(cUsername, cId) {
+	var username = cUsername; // customer username
+	var id = cId;  //customer id
+	
+	console.log("get acnt info username: "+username);
+	console.log("get acnt info id: "+id);
 	
 	var xhr= new XMLHttpRequest();
 	xhr.onreadystatechange = function () {
 		if(xhr.readyState = 4 && xhr.status == 200) {
-			var result = xhr.responseText;
+			var result = xhr.responseText.split(";");
 			
-			console.log(result);
+			document.getElementById("accDetails").innerHTML = result[0];
+			document.getElementById("aWelcome").innerHTML = result[1];
 		}
 	}
 	xhr.open("GET", "php/getAccountDetails.php?username="+username+"&id="+id, true);
@@ -148,7 +162,13 @@ function getAccountInfo() {
 function getCookie(cname) { 
 	var name = cname + "=";
 	var ca = document.cookie.split(';');
+	
+	console.log("get cookie for "+name);
+	
 	for(var i = 0; i < ca.length; i++) {
+		
+		console.log("is it: "+ca[i]);
+		
 		var c = ca[i];
 		while (c.charAt(0)==' ') {
 			c = c.substring(1);
@@ -157,7 +177,17 @@ function getCookie(cname) {
 			return c.substring(name.length, c.length);
 		}
 	}
+	
 	return "";
+}
+
+function test () {
+	var cookie = document.cookie;
+	
+	console.log("javascript test "+cookie);
+	
+	document.cookie = "username=John Doe";
+	console.log("javascript test 2 "+document.cookie);
 }
 
 //***** end functions for account page *****
@@ -400,6 +430,11 @@ function login(username, password) {
         		        document.getElementById("account").style.display="block";
 						document.getElementById("LO").style.display="block";
 		                document.getElementById("LIR").style.display="none";
+						
+						//page functions & visibility
+						//accounts page
+						getAccountDetailsByCookie();
+						document.getElementById("aWelcome").style.display="none";
 			}
 			//signed in as a staff member
 			if(user == "staff"){
@@ -413,6 +448,9 @@ function login(username, password) {
                                 document.getElementById("LIR").style.display="none";
 
                                 //page parts visibility (add staff elements to account & trade in pages)
+								//accounts page
+								document.getElementById("accSearch").style.display="block";
+								document.getElementById("updateCB").style.display="block";
 			}
 		}
 	}
