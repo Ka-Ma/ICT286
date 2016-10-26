@@ -21,11 +21,11 @@
 	//returning
 	if ($result)
 	{
-		echo "Your password has successfully been changed";
+		echo "<p>Your password has successfully been changed.</p>";
 	}
 	else
 	{
-		echo "Password update failed";
+		echo "<p>Password update failed.</p>";
 	}
 			
 	//clearing up

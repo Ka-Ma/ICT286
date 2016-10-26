@@ -313,6 +313,9 @@
 		  creditBalance (no changies for customer)
 		</div>
 	  
+		<div id="accUpdated">
+		</div>
+	  
 		<div id="passwordChange">  
 		<p></p>
 		  <form name="passwordChangeReq">
@@ -327,7 +330,7 @@
 			<form id="fUpdateCB" action="">
 				Adjust Credit Balance to:
 				<input type="text" id="newCredBal">
-				<button type="button" id="adjustCred" onclick="javascript:update>Adjust Credit Balance</button>
+				<button type="button" id="adjustCred" onclick="javascript:updateCredit(this.form.newCredBal)">Adjust Credit Balance</button>
 			</form>
 		</div>
 	</div>

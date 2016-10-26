@@ -215,9 +215,40 @@ function getAccountInfo(cUsername, cId) {
 }
 
 function validateAccDetsChange(formObj) {
-	//if any null discontinue
+	var st = formObj[0].value;
+	var sub = formObj[1].value;
+	var state = formObj[2].value;
+	var pc = formObj[3].value;
+	var ph = formObj[4].value;
+	var e = formObj[5].value;
+	
 	console.log("validating Account Details change ");
-	console.log(formObj);
+	
+	//if any null discontinue
+	if(st==""||sub==""||state==""||pc==""||ph==""||e=="")
+	{
+		alert("All fields must be complete");
+	}
+	else {
+		updateAccountDetails(sessionStorage.username, st, sub, state, pc, ph, e);
+	}
+}
+
+function updateAccountDetails(username, st, sub, state, pc, ph, e) {
+		
+	var xhr= new XMLHttpRequest();
+
+	xhr.onreadystatechange = function () {
+		if(xhr.readyState = 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			
+			console.log(result);
+			document.getElementById("accUpdated").innerHTML = result;
+		}
+	}
+	
+	xhr.open("GET", "php/updateAccountDetails.php?username="+username+"&st="+st+"&sub="+sub+"&state="+state+"&pc="+pc+"&ph="+ph+"&e="+e, true);
+	xhr.send();
 }
 
 function validatePasswordChange(formObj) {
