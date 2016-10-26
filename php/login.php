@@ -41,7 +41,10 @@
 			$cookie_id_value = $staff["StaffID"];
 			setcookie($cookie_username, $cookie_username_value);
 			setcookie($cookie_id, $cookie_id_value);
-			echo"staff";
+			echo"staff,";
+			echo $staff['StaffID'];
+			echo ",";
+			echo $user['Username'];
 		}
 		else {
 			//setCustID and username as cookies
@@ -51,7 +54,10 @@
                         $cookie_id_value = $customer["CustID"];
                         setcookie($cookie_username, $cookie_username_value);
                         setcookie($cookie_id, $cookie_id_value);
-			echo"customer";
+			echo"customer,";
+			echo $customer['CustID'];
+                        echo ",";
+                        echo $user['Username'];
 		}
 	}
 

@@ -128,26 +128,45 @@ function validateTradeIn() {
 }
 //***** end functions for trade-in page *****
 
-//***** start function for cart *****
+//checks to see if book is in stock.
+//if yes, add to and update cart count, else display error message
 function addCart(bookID){
-	console.log("Book added");
+	//check that book is in stock
+	var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
 
-	//make sure bookID is integer
-	var number = parseInt(bookID);
+			//add book to cart if in stock
+			if(result == "inStock") {
+				 console.log("Book added");
 
-	//add book to cart if not already in there
-	if(Cart.indexOf(number) == -1)
-		Cart.push(number);
+			        //make sure bookID is integer
+			        var number = parseInt(bookID);
 
-	//get number of books in cart and display in header
-	var num = Cart.length;
+			        //add book to cart if not already in there
+			        if(Cart.indexOf(number) == -1)
+                			Cart.push(number);
 
-	if(Cart.length == 0) {
-		document.getElementById("cart").innerHTML = "Cart";
-	}
-	else {
-		document.getElementById("cart").innerHTML = "Cart (" + num + ")";
-	}
+        			//get number of books in cart and display in header
+        			var num = Cart.length;
+
+        			if(Cart.length == 0) {
+        			        document.getElementById("cart").innerHTML = "Cart";
+        			}
+        			else {
+        			        document.getElementById("cart").innerHTML = "Cart (" + num + ")";
+        			}
+			}
+			//display error message if out of stock
+			else {
+				console.log("out of stock");
+				alert("Book is currently out of stock. We apologize for the inconvenience");
+			}
+                }
+        }
+        xhr.open("GET", "php/inStock.php?bookID=" + bookID, true);
+        xhr.send();
 }
 
 function remove(bookID) {
@@ -186,6 +205,18 @@ function displayCart() {
         xhr.send();
 }
 
+function purchase(totalPrice) {
+	//finding old div's id
+        var oldDiv = document.getElementsByClassName("active");
+        var oldDivID = oldDiv[0].getAttribute("id") + "-page";
+        //make old div invisible
+        document.getElementById(oldDivID).style.display = "none";
+
+        //make this div visible
+	document.getElementById("purchase-page").style.display = "block";
+//      document.getElementById("purchase-page").style.display = "none";
+}
+
 //login as a staff or customer
 function login(username, password) {
 	var staffMember = "staff";
@@ -197,8 +228,18 @@ function login(username, password) {
 			//display error if incorrect data
 			document.getElementById("logFail").innerHTML = "Incorrect Username or Password.";
 			
+			//return user (customer or staff), username, and ID
+			var comma = result.search(",");
+			var user = result.substr(0,comma);
+			var id = result.substr(comma+1, 8);
+			var name = result.substr(comma+10);
+
+			//set session storage
+			sessionStorage.setItem('username', name);
+			sessionStorage.setItem('id', id);
+
 			//signed in as a customer
-			if(result == "customer"){
+			if(user == "customer"){
 				document.getElementById("logFail").innerHTML = "Successfully logged in as Customer.";
 				console.log("in user if statement");
                 		//navbar button visibility
@@ -208,7 +249,7 @@ function login(username, password) {
 		                document.getElementById("LIR").style.display="none";
 			}
 			//signed in as a staff member
-			if(result == "staff"){
+			if(user == "staff"){
 				document.getElementById("logFail").innerHTML = "Successfully logged in as Staff.";
 				console.log("in staff if statement");
                                 //navbar button visibility

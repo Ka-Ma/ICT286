@@ -72,7 +72,7 @@
 		echo "<td class = \"cart\">Total Price</td><td class = \"cart\">";
 		echo "\$";
 		echo $total;
-		echo "</td><td class = \"cart\"><button class = \"type1\" type = \"button\" value = \"Purchase\" onclick = \"javascript:purchase()\">Purchase</button></td></tr>";
+		echo "</td><td class = \"cart\"><button class = \"type1\" type = \"button\" value = \"Purchase\" onclick = \"javascript:purchase($total)\">Purchase</button></td></tr>";
 		echo "</table class = \"cart\">";
 	}
 ?>
