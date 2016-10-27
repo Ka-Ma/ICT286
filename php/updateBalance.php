@@ -16,13 +16,12 @@
 	$id = mysql_real_escape_string($id);
 	$newBal = mysql_real_escape_string($newBal);
 	
-	
 	//query
 	$q = "UPDATE Customer SET CreditBalance = '$newBal' WHERE Username  = '$username' AND CustID = '$id'";
 	$result = mysql_query($q);
-	
+
 	//returning
-	if($result)
+	if(mysql_affected_rows()>0)
 	{
 		echo "<p>The balance has been updated.</p>";
 	}
