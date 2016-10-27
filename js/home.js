@@ -293,10 +293,10 @@ function updatePWD(nPwd) {
 	xhr.send();		
 }
 
-function customerSearch(formObj) {
-	var username = formObj[0].value;
-	var lastname = formObj[1].value;
-	var phone = formObj[2].value;
+function customerSearch(csUN, csLN, csPH) {
+	var username = csUN;
+	var lastname = csLN;
+	var phone = csPH;
 	
 	var xhr= new XMLHttpRequest();		
 	xhr.onreadystatechange = function () {		
@@ -304,18 +304,25 @@ function customerSearch(formObj) {
 			var result = xhr.responseText.split('^');		
 			
 			console.log("customer search accDets = "+result[0]);
-			console.log("customer search aWel = "+result[1]);
+			console.log("customer search UN = "+result[1]);
 			console.log("customer search id = "+result[2]);
 			
 			if (result != "no result")
 			{
 				document.getElementById("accDetails").innerHTML = result[0];
+				
+				if(!(typeof result[1] === "undefined"))
+				{
 				sessionStorage.thisCustUN = result[1];
 				sessionStorage.thisCustID = result[2];
+				document.getElementById("updateCB").style.display="block";
+				}
 			}
 			else 
 			{
-				document.getElementById("aWelcome").innerHTML = "<p>There was no results for your search.</p>";
+				document.getElementById("aWelcome").innerHTML = "<p>There were no results for your search.</p>";
+				document.getElementById("accDetails").innerHTML = "";
+				
 			}	
 		}	
 	}		
@@ -323,7 +330,9 @@ function customerSearch(formObj) {
 	xhr.send();	
 }
 
-function updateCredit(newCB) {
+function updateCredit(newCredBal) {
+	var newCB = newCredBal;
+	
 	console.log("update credit, new credit is "+newCB);
 	
 	if (newCB >20 || newCB < -10)
@@ -344,7 +353,7 @@ function updateCredit(newCB) {
 					
 			}	
 		}		
-		xhr.open("GET", "php/updateBalance.php?username="+sessionStorage.thisCustUN+"&id="+sessionStorage.thisCustID+"&newBal="+newBal, true);		
+		xhr.open("GET", "php/updateBalance.php?username="+sessionStorage.thisCustUN+"&id="+sessionStorage.thisCustID+"&newBal="+newCB, true);		
 		xhr.send();	
 	}
 }
@@ -683,7 +692,6 @@ function login(username, password) {
                                 //page parts visibility (add staff elements to account & trade in pages)
 								//accounts page
 								document.getElementById("accSearch").style.display="block";
-								document.getElementById("updateCB").style.display="block";
 								document.getElementById("passwordChange").style.display="none";
 			}
 		}

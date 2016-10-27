@@ -281,13 +281,13 @@
  			<p>To search for a customer please enter one of the following fields:</p>		
  			<form id="custSearch">		
  			  Customers Username: 		
- 			  <input type="text" id="csUN"></br>		
+ 			  <input type="text" name="csUN"></br>		
  			  Customers Last Name:		
- 			  <input type="text" id="csLN"></br>		
+ 			  <input type="text" name="csLN"></br>		
  			  Customers Phone:		
- 			  <input type="text" id="csPH"></br>		
- 			  <button type="button" id="custSearch" onclick="javascript:customerSearch(this.form)">Search</button>		
- 			</form>		
+ 			  <input type="text" name="csPH"></br>		
+ 			  <button type="button" id="custSearch" onclick="javascript:customerSearch(this.form.csUN.value, this.form.csLN.value, this.form.csPH.value)">Search</button>		
+ 			</form>			
  		</div>		
  		<div id="accSResults" style="display: none">		
  		</div>		
@@ -311,12 +311,13 @@
  		  </form>		
  		</div>		
   			  	
- 		<div id="updateCB" style="display: none">	
+<div id="updateCB" style="display: none">	
 			<p></p>
 			<div id="newBal"></div>
+			<p></p>
  			<form id="fUpdateCB" action="">		
  				Adjust Credit Balance to:		
- 				<input type="text" id="newCredBal">		
+ 				<input type="text" name="newCredBal">		
  				<button type="button" id="adjustCred" onclick="javascript:updateCredit(this.form.newCredBal.value)">Adjust Credit Balance</button>		
  			</form>		
  		</div>

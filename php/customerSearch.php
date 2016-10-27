@@ -17,8 +17,8 @@
 	$phone = mysql_real_escape_string($phone);
 	
 	//query building blocks
-	$qB = "SELECT * FROM Customer, Registered WHERE ";
-	$qUN = "Customer.Username = Registered.Username AND Customer.Username = '$username'";
+	$qB = "SELECT * FROM Customer, Registered WHERE Customer.Username = Registered.Username AND ";
+	$qUN = "Customer.Username = '$username'";
 	$qJ = " AND ";
 	$qLN = "Registered.LastName = '$lastname'";
 	$qPH = "Registered.Phone = '$phone'";
@@ -52,6 +52,28 @@
 	if (mysql_num_rows($result) == 0)
 	{
 		echo "no result";
+	}
+	else if (mysql_num_rows($result) > 1) 
+	{
+		echo "<table><th>Username</th><th>Name</th><th>Phone</th>";
+		while ($row=mysql_fetch_array($result)) {
+			echo "<tr><td><a href=\"javascript:customerSearch('";
+			echo $row['Username'];
+			echo "', '";
+			echo $row['LastName'];
+			echo "', '";
+			echo $row['phone'];
+			echo "');\">";
+			echo $row['Username'];
+			echo "</a></td><td>";
+			echo $row['FirstName'];
+			echo " ";
+			echo $row['LastName'];
+			echo "</td><td>";
+			echo $row['phone'];
+			echo "</td></tr>";
+		}
+		echo "</table>";
 	}
 	else {
 		while ($row=mysql_fetch_array($result)) {
