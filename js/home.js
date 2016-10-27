@@ -155,7 +155,16 @@ function validateTradeIn(formObj) {
  				
  	}		
  			
- 			
+ 	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			
+			document.getElementById("book-page").innerHTML = result + backBtn;
+		}
+	}
+	xhr.open("GET", "php/getBookDetail.php?bookID=" + bookID, true);
+	xhr.send();		
  			
  }
  
@@ -168,7 +177,31 @@ function checkFileSize(file) {
  	{		
  		return true;		
  	}		
- }		
+ }	
+
+function getTradeInRequest(forWhom, returnTo) {
+	var criteria;
+	
+	if (forWhom=="all")
+	{
+		criteria = "*";
+	}
+	else
+	{
+		criteria = forWhom;
+	}
+	
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			
+			document.getElementById(returnTo).innerHTML = result;
+		}
+	}
+	xhr.open("GET", "php/getTradeInRequest.php?criteria=" + criteria, true);
+	xhr.send();	
+}	
 //***** end functions for trade-in page *****
 
 //***** start functions for account page *****		
@@ -714,10 +747,12 @@ function login(username, password) {
 				sessionStorage.setItem('user', user);
 
                                 //page parts visibility (add staff elements to account & trade in pages)
-				//accounts page
-				document.getElementById("accSearch").style.display="block";
-				document.getElementById("passwordChange").style.display="none";
-
+								//accounts page
+								document.getElementById("accSearch").style.display="block";
+								document.getElementById("passwordChange").style.display="none";
+								document.getElementById("ti-request").style.display="none";
+								document.getElementById("ti-past").style.display="none";
+								document.getElementById("ti-accept").style.display="block";
 			}
 		}
 	}

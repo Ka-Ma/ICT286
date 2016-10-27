@@ -389,7 +389,8 @@
 		
 		</div>
 		
-		<div id="ti-accept"> <!-- will include style="display: none" unless staff logged in --> 
+		<div id="ti-accept" style="display: none"> 
+		<script>getTradeInRequest("all", "ti-accept");</script>
 		shows list of ALL trade-in requests by status tradeInID(link to detail), custName, title, author.
 		
 		staff can provisionally accept tradein and offer a price which triggers email to customer with offer details
