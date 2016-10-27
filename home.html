@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang = "en" xmlns = "http://www.w3.org/1999/xhtml">
 <head>
@@ -277,9 +276,9 @@
 	</div>
 	
 	<div id="account-page" style="display: none">
-			<div id="accSearch" style="display: none">		 +	the customer details (when logged in) plus opportunity to update
- -			<!-- search for particular customer, choose from link list, populate "accDetails"  -->		
- -			<p>To search for a customer please enter one of the following fields:</p>		
+			<div id="accSearch" style="display: none">
+ 			<!-- search for particular customer, choose from link list, populate "accDetails"  -->		
+ 			<p>To search for a customer please enter one of the following fields:</p>		
  			<form id="custSearch">		
  			  Customers Username: 		
  			  <input type="text" id="csUN"></br>		
@@ -297,15 +296,6 @@
  		</div>		
  				
  		<div id="accDetails">		
- 		  first name		
- 		  last name		
- 		  street		
- 		  suburb		
- 		  state		
- 		  postcode		
- 		  phone		
- 		  email		
- 		  creditBalance (no changies for customer)		
  		</div>		
  	  		
  		<div id="accUpdated">		
@@ -321,11 +311,13 @@
  		  </form>		
  		</div>		
   			  	
- 		<div id="updateCB" style="display: none">		
+ 		<div id="updateCB" style="display: none">	
+			<p></p>
+			<div id="newBal"></div>
  			<form id="fUpdateCB" action="">		
  				Adjust Credit Balance to:		
  				<input type="text" id="newCredBal">		
- 				<button type="button" id="adjustCred" onclick="javascript:updateCredit(this.form.newCredBal)">Adjust Credit Balance</button>		
+ 				<button type="button" id="adjustCred" onclick="javascript:updateCredit(this.form.newCredBal.value)">Adjust Credit Balance</button>		
  			</form>		
  		</div>
 	

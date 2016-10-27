@@ -34,7 +34,9 @@
 		echo $row['phone'];
 		echo "'></br>Email:<input type ='email' id='nE' value='";
 		echo $row['email'];
-		echo "'></br>";
+		echo "'></br>Credit Balance:<input type ='text' id='cb' value='";
+		echo $row['CreditBalance'];
+		echo "' readonly></br>";
 		echo "<button type='button' id='subChange' onclick='javascript:validateAccDetsChange(this.form)'>Submit changes</button>";
 		echo "</form>";
 		echo "^";

@@ -191,7 +191,7 @@ function getAccountInfo(cUsername, cId) {
 			
 	var xhr= new XMLHttpRequest();		
 	xhr.onreadystatechange = function () {		
-		if(xhr.readyState = 4 && xhr.status == 200) {		
+		if(xhr.readyState == 4 && xhr.status == 200) {		
 			var result = xhr.responseText.split("^");		
 					
 			document.getElementById("accDetails").innerHTML = result[0];		
@@ -235,7 +235,7 @@ function updateAccountDetails(username, st, sub, state, pc, ph, e) {
 	var xhr= new XMLHttpRequest();		
 		
 	xhr.onreadystatechange = function () {		
-		if(xhr.readyState = 4 && xhr.status == 200) {		
+		if(xhr.readyState == 4 && xhr.status == 200) {		
 			var result = xhr.responseText;		
 					
 			console.log(result);		
@@ -283,7 +283,7 @@ function updatePWD(nPwd) {
 			
 	var xhr= new XMLHttpRequest();		
 	xhr.onreadystatechange = function () {		
-		if(xhr.readyState = 4 && xhr.status == 200) {		
+		if(xhr.readyState == 4 && xhr.status == 200) {		
 		var result = xhr.responseText;		
 				
 		document.getElementById("passwordChange").innerHTML = result;		
@@ -291,7 +291,63 @@ function updatePWD(nPwd) {
 	}		
 	xhr.open("GET", "php/updatePwd.php?nPwd="+nPwd+"&username="+sessionStorage.username, true);		
 	xhr.send();		
-}		
+}
+
+function customerSearch(formObj) {
+	var username = formObj[0].value;
+	var lastname = formObj[1].value;
+	var phone = formObj[2].value;
+	
+	var xhr= new XMLHttpRequest();		
+	xhr.onreadystatechange = function () {		
+		if(xhr.readyState == 4 && xhr.status == 200) {		
+			var result = xhr.responseText.split('^');		
+			
+			console.log("customer search accDets = "+result[0]);
+			console.log("customer search aWel = "+result[1]);
+			console.log("customer search id = "+result[2]);
+			
+			if (result != "no result")
+			{
+				document.getElementById("accDetails").innerHTML = result[0];
+				sessionStorage.thisCustUN = result[1];
+				sessionStorage.thisCustID = result[2];
+			}
+			else 
+			{
+				document.getElementById("aWelcome").innerHTML = "<p>There was no results for your search.</p>";
+			}	
+		}	
+	}		
+	xhr.open("GET", "php/customerSearch.php?username="+username+"&lastname="+lastname+"&phone="+phone, true);		
+	xhr.send();	
+}
+
+function updateCredit(newCB) {
+	console.log("update credit, new credit is "+newCB);
+	
+	if (newCB >20 || newCB < -10)
+	{
+		alert("Those values are beyond the accepted limits");
+	}
+	else 
+	{
+		var xhr= new XMLHttpRequest();		
+		xhr.onreadystatechange = function () {		
+			if(xhr.readyState == 4 && xhr.status == 200) {		
+				var result = xhr.responseText;		
+				
+				console.log("customer update bal = "+result);
+								
+				document.getElementById("newBal").innerHTML = result;
+				
+					
+			}	
+		}		
+		xhr.open("GET", "php/updateBalance.php?username="+sessionStorage.thisCustUN+"&id="+sessionStorage.thisCustID+"&newBal="+newBal, true);		
+		xhr.send();	
+	}
+}
 //***** end functions for account page *****		
 		
 //***** start functions for cart *****
@@ -628,6 +684,7 @@ function login(username, password) {
 								//accounts page
 								document.getElementById("accSearch").style.display="block";
 								document.getElementById("updateCB").style.display="block";
+								document.getElementById("passwordChange").style.display="none";
 			}
 		}
 	}
