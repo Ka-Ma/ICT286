@@ -62,8 +62,7 @@ function showBookOfWk(bookID) {
 
 function showRecentBooks() {
 	var date = new Date(); //today's date
-	date.setDate(date.getDate() - 7); // set date to 7 days ago
-	
+		
 	//convert date to string for sql
 	var dM = date.getMonth() + 1;
 	var dateSQL = date.getFullYear() +"-"+ dM +"-" + date.getDate();
@@ -103,7 +102,7 @@ function getBookDetail(bookID) {
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";
 	//need to make a backBtn to oldDivID
-	var backBtn = "<button type='button' onclick='javascript:loadPage("+oldDivID+")'>Continue Browsing</button>";
+	var backBtn = "<button type='button' onclick='javascript:loadPage(\""+oldDivID+"\")'>Continue Browsing</button>";
 	
 	//make this div visible
 	document.getElementById("book-page").style.display = "block";
@@ -122,14 +121,245 @@ function getBookDetail(bookID) {
 //***** end functions for book-page *****
 
 //***** start functions for trade-in page *****
-function validateTradeIn() {
-	console.log("children need to be tucked in");
-	//fields required title, author, isbn, photos of front, back, spine & pubinfo
-	//files must be smaller than 100kb
-	//description but be less than x chars long
+function validateTradeIn(formObj) {		 
+ 	var t = formObj[0].value; //tititle;
+ 	var a = formObj[1].value; //tiauthor;		
+ 	var i = formObj[2].value; //tiisbn;		
+ 	var f = formObj[3].value; //tiform;		
+ 	var d = formObj[4].value; //tidesc;		
+ 	var fi = formObj[5].value; //tifrontImage;		
+ 	var bi = formObj[6].value; //tibackImage;		
+ 	var si = formObj[7].value; //tispineImage;		
+ 	var pi = formObj[8].value; //tipubInfoImage;		
+ 	var oi = formObj[9].value; //tiotherImage;		
+ 			
+ 	console.log("validate trade in: title "+t);		
+ 			
+ 	//fields required: title, author, isbn, photos of front, back, spine & pubinfo		
+ 	if (t=="" || a=="" || i=="" || fi=="" || bi=="" || si=="" || pi=="")		
+ 	{ 		
+ 		alert("Title, Author, ISBN, and images for front, back, spine and publication information are required");		
+ 		return false;		
+ 	}		
+ 	//files must be smaller than 100kb
+ 	else if (checkFileSize(fi)||checkFileSize(bi)||checkFileSize(si)||checkFileSize(pi)||checkFileSize(oi))		 
+ 	{		
+ 		alert("File size too large, must be less than 100kb");		
+ 		return false;		
+ 	}		
+ 	//submit to db		
+ 	else 		
+ 	{		
+ 		//need to add this function
+		console.log("children need to be tucked in");		
+ 				
+ 	}		
+ 			
+ 			
+ 			
+ }
+ 
+function checkFileSize(file) {		
+ 	var oFile = document.getElementById(file).files[0]; 		
 	
-}
+	console.log("checking file size");
+	
+ 	if (oFile.size > 100000) //100kb		
+ 	{		
+ 		return true;		
+ 	}		
+ }		
 //***** end functions for trade-in page *****
+
+//***** start functions for account page *****		
+function getAccountDetailsByStored() {		
+	var username = sessionStorage.username;  		
+	var id = sessionStorage.id;  		
+			
+	console.log("username = "+username);		
+	console.log("id = "+id);		
+			
+	getAccountInfo(username, id);		
+}		
+		
+function getAccountInfo(cUsername, cId) {		
+	var username = cUsername; // customer username		
+	var id = cId;  //customer id		
+			
+	console.log("username = "+username);		
+	console.log("id = "+id);		
+			
+	var xhr= new XMLHttpRequest();		
+	xhr.onreadystatechange = function () {		
+		if(xhr.readyState == 4 && xhr.status == 200) {		
+			var result = xhr.responseText.split("^");		
+					
+			document.getElementById("accDetails").innerHTML = result[0];		
+			document.getElementById("aWelcome").innerHTML = result[1];		
+			sessionStorage.forChecking = result[2];		
+					
+			console.log("forchecking "+result[2]);		
+					
+			sessionStorage.balance = result[3];		
+					
+			console.log("balance "+result[3]);		
+				
+		}		
+	}		
+	xhr.open("GET", "php/getAccountDetails.php?username="+username+"&id="+id, true);		
+ 	xhr.send();		
+}		
+		
+function validateAccDetsChange(formObj) {		
+	var st = formObj[0].value;		
+	var sub = formObj[1].value;		
+	var state = formObj[2].value;		
+	var pc = formObj[3].value;		
+	var ph = formObj[4].value;		
+	var e = formObj[5].value;		
+			
+	console.log("validating Account Details change ");		
+ 		
+ 	//if any null discontinue		
+	if(st==""||sub==""||state==""||pc==""||ph==""||e=="")		
+ 	{		
+ 		alert("All fields must be complete");		
+	}		
+	else {		
+		updateAccountDetails(sessionStorage.username, st, sub, state, pc, ph, e);		
+	}		
+}		
+		
+function updateAccountDetails(username, st, sub, state, pc, ph, e) {		
+				
+	var xhr= new XMLHttpRequest();		
+		
+	xhr.onreadystatechange = function () {		
+		if(xhr.readyState == 4 && xhr.status == 200) {		
+			var result = xhr.responseText;		
+					
+			console.log(result);		
+			document.getElementById("accUpdated").innerHTML = result;		
+		}		
+	}		
+			
+	xhr.open("GET", "php/updateAccountDetails.php?username="+username+"&st="+st+"&sub="+sub+"&state="+state+"&pc="+pc+"&ph="+ph+"&e="+e, true);		
+	xhr.send();		
+}		
+		
+function validatePasswordChange(formObj) {		
+	var oPW = formObj[0].value;		
+	var nPW = formObj[1].value;		
+	var nPWA = formObj[2].value;		
+			
+	console.log(formObj);		
+	console.log(formObj[0].value);		
+	console.log(formObj[1].value);		
+	console.log(formObj[2].value);		
+		
+	console.log("will be comparing "+oPW+" to "+sessionStorage.forChecking);		
+			
+	if(oPW != sessionStorage.forChecking)		
+	{		
+		alert("If you have forgotten your password please contact our friendly staff during office hours");		
+	}		
+	else if (nPW==oPW) //failed attempt		
+	{		
+		alert("Please choose a new password");		
+	}		
+	else if (nPW != nPWA) 		
+	{		
+		alert("Please make sure the two new passwords are the same");		
+	}		
+	else //success, update db		
+	{		
+		updatePWD(nPW);		
+	}		
+			
+}		
+		
+function updatePWD(nPwd) {		
+	var nPwd = nPwd;		
+			
+	var xhr= new XMLHttpRequest();		
+	xhr.onreadystatechange = function () {		
+		if(xhr.readyState == 4 && xhr.status == 200) {		
+		var result = xhr.responseText;		
+				
+		document.getElementById("passwordChange").innerHTML = result;		
+		}		
+	}		
+	xhr.open("GET", "php/updatePwd.php?nPwd="+nPwd+"&username="+sessionStorage.username, true);		
+	xhr.send();		
+}
+
+function customerSearch(csUN, csLN, csPH) {
+	var username = csUN;
+	var lastname = csLN;
+	var phone = csPH;
+	
+	var xhr= new XMLHttpRequest();		
+	xhr.onreadystatechange = function () {		
+		if(xhr.readyState == 4 && xhr.status == 200) {		
+			var result = xhr.responseText.split('^');		
+			
+			console.log("customer search accDets = "+result[0]);
+			console.log("customer search UN = "+result[1]);
+			console.log("customer search id = "+result[2]);
+			
+			if (result != "no result")
+			{
+				document.getElementById("accDetails").innerHTML = result[0];
+				
+				if(!(typeof result[1] === "undefined"))
+				{
+				sessionStorage.thisCustUN = result[1];
+				sessionStorage.thisCustID = result[2];
+				document.getElementById("updateCB").style.display="block";
+				}
+			}
+			else 
+			{
+				document.getElementById("aWelcome").innerHTML = "<p>There were no results for your search.</p>";
+				document.getElementById("accDetails").innerHTML = "";
+				
+			}	
+		}	
+	}		
+	xhr.open("GET", "php/customerSearch.php?username="+username+"&lastname="+lastname+"&phone="+phone, true);		
+	xhr.send();	
+}
+
+function updateCredit(newCredBal) {
+	var newCB = newCredBal;
+	
+	console.log("update credit, new credit is "+newCB);
+	
+	if (newCB >20 || newCB < -10)
+	{
+		alert("Those values are beyond the accepted limits");
+	}
+	else 
+	{
+		var xhr= new XMLHttpRequest();		
+		xhr.onreadystatechange = function () {		
+			if(xhr.readyState == 4 && xhr.status == 200) {		
+				var result = xhr.responseText;		
+				
+				console.log("customer update bal = "+result);
+								
+				document.getElementById("newBal").innerHTML = result;
+				
+					
+			}	
+		}		
+		xhr.open("GET", "php/updateBalance.php?username="+sessionStorage.thisCustUN+"&id="+sessionStorage.thisCustID+"&newBal="+newCB, true);		
+		xhr.send();	
+	}
+}
+//***** end functions for account page *****		
+		
+//***** start functions for cart *****
 
 //checks to see if book is in stock.
 //if yes, add to and update cart count, else display error message
@@ -464,6 +694,10 @@ function login(username, password) {
 		                document.getElementById("LIR").style.display="none";
 	
 				sessionStorage.setItem('user', user);
+						
+				//page functions & visibility
+				//accounts page
+				getAccountDetailsByStored();
 			}
 			//signed in as a staff member
 			if(user == "staff"){
@@ -478,6 +712,12 @@ function login(username, password) {
                                 document.getElementById("LIR").style.display="none";
 
 				sessionStorage.setItem('user', user);
+
+                                //page parts visibility (add staff elements to account & trade in pages)
+				//accounts page
+				document.getElementById("accSearch").style.display="block";
+				document.getElementById("passwordChange").style.display="none";
+
 			}
 		}
 	}

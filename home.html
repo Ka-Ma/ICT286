@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang = "en" xmlns = "http://www.w3.org/1999/xhtml">
 <head>
@@ -292,27 +291,69 @@
         </div>
 	
 	<div id="book-page" style="display: none">
-	this page loads when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart
-	 
-	Needs a button to go back to previous page which means need to somehow indicate which "page" we have come from or something.
+	<!-- this div becomes visible and populated when a book cover image is clicked to display the details of that book and give the opportunity to add the book to the cart, there is also a back button to return from whence they came -->
 	</div>
 	
 	<div id="account-page" style="display: none">
-	the customer details (when logged in) plus opportunity to update
+			<div id="accSearch" style="display: none">
+ 			<!-- search for particular customer, choose from link list, populate "accDetails"  -->		
+ 			<p>To search for a customer please enter one of the following fields:</p>		
+ 			<form id="custSearch">		
+ 			  Customers Username: 		
+ 			  <input type="text" name="csUN"></br>		
+ 			  Customers Last Name:		
+ 			  <input type="text" name="csLN"></br>		
+ 			  Customers Phone:		
+ 			  <input type="text" name="csPH"></br>		
+ 			  <button type="button" id="custSearch" onclick="javascript:customerSearch(this.form.csUN.value, this.form.csLN.value, this.form.csPH.value)">Search</button>		
+ 			</form>		
+ 		</div>		
+ 		<div id="accSResults" style="display: none">		
+ 		</div>		
+ 				
+ 		<div id="aWelcome">		
+ 		</div>		
+ 				
+ 		<div id="accDetails">		
+ 		</div>		
+ 	  		
+ 		<div id="accUpdated">		
+ 		</div>		
+ 	  		
+ 		<div id="passwordChange">  		
+ 		<p></p>		
+ 		  <form name="passwordChangeReq">		
+ 			  Old Password:<input type="password" id="oldPassword">		
+ 			  New Password:<input type="password" id="newPassword">		
+ 			  New Password Again:<input type="password" id="newPasswordAgain">		
+ 			  <button type="button" id="subPWChange"  onclick="javascript:validatePasswordChange(this.form)">Submit Change</button>		
+ 		  </form>		
+ 		</div>		
+  			  	
+		<div id="updateCB" style="display: none">
+		<p></p>
+			<div id="newBal"></div>
+			<p></p>
+ 			<form id="fUpdateCB" action="">		
+ 				Adjust Credit Balance to:		
+ 				<input type="text" name="newCredBal">		
+ 				<button type="button" id="adjustCred" onclick="javascript:updateCredit(this.form.newCredBal.value)">Adjust Credit Balance</button>		
+ 			</form>		
+ 		</div>
 	
 	</div>
 	
 	<div id="tradeIn-page" style="display: none">
+		<h1>Trade in request</h1>
 		<div id="ti-past"> 
-		<h1>Your trade in requests</h1>
-		list of trade ins for this customer and their status
-		hide if none or user is staff (they have their own access)
+		<!--list of trade ins for this customer and their status		 
+ 		hide if none or user is staff (they have their own access)-->
 		</div>
 		
 		<div id="ti-request"> <!-- hide if staff -->
-		<p>Please enter the details & photos of the book you would like to trade in. We will email you a price within 5 working days.</p>
+		<p>Please enter the details and photos of the book you would like to trade in. We will email you a price within 5 working days.</p>
 		
-		<form id="tradeIn-form" action=""> <!-- don't want page to reload so going to have a button that launches javascript that will submit the data to the database pending validation -->
+		<form id="tradeIn-form"> <!-- don't want page to reload so going to have a button that launches javascript that will submit the data to the database pending validation -->
 		  <!-- cust id, today's date, status needed but not shown -->
 		  <fieldset>
 		    <legend>Publication Information</legend>
@@ -329,31 +370,28 @@
 		  <fieldset>
 		    <legend>Condition Information</legend>
 			Description<br>
-		    <textarea name="ti-desc" rows="10" cols="40"><br>
+		    <textarea name="ti-desc" rows="10" cols="40"></textarea><br>
 			Photo of the front of the book*<br>
-		    <input type="file" name="ti-frontImage" accept="image/*" onblur="viewImage('ti-frontImage')">
-			<img src="images\1477319710_picture.png" id="ti-fi" ></img><br>
+		    <input type="file" name="ti-frontImage" accept="image/*"><br>
 			Photo of the back of the book*<br>
-		    <input type="file" name="ti-backImage" accept="image/*" onblur="viewImage('ti-backImage')">
-			<img src="images\1477319710_picture.png" id="ti-bi">Back Image</img><br>
+		    <input type="file" name="ti-backImage" accept="image/*"><br>
 			Photo of the spine of the book*<br>
-		    <input type="file" name="ti-spineImage" accept="image/* onblur="viewImage('ti-spinetImage')"">
-			<img src="images\1477319710_picture.png" id="ti-si">Spine Image</img><br>
+		    <input type="file" name="ti-spineImage" accept="image/*"><br>
 			Photo of the publication information page of the book*<br>
-		    <input type="file" name="ti-pubInfoImage" accept="image/*" onblur="viewImage('ti-pubInfoImage')">
-			<img src="images\1477319710_picture.png" id="ti-pi">Publication Image</img><br>
+		    <input type="file" name="ti-pubInfoImage" accept="image/*" ><br>
 		    Photo of any other notable feature of the book (please mention in description)<br>
-			<input type="file" name="ti-otherImage" accept="image/*" onblur="viewImage('ti-otherImage')">
-			<img src="images\1477319710_picture.png" id="ti-oi">Other Image</img>
+			<input type="file" name="ti-otherImage" accept="image/*">>Other Image</img>
 		  </fieldset>
 		  *required fields<br>
-		  <button type="button" onclick="validateTradeIn()">Sumbit Trade In Request</button>
+		  <button type="button" onclick="javascript:validateTradeIn(this.form)">Sumbit Trade In Request</button>
 		  on button click, if it passes validation, javascript sends to php and adds it to the database then this page is changed to show the customers tradeins by status.
 		</form>
 		
 		</div>
 		
 		<div id="ti-accept"> <!-- will include style="display: none" unless staff logged in --> 
+		shows list of ALL trade-in requests by status tradeInID(link to detail), custName, title, author.
+		
 		staff can provisionally accept tradein and offer a price which triggers email to customer with offer details
 		
 		staff can indicate receipt of book and absolute acceptence of trade in which triggers adding credit to customer account and email to customer.
