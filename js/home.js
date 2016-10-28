@@ -490,3 +490,415 @@ function search() {
 	xhr.open("GET", "php/search.php?checked=" + JSON.stringify(checked), true);
 	xhr.send();
 }
+
+function aedFunc() {
+	//find which option selected
+        var option = document.getElementById("formAED").aedRadio;
+        var select;
+
+        for (var i=0;i<option.length; i++) {
+                if (option[i].checked) {
+                        select = option[i].value;
+                        break;
+                }
+        }
+
+	var bookName = "<label> Book Title: </label><input type = \"text\" id = \"findName\" name = \"findName\" />";
+	var ISBN = "<label> ISBN: </label><input type = \"text\" id = \"findISBN\" name = \"findISBN\" />";
+	addButton = "<button type = \"button\" onclick = \"javascript:findBookAdd()\">Search</button>";
+	editButton = "<button type = \"button\" onclick = \"javascript:findBookEdit()\">Search</button>";
+	deleteButton = "<button type = \"button\" onclick = \"javascript:findBookDelete()\">Search</button>";	
+
+	//clear all divs that arent needed
+	if(select == "Add"){
+		document.getElementById("add").innerHTML = ISBN + " " + addButton;
+                document.getElementById("edit").innerHTML = "";
+                document.getElementById("delete").innerHTML = "";
+		document.getElementById("aedInfo").innerHTML = "";
+		document.getElementById("aedInfo2").innerHTML = "";
+	}
+	if(select == "Edit"){
+		document.getElementById("aedInfo").innerHTML = "";
+		document.getElementById("aedInfo2").innerHTML = "";
+                document.getElementById("add").innerHTML = "";
+                document.getElementById("edit").innerHTML = bookName + " " + editButton;
+                document.getElementById("delete").innerHTML = "";
+	}
+	if(select == "Delete"){
+		document.getElementById("aedInfo").innerHTML = "";
+		document.getElementById("aedInfo2").innerHTML = "";
+                document.getElementById("add").innerHTML = "";
+                document.getElementById("edit").innerHTML = "";
+                document.getElementById("delete").innerHTML = bookName + " " + deleteButton;
+	}
+}
+
+//add book to database
+function addBook(){
+	var error = "Error!<br />"
+        var err;
+
+        //ensure all required fields have input
+        var title = document.getElementById("formAdd").bookTitle.value;
+        var au = document.getElementById("formAdd").bookAuthor.value;
+        var isbn = document.getElementById("formAdd").bookISBN.value;
+        var syn = document.getElementById("formAdd").bookSyn.value;
+        var form = document.getElementById("formAdd").bookForm.value;
+        var pri = document.getElementById("formAdd").bookPrice.value;
+        var cov = document.getElementById("formAdd").bookCover.value;
+        var type = document.getElementById("formAdd").bookType.value;
+
+	//convert image path to right path
+	var path = "images/bookCovers/";
+	var x = cov.slice(12);
+	cov = path.concat(x);
+
+	if(title.length == 0){
+                err = "Please input a Title <br />";
+                error = error.concat(err);
+        }
+        if(au.length == 0){
+                err = "Please input an Author <br />";
+                error = error.concat(err);
+        }
+        if(isbn.length == 0){
+                err = "Please input a ISBN <br />";
+                error = error.concat(err);
+        }
+        if(form.length == 0){
+                err = "Please input a Form <br />";
+                error = error.concat(err);
+        }
+        if(pri <= 0){
+                err = "Please input a Price <br />";
+                error = error.concat(err);
+        }
+        if(type.length == 0){
+                err = "Please input a Type <br />";
+                error = error.concat(err);
+        }
+
+	//ensure at least 1 genre is selected
+        var genres = document.getElementById("formAdd").elements;
+        var check = 0;
+	var genreArr = [];
+	var genre;
+        for (var i = 0; i < genres.length; i++) {
+                if(genres[i].checked) {
+                        check++;
+			genre = genres[i].value;
+			genreArr.push(genre);
+                }
+        }
+
+	if(check == 0){
+		err = "Please select at least ONE genre <br />";
+                error = error.concat(err);
+	}
+
+	//display errors OR send data to database
+        if(error.length > 12)//initial size of error
+                document.getElementById("aedInfo").innerHTML = error;
+        else{
+		data = "title="+title+"&au="+au+"&isbn="+isbn+"&syn="+syn+"&form="+form+"&pri="+pri+"&cov="+cov+"&type="+type+"&genre="+genreArr+"&len="+check;
+		var xhr = new XMLHttpRequest();
+        	xhr.onreadystatechange = function () {
+        	        if(xhr.readyState == 4 && xhr.status == 200) {
+				var result = xhr.responseText;
+
+				if(result == "added"){
+					alert("Book added successfully!");
+
+			                //clear all divs
+        			        document.getElementById("aedInfo").innerHTML = "";
+					document.getElementById("add").innerHTML = "";
+                			document.getElementById("edit").innerHTML = "";
+			                document.getElementById("delete").innerHTML = "";
+					document.getElementById("aedInfo2").innerHTML = "";
+
+        			        //make old div invisible
+        			        document.getElementById("AED-page").style.display = "none";
+
+        			        //navigate to home page after delay
+        			        document.getElementById("home-page").style.display = "block";
+        			        updateActive("home");
+				}
+				else{
+					//document.getElementById("aedInfo").innerHTML = "Error. Failed to add book to database. Please check all details";
+					document.getElementById("aedInfo").innerHTML = result;
+				}
+                	}
+	        }
+	xhr.open("POST", "php/addBook.php", true);
+
+        //Send the proper header information along with the request
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.send(data);
+	}
+}
+
+//show add book form
+function addForm(){
+	//keep ISBN from previous search
+	var isbn = document.getElementById("findISBN").value;
+
+	//message to display
+	var msg =  "Book not found. Please enter book details. <br /><br />";
+
+        var form = "<form id = \"formAdd\">";	
+        var title = "<label> Title: </label><input type = \"text\" id = \"bookTitle\" name = \"bookTitle\" /><br />";
+        var author = "<label> Author: </label><input type = \"text\" id = \"bookAuthor\" name = \"bookAuthor\" /><br />";
+        var ISBN = "<label> ISBN: </label><input type = \"text\" id = \"bookISBN\" name = \"bookISBN\" /><br />";
+        var Synopsis = "<label> Synopsis: </label><textarea id = \"bookSyn\" name = \"bookSyn\" cols = \"100\" rows = \"10\"></textarea><br />";
+        var Form = "<label> Form: </label><input type = \"text\" id = \"bookForm\" name = \"bookForm\" /><br />";
+        var Price = "<label> Price: </label><input type = \"number\" id = \"bookPrice\" name = \"bookPrice\" /><br />";
+        var CoverImage ="<label> Cover Image: </label><input type = \"file\" id = \"bookCover\" name = \"bookCover\" accept = \"image/*\"/><br />";
+        var Type = "<label> Type: </label><input type = \"text\" id = \"bookType\" name = \"bookType\" /><br /><br />";
+	var genre = "<table><caption class = \"searchTable\" /><tbody><tr><td><label>Drama: <input type = \"checkbox\" value = \"11111111\" name = \"genre\" /></label>" +
+               "</td><td><label>Fantasy: <input type = \"checkbox\" value = \"11111112\" name = \"genre\" /></label></td><td>" +
+               "<label>Mystery: <input type = \"checkbox\" value = \"11111113\" name = \"genre\" /></label></td><td><label>Thriller: <input type = \"checkbox\" value = \"11111114\" name = \"genre\" /></label>" +
+               "</td><td><label>Bildungsroman: <input type = \"checkbox\" value = \"111111115\" name = \"genre2\" /></label></td></tr><tr><td>" +
+               "<label>Young Adult Fiction: <input type = \"checkbox\" value = \"11111116\" name = \"genre2\" /></label></td><td><label>Children's Fiction: <input type = \"checkbox\" value = \"11111117\" name = \"genre2\" /></label>" +
+               "</td><td><label>Adventure: <input type = \"checkbox\" value = \"11111118\" name = \"genre2\" /></label></td><td><label>Animals: <input type = \"checkbox\" value = \"11111119\" name = \"genre2\" /></label>" +
+               "</td><td><label>Humour: <input type = \"checkbox\" value = \"11111120\" name = \"genre2\" /></label></td></tr><tr><td><label>Classic: <input type = \"checkbox\" value = \"11111121\" name = \"genre2\" /></label>" +
+               "</td><td><label>Short Stories: <input type = \"checkbox\" value = \"11111122\" name = \"genre2\" /></label></td><td><label>Traditional: <input type = \"checkbox\" value = \"11111123\" name = \"genre2\" /></label>" +
+               "</td><td><label>Children's: <input type = \"checkbox\" value = \"11111124\" name = \"genre2\" /></label></td><td><label>Historical Fiction: <input type = \"checkbox\" value = \"11111125\" name = \"genre2\" /></label>" +
+               "</td></tr><tr><td><label>Philosophical Fiction: <input type = \"checkbox\" value = \"11111126\" name = \"genre2\" /></label></td><td>" +
+               "<label>Science Fiction: <input type = \"checkbox\" value = \"11111127\" name = \"genre2\" /></label></td><td><label>Romance: <input type = \"checkbox\" value = \"11111128\" name = \"genre2\" /></label>" +
+               "</td><td><label>Horror: <input type = \"checkbox\" value = \"11111129\" name = \"genre2\" /></label></td><td></td></tr></tbody></table><br />";
+        addButton = "<button type = \"button\" onclick = \"javascript:addBook()\"\">Add Book</button>";
+	var form2 = "</form>";
+
+	//display message
+	document.getElementById("aedInfo").innerHTML = msg;
+        document.getElementById("add").innerHTML = form + title + author + ISBN + Synopsis + Form + Price + CoverImage + Type + genre + addButton + form2;
+
+	//add ISBN to form
+        document.getElementById("bookISBN").value = isbn;
+
+}
+
+//search for book in database before adding
+//if found, increment InStock by 1, else call addBook function
+function findBookAdd(){
+        var ISBN = document.getElementById("findISBN").value;
+
+	var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+		
+			if(result == "not found")
+				addForm();
+			else{
+				document.getElementById("add").innerHTML = "Book already in database. Stock incremented by 1";
+                		document.getElementById("edit").innerHTML = "";
+                		document.getElementById("delete").innerHTML = "";
+				document.getElementById("aedInfo").innerHTML = "";
+				document.getElementById("aedInfo2").innerHTML = "";
+			}
+                }
+        }
+        xhr.open("GET", "php/bookInStock.php?ISBN=" + ISBN, true);
+        xhr.send();
+}
+
+function editForm(book){
+	//clear book list, and place form there
+	document.getElementById("aedInfo2").innerHTML = "";
+
+
+	var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+				document.getElementById("aedInfo2").innerHTML = result
+				document.getElementById("edit").innerHTML = "";
+                        }
+                }
+   
+        xhr.open("GET", "php/editForm.php?id=" + book, true);
+        xhr.send();
+}
+
+//search for book in database to edit
+function findBookEdit(){
+	var book = document.getElementById("findName").value;
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+
+                        if(result == "not found"){
+                                document.getElementById("add").innerHTML = "";
+				document.getElementById("delete").innderHTML = "";
+                                document.getElementById("aedInfo2").innerHTML = "No books found. Try another Title.";
+                                document.getElementById("aedInfo").innerHTML = "";
+                        }
+                        else{
+                                document.getElementById("aedInfo2").innerHTML = result;
+                        }
+                }
+        }
+        xhr.open("GET", "php/displayEditBooks.php?book=" + book, true);
+        xhr.send();	
+}
+
+function editBook(book){
+	var error = "Error!<br />"
+        var err;
+
+	//book details
+	var title = document.getElementById("bookTitle").value;
+        var author = document.getElementById("bookAuthor").value;
+        var isbn = document.getElementById("bookISBN").value;
+        var synopsis = document.getElementById("bookSyn").value;
+        var form = document.getElementById("bookForm").value;
+        var price = document.getElementById("bookPrice").value;
+        var cover = document.getElementById("bookCover").value;
+        var type = document.getElementById("bookType").value;
+	var qty = document.getElementById("inStock").value;
+
+	//convert image path to right path
+        var path = "images/bookCovers/";
+        var x = cover.slice(12);
+        cover = path.concat(x);
+
+	//ensure all required fields have data entered
+	if(title.length == 0){
+                err = "Please input a Title <br />";
+                error = error.concat(err);
+        }
+        if(author.length == 0){
+                err = "Please input an Author <br />";
+                error = error.concat(err);
+        }
+        if(isbn.length == 0){
+                err = "Please input a ISBN <br />";
+                error = error.concat(err);
+        }
+        if(form.length == 0){
+                err = "Please input a Form <br />";
+                error = error.concat(err);
+        }
+        if(price <= 0){
+                err = "Please input a Price <br />";
+                error = error.concat(err);
+        }
+        if(type.length == 0){
+                err = "Please input a Type <br />";
+                error = error.concat(err);
+        }
+
+	if(qty < 0){
+		err = "Quantity can't be less than 0 <br />";
+                error = error.concat(err);
+	}
+
+        //ensure at least 1 genre is selected
+        var genres = document.getElementById("formEdit").elements;
+        var check = 0;
+        var genreArr = [];
+        var genre;
+	for (var i = 0; i < genres.length; i++) {
+                if(genres[i].checked) {
+                        check++;
+                        genre = genres[i].value;
+                        genreArr.push(genre);
+                }
+        }
+
+        if(check == 0){
+                err = "Please select at least ONE genre <br />";
+                error = error.concat(err);
+        }
+
+        //display errors OR send data to database
+        if(error.length > 12)//initial size of error
+                document.getElementById("aedInfo").innerHTML = error;
+        else{
+		data = "php/editBook.php?id="+book+"&title="+title+"&au="+author+"&isbn="+isbn+"&syn="+synopsis+"&form="+form+"&price="+price+"&cover="+cover+"&type="+type+"&qty="+qty+"&genres="+JSON.stringify(genreArr);
+	        var xhr = new XMLHttpRequest();
+	        xhr.onreadystatechange = function () {
+	                if (xhr.readyState == 4 && xhr.status == 200) {
+	                        var result = xhr.responseText;
+
+	                        if(result == "error"){
+	                                document.getElementById("add").innerHTML = "";
+	                                document.getElementById("edit").innerHTML = "";
+	                                document.getElementById("aedInfo").innerHTML = "Error. Failed to edit book. Please check all details.";
+	                        }
+	                        else{
+					alert("Book edited successfully!");
+
+					//clear all divs
+				 	document.getElementById("aedInfo").innerHTML = "";
+	                                document.getElementById("add").innerHTML = "";
+	                                document.getElementById("edit").innerHTML = "";
+	                                document.getElementById("delete").innerHTML = "";
+        	                        document.getElementById("aedInfo2").innerHTML = "";
+
+     	                        	//make old div invisible
+	                                document.getElementById("AED-page").style.display = "none";
+
+        	                        //navigate to home page after delay
+	                                document.getElementById("home-page").style.display = "block";
+        	                        updateActive("home");
+                	        }
+               		}
+		}
+        }
+	xhr.open("GET", data, true);
+        xhr.send();
+}
+
+//search for book in database to delete
+function findBookDelete(){
+        var book = document.getElementById("findName").value;
+	var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+
+                        if(result == "not found"){
+                                document.getElementById("add").innerHTML = "";
+                                document.getElementById("edit").innerHTML = "";
+				document.getElementById("aedInfo2").innerHTML = "No books found. Try another Title.";
+                                document.getElementById("aedInfo").innerHTML = "";
+                        }
+			else{
+                                document.getElementById("aedInfo2").innerHTML = result;
+                        }
+                }
+        }
+        xhr.open("GET", "php/displayDeleteBooks.php?book=" + book, true);
+        xhr.send();
+}
+
+function deleteBook(book) {
+	var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+
+			alert("Book deleted from database successfully!");
+
+                        //clear all divs
+                        document.getElementById("aedInfo").innerHTML = "";
+                        document.getElementById("add").innerHTML = "";
+                        document.getElementById("edit").innerHTML = "";
+                        document.getElementById("delete").innerHTML = "";
+                        document.getElementById("aedInfo2").innerHTML = "";
+
+                        //make old div invisible
+                        document.getElementById("AED-page").style.display = "none";
+
+                        //navigate to home page after delay
+                        document.getElementById("home-page").style.display = "block";
+	                updateActive("home");
+                }
+        }
+        xhr.open("GET", "php/deleteBook.php?book=" + book, true);
+        xhr.send();
+}
