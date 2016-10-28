@@ -98,8 +98,27 @@
 	<div id="cart-page" style="display: none">
 	<p id = "showCart"></p>
 	</div>
+
+	<div id="AED-page" style="display: none">
+	<br /><form id = "formAED">
+	<label>Add: <input type = "radio" value = "Add" name = "aedRadio" onclick = "javascript:aedFunc()" /></label>
+	<label>Edit: <input type = "radio" value = "Edit" name = "aedRadio" onclick = "javascript:aedFunc()" /></label>
+	<label>Delete: <input type = "radio" value = "Delete" name = "aedRadio" onclick = "javascript:aedFunc()" /></label>
+	</form>
+        <p id = "aedInfo" class = "text"></p>
+	<p id = "add" class = "text"></p>
+	<p id = "edit" class = "text"></p>
+	<p id = "delete" class = "text"></p>
+	<p id = "aedInfo2" class = "text"></p>
+        </div>
 	
 	<div id="search-page" style="display: none">
+	<br /><form id = "SearchBox">
+	<label> Search: <input type = "text" name = "searchBox" /></label>
+	<button class = "type1" type = "button" value = "Submit" onclick = "javascript:searchText()">Search</button><br />
+	<p class = "text">
+	OR <br /><br /> Select 1 or more genres:
+	</p></form>
 	<form id = "SearchForm">
 		<table>
 		<caption class = "searchTable"></caption>
@@ -155,7 +174,7 @@
 	</div>
 	
 	<div id="LIR-page" style="display: none">
-	<table>
+	<br /><table>
 	<caption class = "loginTable"></caption>
 	<thead><tr>
 		<th> Register </th>

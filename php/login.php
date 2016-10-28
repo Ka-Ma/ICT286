@@ -35,12 +35,6 @@
 	else {
 		if($staff) {
 			//set StaffID and username as cookies
-			$cookie_username = "username";
-			$cookie_id = "id";
-			$cookie_username_value = $staff["Username"];
-			$cookie_id_value = $staff["StaffID"];
-			setcookie($cookie_username, $cookie_username_value);
-			setcookie($cookie_id, $cookie_id_value);
 			echo"staff,";
 			echo $staff['StaffID'];
 			echo ",";
@@ -48,12 +42,6 @@
 		}
 		else {
 			//setCustID and username as cookies
-			$cookie_username = "username";
-                        $cookie_id = "id";
-			$cookie_username_value = $customer["Username"];
-                        $cookie_id_value = $customer["CustID"];
-                        setcookie($cookie_username, $cookie_username_value);
-                        setcookie($cookie_id, $cookie_id_value);
 			echo"customer,";
 			echo $customer['CustID'];
                         echo ",";
