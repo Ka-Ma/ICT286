@@ -151,21 +151,21 @@ function validateTradeIn(formObj) {
  	else 		
  	{		
  		//need to add this function
-		console.log("children need to be tucked in");		
- 				
- 	}		
- 			
- 	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			var result = xhr.responseText;
-			
-			document.getElementById("book-page").innerHTML = result + backBtn;
+		console.log("submitting trade in details to php");		
+ 		 			
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var result = xhr.responseText;
+				
+				document.getElementById("tradeIn-form").innerHTML = result;
+			}
 		}
-	}
-	xhr.open("GET", "php/getBookDetail.php?bookID=" + bookID, true);
-	xhr.send();		
- 			
+		xhr.open("POST", "php/addTradeInBook.php?tiForm=" + formObj, true);
+		//header information for POST
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send();		
+ 	}		
  }
  
 function checkFileSize(file) {		
