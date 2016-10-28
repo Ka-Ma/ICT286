@@ -55,7 +55,7 @@
 			echo $row['Title'];
 			echo "</p>";
 			echo "<a href=\"javascript:getBookDetail('$bookID')\">";
-	                echo "<img src=\"";
+	                echo "<img class = \"book\" src=\"";
 			echo  $row['CoverImage'];
 	                echo "\"</img></a></br>";
 	                echo "<button type='button' onclick=\"javascript:addCart('$bookID')\">Add to Cart</button></td>";

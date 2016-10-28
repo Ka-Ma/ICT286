@@ -226,6 +226,25 @@ function displayCart() {
         xhr.send();
 }
 
+//checks that user is logged in as a customer
+function checkLogin(total){
+	var name = sessionStorage.user;
+
+	//if not customer, move to login screen
+	if(name == "customer")
+		checkout(total);
+	else{
+		alert("Please login as a Customer to continue with your purchase.");
+
+		//make cart invisible
+                document.getElementById("cart-page").style.display = "none";
+
+                //navigate to home page
+                document.getElementById("LIR-page").style.display = "block";
+                updateActive("LIR");
+	}
+}
+
 //shows checkout/purchase page
 function checkout(totalPrice) {
 	//remove any previous notifications
@@ -441,21 +460,24 @@ function login(username, password) {
                 		//navbar button visibility
                 		document.getElementById("tradeIn").style.display="block";
         		        document.getElementById("account").style.display="block";
-						document.getElementById("LO").style.display="block";
+				document.getElementById("LO").style.display="block";
 		                document.getElementById("LIR").style.display="none";
+	
+				sessionStorage.setItem('user', user);
 			}
 			//signed in as a staff member
 			if(user == "staff"){
 				document.getElementById("logFail").innerHTML = "Successfully logged in as Staff.";
 				console.log("in staff if statement");
-                                //navbar button visibility
+                                
+				//navbar button visibility
                                 document.getElementById("tradeIn").style.display="block";
                                 document.getElementById("AED").style.display="block";
                                 document.getElementById("account").style.display="block";
-								document.getElementById("LO").style.display="block";
+				document.getElementById("LO").style.display="block";
                                 document.getElementById("LIR").style.display="none";
 
-                                //page parts visibility (add staff elements to account & trade in pages)
+				sessionStorage.setItem('user', user);
 			}
 		}
 	}
@@ -465,7 +487,6 @@ function login(username, password) {
 
 //search for books (genres[0] - genres[18] [19 genres])
 function search() {
-	
 	//find which genres were checked
 	var genre;
 	var genres = document.getElementById("SearchForm").elements;
@@ -489,6 +510,21 @@ function search() {
 	}
 	xhr.open("GET", "php/search.php?checked=" + JSON.stringify(checked), true);
 	xhr.send();
+}
+
+//search for a string of text in database
+function searchText(){
+	var str = document.getElementById("SearchBox").searchBox.value;
+	
+	var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                        var result = xhr.responseText;
+                        document.getElementById("searchBooks").innerHTML = result;
+                }
+        }
+        xhr.open("GET", "php/searchtext.php?str=" + str, true);
+        xhr.send();
 }
 
 function aedFunc() {
