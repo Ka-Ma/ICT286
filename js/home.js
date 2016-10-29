@@ -27,6 +27,9 @@ function loadPage(page) {
 	//incase purchase page
 	document.getElementById("purchase-page").style.display = "none";
 
+	//run particular scripts
+	if(page=="tradeIn-page")
+		getTradeInRequest(sessionStorage.id, "ti-past", "customer");
 	
 	//make this div visible
 	document.getElementById(page).style.display = "block";
@@ -121,7 +124,7 @@ function getBookDetail(bookID) {
 //***** end functions for book-page *****
 
 //***** start functions for trade-in page *****
-function validateTradeIn(formObj) {		 
+function validateTradeIn(formObj) {		 //going to be replaced by php all teh way baby
  	var t = formObj.tititle.value; //tititle;
  	var a = formObj.tiauthor.value; //tiauthor;		
  	var i = formObj.tiisbn.value; //tiisbn;		
@@ -163,7 +166,10 @@ function validateTradeIn(formObj) {
  	{		
  		//need to add this function
 		console.log("submitting trade in details to php");		
- 		 			
+		
+		var data = "custID="+sessionStorage.id+"&t="+t+"&a="+a+"&i="+i+"&f="+f+"&d="+d+"&fi="+fi+"&bi="+bi+"&si="+si+"&pi="+pi+"&oi="+oi; 
+		//var data = "custID="+sessionStorage.id+"&formObj="+formObj;
+		
 		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4 && xhr.status == 200) {
@@ -172,28 +178,16 @@ function validateTradeIn(formObj) {
 				document.getElementById("tradeIn-form").innerHTML = result;
 			}
 		}
-		xhr.open("POST", "php/addTradeInBook.php?tiForm=" + formObj, true);
+		xhr.open("POST", "php/addTradeInBook.php", true);
 		//header information for POST
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send();		
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); //multipart/form-data
+		xhr.send(data);		
  	}		
  }
  
-function checkFileSize(file) {		
-	console.log("file "+file);
-	console.log("file "+document.getElementById(file));
-	console.log("file.files.length "+document.getElementById(file).files.length);
-	console.log("file.files[0] "+document.getElementById(file).files[0]);
-	
- 	var oFile = document.getElementById(file).files[0]; 		
-	
-	console.log("checking file size");
-	
- 	if (oFile.size > 100000) //100kb		
- 	{		
- 		return true;		
- 	}		
- }	
+function setCustomer() {
+	document.getElementById("setCust").value = sessionStorage.id;
+}
 
 function getTradeInRequest(forWhom, returnTo, access) {
 	var criteria;

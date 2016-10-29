@@ -6,51 +6,106 @@
 	$dbname = "X32628221"; //jack's account
 	@mysql_select_db($dbname) or die ('Cannot connect to database ' . mysql_error());
 	
-	var_dump($_GET);
-	
 	//put submitted in variables
-	$custID = $_GET['CustID'];
-	$title = $_GET['tititle'];
-	$author = $_GET['tiauthor'];
-	$isbn = $_GET['tiisbn'];
-	$form = $_GET['tiform'];
-	$desc = $_GET['tidesc'];
-	$fi = $_GET['tifrontImage'];
-	$bi = $_GET['tibackImage'];
-	$si = $_GET['tispineImage'];
-	$pi = $_GET['tipubInfoImage'];
-	$oi = $_GET['tiotherImage'];
+	$custID = $_POST['CustID'];
+	$title = $_POST['tititle'];
+	$author = $_POST['tiauthor'];
+	$isbn = $_POST['tiisbn'];
+	$form = $_POST['tiform'];
+	$desc = $_POST['tidesc'];
+	$fi = $_FILES['tifrontImage']["name"];
+	$bi = $_FILES['tibackImage']["name"];
+	$si = $_FILES['tispineImage']["name"];
+	$pi = $_FILES['tipubInfoImage']["name"];
+	$oi = $_FILES['tiotherImage']["name"];
 	
-	//set up for image upload
-	$target_dir = "../images/TradeIn/";
+	var_dump($fi);
 	
-	//need to append the trade in number to start of file which means I need to know the trade in number before i lodge it. combination of date and custid?
-	$target_file ;
-	
+	//other variables
+	$date = date("Y-m-d");
+		
 	//prevent SQL injection
-	$username = mysql_real_escape_string($username);
-	$st = mysql_real_escape_string($st);
-	$sub = mysql_real_escape_string($sub);
-	$state = mysql_real_escape_string($state);
-	$pc = mysql_real_escape_string($pc);
-	$ph = mysql_real_escape_string($ph);
-	$e = mysql_real_escape_string($e);
+	$custID = mysql_real_escape_string($custID);
+	$title = mysql_real_escape_string($title);
+	$author = mysql_real_escape_string($author);
+	$isbn = mysql_real_escape_string($isbn);
+	$desc = mysql_real_escape_string($desc);
+	
 	
 	//query
-	$q = "UPDATE Registered SET Street = '$st', Suburb = '$sub', State = '$state', PostCode = '$pc', phone = '$ph', email = '$e' WHERE Username  = '$username'";
-	//$result = mysql_query($q);
+	//what is next tiID
+	$q1 = "SELECT MAX(TradeBookID) AS last FROM TradeBook";
+	$result1 = mysql_query($q1);
+	$tiID = mysql_fetch_array($result1)['last']+1;
 	
-	//returning
-	if($result)
+	
+	//set up for image upload  (upload stuff borrowed from w3schools (eventually after much drama))
+	//directory being saved to "images/TradeIn/" . 
+	$target_dir = "../images/TradeIn/";
+	//files being uploaded
+	$target_file1 = $target_dir . $tiID . basename($_FILES["tifrontImage"]["name"]);	
+	$target_file2 = $target_dir . $tiID . basename($_FILES["tibackImage"]["name"]);
+	$target_file3 = $target_dir . $tiID . basename($_FILES["tispineImage"]["name"]);
+	$target_file4 = $target_dir . $tiID . basename($_FILES["tipubInfoImage"]["name"]);
+	if($oi != "")
+	$target_file5 = $target_dir . $tiID . basename($_FILES["tiotherImage"]["name"]);
+
+	$uploadOk = 1;
+	$imageFileType = pathinfo($target_file1,PATHINFO_EXTENSION);
+	//real or fake
+	if(isset($_POST["submit"])) {
+		$check = getimagesize($_FILES["tifrontImage"]["tmp_name"]);
+		if($check !== false) {
+			echo "File is an image - " . $check["mime"] . ".";
+			$uploadOk = 1;
+		}else{
+			echo "File is not an image.";
+			$uploadOk=0;
+		}
+	}
+	// Check file size
+	if ($_FILES["tifrontImage"]["size"] > 100000) {  //100kb 
+		echo "Sorry, your file is too large.";
+		$uploadOk = 0;
+	}
+	
+	// Check if $uploadOk is set to 0 by an error
+	if ($uploadOk == 0) {
+		echo "Sorry, your file was not uploaded.";
+	// if everything is ok, try to upload file
+	} else {	
+		if (move_uploaded_file($_FILES["tifrontImage"]["tmp_name"], $target_file1)) {
+			echo "The file ". basename( $_FILES["tifrontImage"]["name"]). " has been uploaded.";
+		} else {
+			echo "Sorry, there was an error uploading your file.";
+		}
+	}
+	
+	//for db paths
+	$fi = "images/TradeIn/" . $tiID . $fi;
+	$bi = "images/TradeIn/" . $tiID . $bi;
+	$si = "images/TradeIn/" . $tiID . $si;
+	$pi = "images/TradeIn/" . $tiID . $pi;
+	if($oi != "")
+		$oi = "images/TradeIn/" . $tiID . $oi;
+	
+	//query
+	//add to TradeBook table
+	$q2 = "INSERT INTO TradeBook VALUES ('$tiID', '$custID', '$date', 'new', '$title', '$author', '$isbn', '$desc', '$form', '$fi', '$bi', '$si', '$pi', '$oi')";
+	$result2 = mysql_query($q2);
+	
+	echo $q2;
+	
+	if($result2)
 	{
-		echo "<p>Your details have been updated.</p>";
+		echo "Request recorded";
 	}
 	else
 	{
-		echo "<p>Update failed.</p>";
+		echo "something went wrong";
 	}
-		
+	
 	//clearing up
-	//mysql_free_result($result); not needed for boolean results
+	mysql_free_result($result1);
 	mysql_close();
 ?>

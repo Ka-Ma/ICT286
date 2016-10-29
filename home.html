@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>BMM</title>
-  <script type = "text/javascript" src = "js/home.js"> </script>
+  <script type = "text/javascript" src = "js/home.js">
+}</script>
   <link rel="stylesheet" type="text/css" href="css/home.css"> </style>
 </head>
 <body>
@@ -348,19 +349,17 @@
 		<div id="ti-past"> 
 		<!--list of trade ins for this customer and their status		 
  		hide if none or user is staff (they have their own access)-->
-		<script>getTradeInRequest(sessionStorage.id, "ti-past", "customer");</script>
 		</div>
 		
 		<div id="ti-request"> <!-- hide if staff -->
 		<p>Please enter the details and photos of the book you would like to trade in. We will email you a price within 5 working days.</p>
-		
-		<form id="tradeIn-form"> <!-- don't want page to reload so going to have a button that launches javascript that will submit the data to the database pending validation -->
-		  <!-- cust id, today's date, status needed but not shown -->
-		  <input type="hidden" name="CustID" value=sessionStorage.username>
+		<iframe src="" name="iframe_hide" width="0" height="0"></iframe>
+		<form id="tradeIn-form" action="php/addTradeInBook.php" method="POST" enctype="multipart/form-data" target="iframe_hide"> <!-- don't want page to reload so going to have find a way to not do that -->
+		  <input type="hidden" name="CustID" id="setCust">
 		  <fieldset>
 		    <legend>Publication Information</legend>
 			Title*<br>
-		    <input type="text" name="tititle"><br>
+		    <input type="text" name="tititle" onblur="setCustomer()"><br>
 			Author*<br>
 		    <input type="text" name="tiauthor"><br>
 			ISBN<br>
@@ -385,8 +384,7 @@
 			<input type="file" name="tiotherImage" id="tiotherImage" accept="image/*">
 		  </fieldset>
 		  *required fields<br>
-		  <button type="button" onclick="javascript:validateTradeIn(this.form)">Sumbit Trade In Request</button>
-		  on button click, if it passes validation, javascript sends to php and adds it to the database then this page is changed to show the customers tradeins by status.
+		  <input type="submit" value="Submit Trade In Request" name="submit">
 		</form>
 		
 		</div>

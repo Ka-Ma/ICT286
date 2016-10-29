@@ -14,6 +14,7 @@
 	//prevent SQL injection
 	$criteria = mysql_real_escape_string($criteria);
 	$returnTo = mysql_real_escape_string($returnTo);
+	$access = mysql_real_escape_string($access);
 	
 	//query building blocks
 	//select  from'id'
@@ -52,8 +53,7 @@
 		while ($row=mysql_fetch_array($result)) {
 			echo "<tr><td><a href=\"javascript:getTradeInRequest('";
 			echo $row['TradeBookID'];
-			echo "', 'ti-accept'";
-			echo "');\">";
+			echo "', 'ti-accept', '$access');\">";
 			echo $row['TradeBookID'];
 			echo "</a></td><td>";
 			echo $row['Date'];
