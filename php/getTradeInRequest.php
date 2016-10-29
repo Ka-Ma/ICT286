@@ -121,7 +121,7 @@
 				echo $row['Author'];
 				echo "'>";
 				echo "Quote Price:<input type ='text' name='qP'></br>";
-				echo "Set Status:<select name='newStatus'><option value='pending'>Pending Customer Acceptance of Quote</option><option value='rejected'>Rejected</option><opton value='finalised'>Finalised</option></select></br>";
+				echo "Set Status:<select name='newStatus'><option value='pending'>Pending Customer Acceptance of Quote</option><option value='rejected'>Rejected</option><option value='finalised'>Finalised</option></select></br>";
 				echo "<button type='button' id='statusChange' onclick='javascript:updateStatus(this.form)'>Update Status</button>";
 				echo "</form>";
 			}

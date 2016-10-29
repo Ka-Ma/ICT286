@@ -259,7 +259,7 @@ function updateStatus(formObj) {
 				var result = xhr.responseText;
 				
 				console.log(result);
-				//document.getElementById("ticonf").innerHTML = result;
+				document.getElementById("ti-conf").innerHTML = result;
 			}
 		}
 		xhr.open("GET", "php/sendEmail.php?tiCustE=" + tiCustE+"&sbj="+sbj+"&msg="+msg, true);
@@ -281,7 +281,7 @@ function updateStatus(formObj) {
 		if (xhr.readyState == 4 && xhr.status == 200) {
 			var result = xhr.responseText;
 			
-			document.getElementById("ticonf").innerHTML = result;
+			document.getElementById("ti-conf").innerHTML = result;
 		}
 	}
 	xhr.open("GET", "php/updateStatus.php?tiID=" + tiID + "&tiStatus="+tiStatus, true);
