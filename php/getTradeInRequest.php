@@ -8,14 +8,17 @@
 	
 	//put submitted in variables
 	$criteria = $_GET['criteria'];
+	$returnTo = $_GET['returnTo'];
+	$access = $_GET['access'];
 	
 	//prevent SQL injection
 	$criteria = mysql_real_escape_string($criteria);
+	$returnTo = mysql_real_escape_string($returnTo);
 	
 	//query building blocks
-	select  from'id'
-	$qB = "SELECT * FROM TradeBook";  //do i need customer info?
-	$qC = "  WHERE CustID = '$criteria'";
+	//select  from'id'
+	$qB = "SELECT * FROM TradeBook, Customer, Registered WHERE TradeBook.CustID = Customer.CustID AND Customer.Username = Registered.Username";
+	$qC = "  AND Customer.CustID = '$criteria'";
 	$qE = " ORDER BY Date DESC";
 	$q = $qB;
 	
@@ -28,14 +31,23 @@
 	$q = $q . $qE;
 	
 	$result = mysql_query($q);
-	
+
+	if($result === FALSE) { 
+		die(mysql_error()); //better error handling
+	}
+
 	//returning
 	if (mysql_num_rows($result) == 0)
 	{
-		echo "no result";
+		if($access =="staff")
+			echo "no result";
 	}
 	else if (mysql_num_rows($result) > 1) 
 	{
+		if($access == "customer")
+			{
+				echo "<h2>Pending Requests</h2>";
+			}
 		echo "<table><th>Trade In ID</th><th>Date</th><th>Status</th>";
 		while ($row=mysql_fetch_array($result)) {
 			echo "<tr><td><a href=\"javascript:getTradeInRequest('";
@@ -53,33 +65,76 @@
 	}
 	else {
 		while ($row=mysql_fetch_array($result)) {
-			echo "<form name = 'accInfo'>";
-			echo "First Name: <input type = 'text' id='nFN' value ='";
-			echo $row['FirstName'];
-			echo "'></br>Last Name: <input type='text' id='nLN' value='";
-			echo $row['LastName'];
-			echo "'></br>Address:<input type='text' id='nSt' value='";
-			echo $row['Street'];
-			echo "'></br>";
-			echo "<input type='text' id='nSub' value='";
-			echo $row['Suburb'];
-			echo "'><input type='text' id='nState' value='";
-			echo $row['State'];
-			echo "'><input type ='text' id='nPC' value='";
-			echo $row['PostCode'];
-			echo "'></br>Phone:<input type ='text' id='nPh' value='";
-			echo $row['phone'];
-			echo "'></br>Email:<input type ='email' id='nE' value='";
-			echo $row['email'];
-			echo "'></br>Credit Balance:<input type ='text' id='cb' value='";
-			echo $row['CreditBalance'];
-			echo "' readonly></br>";
-			echo "<button type='button' id='subChange' onclick='javascript:validateAccDetsChange(this.form)'>Submit changes</button>";
-			echo "</form>";
-			echo "^";
-			echo $row['Username'];
-			echo "^";
-			echo $row['CustID'];
+			if($access == "customer")
+			{
+				echo "<h2>Pending Request</h2>";
+			}
+			echo "<p>Trade-in ID: ";
+			echo $row['TradeBookID'];
+			echo "</p><p>Date of Request: ";
+			echo $row['Date'];
+			echo " Status: ";
+			echo $row['Status'];
+			echo "</p><p>";
+			echo $row['Title'];
+			echo ", by ";
+			echo $row['Author'];
+			echo "</p><p>ISBN: ";
+			echo $row['ISBN'];
+			echo "</p><p>Form: ";
+			echo $row['Form'];
+			echo "</p><p>Description of condition: ";
+			echo $row['Description'];
+			echo "</p><p>Images</p>";
+			echo "<img class='book' src='";
+			echo $row['FrontImage'];
+			echo "'><img class='book' src='";
+			echo $row['BackImage'];
+			echo "'><img class='book' src='";
+			echo $row['SpineImage'];
+			echo "'><img class='book' src='";
+			echo $row['PubInfoImage'];
+			echo "'>";
+			if($row['OtherImage'] != "")
+			{
+				echo "<img class='book' src='";
+				echo $row['OtherImage'];
+				echo "'>";
+			}
+			
+			//form to enter price and status and to submit include hidden fields for other needed data
+			if($access=="staff")
+			{
+				echo "<form name = 'tiquote'>";
+				echo "<input type='hidden' name='tiID' value='";
+				echo $row['TradeBookID'];
+				echo "'>";
+				echo "<input type='hidden' name='tiCustE' value='";
+				echo $row['email'];
+				echo "'>";
+				echo "<input type='hidden' name='tiCustN' value='";
+				echo $row['FirstName'];
+				echo "'>";
+				echo "<input type='hidden' name='tiBook' value='";
+				echo $row['Title'];
+				echo " by ";
+				echo $row['Author'];
+				echo "'>";
+				echo "Quote Price:<input type ='text' name='qP'></br>";
+				echo "Set Status:<select name='newStatus'><option value='pending'>Pending Customer Acceptance of Quote</option><option value='rejected'>Rejected</option><opton value='finalised'>Finalised</option></select></br>";
+				echo "<button type='button' id='statusChange' onclick='javascript:updateStatus(this.form)'>Update Status</button>";
+				echo "</form>";
+			}
+			if($access=="customer")
+			{
+				echo "<form name = 'ti-accQuote'>";
+				echo "<input type='hidden' name='tiID' value='";
+				echo $row['TradeBookID'];
+				echo "'>";
+				echo "Set Status:<select name='newStatus'><option value='accepted'>Accepting Quote</option><option value='rejected'>Rejecting Quote</option></select></br>";
+				echo "<button type='button' id='statusChange' onclick='javascript:updateStatus(this.form)'>Update Status</button>";
+				echo "</form>";
+			}			
 		}
 	}
 		

@@ -122,19 +122,22 @@ function getBookDetail(bookID) {
 
 //***** start functions for trade-in page *****
 function validateTradeIn(formObj) {		 
- 	var t = formObj[0].value; //tititle;
- 	var a = formObj[1].value; //tiauthor;		
- 	var i = formObj[2].value; //tiisbn;		
- 	var f = formObj[3].value; //tiform;		
- 	var d = formObj[4].value; //tidesc;		
- 	var fi = formObj[5].value; //tifrontImage;		
- 	var bi = formObj[6].value; //tibackImage;		
- 	var si = formObj[7].value; //tispineImage;		
- 	var pi = formObj[8].value; //tipubInfoImage;		
- 	var oi = formObj[9].value; //tiotherImage;		
- 			
+ 	var t = formObj.tititle.value; //tititle;
+ 	var a = formObj.tiauthor.value; //tiauthor;		
+ 	var i = formObj.tiisbn.value; //tiisbn;		
+ 	var f = formObj.tiform.value; //tiform;		
+ 	var d = formObj.tidesc.value; //tidesc;		
+ 	var fi = formObj.tifrontImage.value; //tifrontImage;		
+ 	var bi = formObj.tibackImage.value; //tibackImage;		
+ 	var si = formObj.tispineImage.value; //tispineImage;		
+ 	var pi = formObj.tipubInfoImage.value; //tipubInfoImage;		
+ 	var oi = formObj.tiotherImage.value; //tiotherImage;		
+ 	
+	console.log(formObj);
  	console.log("validate trade in: title "+t);		
- 			
+ 	console.log("validate trade in: author "+a);
+	console.log("file frontimage: "+fi);
+	
  	//fields required: title, author, isbn, photos of front, back, spine & pubinfo		
  	if (t=="" || a=="" || i=="" || fi=="" || bi=="" || si=="" || pi=="")		
  	{ 		
@@ -142,11 +145,19 @@ function validateTradeIn(formObj) {
  		return false;		
  	}		
  	//files must be smaller than 100kb
- 	else if (checkFileSize(fi)||checkFileSize(bi)||checkFileSize(si)||checkFileSize(pi)||checkFileSize(oi))		 
- 	{		
- 		alert("File size too large, must be less than 100kb");		
+ 	else if (checkFileSize("tifrontImage")||checkFileSize("tibackImage")||checkFileSize("tispineImage")||checkFileSize("tipubInfoImage"))
+	{	
+		alert("File size too large, must be less than 100kb");		
  		return false;		
- 	}		
+ 	}
+	else if (oi != "")
+	{
+		if(checkFileSize("tiotherImage"))
+		{
+			alert("File size too large, must be less than 100kb");		
+			return false;
+		}
+	}
  	//submit to db		
  	else 		
  	{		
@@ -169,6 +180,11 @@ function validateTradeIn(formObj) {
  }
  
 function checkFileSize(file) {		
+	console.log("file "+file);
+	console.log("file "+document.getElementById(file));
+	console.log("file.files.length "+document.getElementById(file).files.length);
+	console.log("file.files[0] "+document.getElementById(file).files[0]);
+	
  	var oFile = document.getElementById(file).files[0]; 		
 	
 	console.log("checking file size");
@@ -179,12 +195,12 @@ function checkFileSize(file) {
  	}		
  }	
 
-function getTradeInRequest(forWhom, returnTo) {
+function getTradeInRequest(forWhom, returnTo, access) {
 	var criteria;
 	
 	if (forWhom=="all")
 	{
-		criteria = "*";
+		criteria = "all";
 	}
 	else
 	{
@@ -199,9 +215,78 @@ function getTradeInRequest(forWhom, returnTo) {
 			document.getElementById(returnTo).innerHTML = result;
 		}
 	}
-	xhr.open("GET", "php/getTradeInRequest.php?criteria=" + criteria, true);
+	xhr.open("GET", "php/getTradeInRequest.php?criteria=" + criteria + "&returnTo="+returnTo+"&access="+access, true);
 	xhr.send();	
 }	
+
+function updateStatus(formObj) {
+	var tiID = formObj.tiID.value;
+	var tiCustE = formObj.tiCustE.value; //email
+	var tiCustN = formObj.tiCustN.value; //name
+	var tiBook = formObj.tiBook.value;
+	var tiQuote = formObj.qP.value;
+	var tiStatus = formObj.newStatus.value;
+	
+	var sbj = "BMM Trade In Request " + tiID;
+	
+	if (tiStatus == "pending")//send email to customer with details
+	{
+		console.log("status will be set to pending");
+		var msg = "Dear "+tiCustN+",\n Thank you for your trade in request. \n We have provisionally accepted your trade at a price of $" + tiQuote+"\n If you accept please print this email and send or deliver "+tiBook+ " to our store.";
+		
+		//send email sendEmail(tiCustE, sbj, msg) 
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var result = xhr.responseText;
+				
+				console.log(result);
+				//document.getElementById("ticonf").innerHTML = result;
+			}
+		}
+		xhr.open("GET", "php/sendEmail.php?tiCustE=" + tiCustE+"&sbj="+sbj+"&msg="+msg, true);
+		xhr.send();	
+	}
+	if (tiStatus == "rejected" && tiCustN !="")//send email to customer
+	{
+		console.log("status to be set to rejected by store");
+		var msg = "Dear "+tiCustN+",\n Thank you for your trade in request. \n Unfortunately your copy of "+tiBook+ " does not meet our standards.";
+		
+		//send email sendEmail(tiCustE, sbj, msg) 
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				var result = xhr.responseText;
+				
+				console.log(result);
+				//document.getElementById("ticonf").innerHTML = result;
+			}
+		}
+		xhr.open("GET", "php/sendEmail.php?tiCustE=" + tiCustE+"&sbj="+sbj+"&msg="+msg, true);
+		xhr.send();	
+	}
+	else
+	{
+		console.log("customer rejected quote");
+	}
+	if (tiStatus == "accepted")//update status in db
+	{
+		console.log("status will be set to accepted");
+		
+	}
+	
+	//update db to new status
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			var result = xhr.responseText;
+			
+			document.getElementById("ticonf").innerHTML = result;
+		}
+	}
+	xhr.open("GET", "php/updateStatus.php?tiID=" + tiID + "&tiStatus="+tiStatus, true);
+	xhr.send();
+}
 //***** end functions for trade-in page *****
 
 //***** start functions for account page *****		

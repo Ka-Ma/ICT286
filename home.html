@@ -348,6 +348,7 @@
 		<div id="ti-past"> 
 		<!--list of trade ins for this customer and their status		 
  		hide if none or user is staff (they have their own access)-->
+		<script>getTradeInRequest(sessionStorage.id, "ti-past", "customer");</script>
 		</div>
 		
 		<div id="ti-request"> <!-- hide if staff -->
@@ -355,32 +356,33 @@
 		
 		<form id="tradeIn-form"> <!-- don't want page to reload so going to have a button that launches javascript that will submit the data to the database pending validation -->
 		  <!-- cust id, today's date, status needed but not shown -->
+		  <input type="hidden" name="CustID" value=sessionStorage.username>
 		  <fieldset>
 		    <legend>Publication Information</legend>
 			Title*<br>
-		    <input type="text" name="ti-title"><br>
+		    <input type="text" name="tititle"><br>
 			Author*<br>
-		    <input type="text" name="ti-author"><br>
+		    <input type="text" name="tiauthor"><br>
 			ISBN<br>
-		    <input type="text" name="ti-isbn"><br>
+		    <input type="text" name="tiisbn"><br>
 			Form*<br>
-			<input type="radio" name="ti-form value="Paperback" checked>Paperback<br>
-		    <input type="radio" name="ti-form value="Hardback">Hardback
+			<input type="radio" name="tiform" value="Paperback" checked>Paperback<br>
+		    <input type="radio" name="tiform" value="Hardback">Hardback
 		  </fieldset>
 		  <fieldset>
 		    <legend>Condition Information</legend>
 			Description<br>
-		    <textarea name="ti-desc" rows="10" cols="40"></textarea><br>
+		    <textarea name="tidesc" rows="10" cols="40"></textarea><br>
 			Photo of the front of the book*<br>
-		    <input type="file" name="ti-frontImage" id="ti-frontImage" accept="image/*"><br>
+		    <input type="file" name="tifrontImage" id="tifrontImage" accept="image/*"><br>
 			Photo of the back of the book*<br>
-		    <input type="file" name="ti-backImage" id="ti-backImage" accept="image/*"><br>
+		    <input type="file" name="tibackImage" id="tibackImage" accept="image/*"><br>
 			Photo of the spine of the book*<br>
-		    <input type="file" name="ti-spineImage" id="ti-spineImage" accept="image/*"><br>
+		    <input type="file" name="tispineImage" id="tispineImage" accept="image/*"><br>
 			Photo of the publication information page of the book*<br>
-		    <input type="file" name="ti-pubInfoImage" id="ti-pubInfoImage" accept="image/*" ><br>
+		    <input type="file" name="tipubInfoImage" id="tipubInfoImage" accept="image/*" ><br>
 		    Photo of any other notable feature of the book (please mention in description)<br>
-			<input type="file" name="ti-otherImage" id="ti-otherImage" accept="image/*">
+			<input type="file" name="tiotherImage" id="tiotherImage" accept="image/*">
 		  </fieldset>
 		  *required fields<br>
 		  <button type="button" onclick="javascript:validateTradeIn(this.form)">Sumbit Trade In Request</button>
@@ -390,13 +392,13 @@
 		</div>
 		
 		<div id="ti-accept" style="display: none"> 
-		<script>getTradeInRequest("all", "ti-accept");</script>
-		shows list of ALL trade-in requests by status tradeInID(link to detail), custName, title, author.
+		<script>getTradeInRequest("all", "ti-accept", "staff");</script>
+		shows list (if more than one) of ALL trade-in requests by status(new, accepted, rejected, pending, finalised),  tradeInID(link to detail), custName, title, author.
 		
 		staff can provisionally accept tradein and offer a price which triggers email to customer with offer details
 		
-		staff can indicate receipt of book and absolute acceptence of trade in which triggers adding credit to customer account and email to customer.
-		
+		staff can indicate receipt of book and absolute acceptence of trade in which triggers adding credit to customer account and email to customer and prompts staff to add/edit/delete page with some fields already completed.
+		<div id="ticonf"></div>
 		</div>
 
 	</div>

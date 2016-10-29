@@ -6,18 +6,20 @@
 	$dbname = "X32628221"; //jack's account
 	@mysql_select_db($dbname) or die ('Cannot connect to database ' . mysql_error());
 	
+	var_dump($_GET);
+	
 	//put submitted in variables
-	$custID = $_POST['CustID'];
-	$title = $_POST['title'];
-	$author = $_POST['author'];
-	$isbn = $_POST['isbn'];
-	$form = $_POST['form'];
-	$desc = $_POST['desc'];
-	$fi = $_POST['fi'];
-	$bi = $_POST['bi'];
-	$si = $_POST['si'];
-	$pi = $_POST['pi'];
-	$oi = $_POST['oi'];
+	$custID = $_GET['CustID'];
+	$title = $_GET['tititle'];
+	$author = $_GET['tiauthor'];
+	$isbn = $_GET['tiisbn'];
+	$form = $_GET['tiform'];
+	$desc = $_GET['tidesc'];
+	$fi = $_GET['tifrontImage'];
+	$bi = $_GET['tibackImage'];
+	$si = $_GET['tispineImage'];
+	$pi = $_GET['tipubInfoImage'];
+	$oi = $_GET['tiotherImage'];
 	
 	//set up for image upload
 	$target_dir = "../images/TradeIn/";
@@ -36,7 +38,7 @@
 	
 	//query
 	$q = "UPDATE Registered SET Street = '$st', Suburb = '$sub', State = '$state', PostCode = '$pc', phone = '$ph', email = '$e' WHERE Username  = '$username'";
-	$result = mysql_query($q);
+	//$result = mysql_query($q);
 	
 	//returning
 	if($result)
