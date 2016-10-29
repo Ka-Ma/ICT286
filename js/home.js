@@ -29,7 +29,7 @@ function loadPage(page) {
 
 	//run particular scripts
 	if(page=="tradeIn-page")
-		getTradeInRequest(sessionStorage.id, "ti-past", "customer");
+		getTradeInRequest(sessionStorage.id, "",  "ti-past", "customer");
 	
 	//make this div visible
 	document.getElementById(page).style.display = "block";
@@ -189,17 +189,19 @@ function setCustomer() {
 	document.getElementById("setCust").value = sessionStorage.id;
 }
 
-function getTradeInRequest(forWhom, returnTo, access) {
-	var criteria;
-	
+function getTradeInRequest(forWhom, forWhat, returnTo, access) {
+	var criteria = new Array();
+			
 	if (forWhom=="all")
 	{
-		criteria = "all";
+		criteria.push("all");
 	}
 	else
 	{
-		criteria = forWhom;
+		criteria.push(forWhom);
 	}
+		
+	criteria.push(forWhat);
 	
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function () {

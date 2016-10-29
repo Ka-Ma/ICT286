@@ -7,26 +7,33 @@
 	@mysql_select_db($dbname) or die ('Cannot connect to database ' . mysql_error());
 	
 	//put submitted in variables
-	$criteria = $_GET['criteria'];
+	$criteria = explode (",", $_GET['criteria']);
 	$returnTo = $_GET['returnTo'];
 	$access = $_GET['access'];
 	
 	//prevent SQL injection
-	$criteria = mysql_real_escape_string($criteria);
+	$criteria[0] = mysql_real_escape_string($criteria[0]);
+	$criteria[1] = mysql_real_escape_string($criteria[1]);
 	$returnTo = mysql_real_escape_string($returnTo);
 	$access = mysql_real_escape_string($access);
 	
 	//query building blocks
 	//select  from'id'
 	$qB = "SELECT * FROM TradeBook, Customer, Registered WHERE TradeBook.CustID = Customer.CustID AND Customer.Username = Registered.Username";
-	$qC = "  AND Customer.CustID = '$criteria'";
+	$qC0 = " AND Customer.CustID = '$criteria[0]'";
+	$qC1 = " AND TradeBookID = '$criteria[1]'";
 	$qE = " ORDER BY Date DESC";
 	$q = $qB;
 	
 	//build query
-	if($criteria != "all")
+	if($criteria[0] != "" && $criteria[0] != "all")
 	{
-		$q = $q . $qC;
+		$q = $q . $qC0;
+	}
+	
+	if($criteria[1] != "")
+	{
+		$q = $q. $qC1;
 	}
 	
 	$q = $q . $qE;
@@ -51,9 +58,9 @@
 			}
 		echo "<table><th>Trade In ID</th><th>Date</th><th>Status</th>";
 		while ($row=mysql_fetch_array($result)) {
-			echo "<tr><td><a href=\"javascript:getTradeInRequest('";
+			echo "<tr><td><a href=\"javascript:getTradeInRequest('','";
 			echo $row['TradeBookID'];
-			echo "', 'ti-accept', '$access');\">";
+			echo "', '$returnTo', '$access');\">";
 			echo $row['TradeBookID'];
 			echo "</a></td><td>";
 			echo $row['Date'];

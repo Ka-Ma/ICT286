@@ -353,7 +353,7 @@
 		
 		<div id="ti-request"> <!-- hide if staff -->
 		<p>Please enter the details and photos of the book you would like to trade in. We will email you a price within 5 working days.</p>
-		<iframe src="" name="iframe_hide" width="0" height="0"></iframe>
+		<iframe src="" name="iframe_hide" width="100%" height="10"></iframe>
 		<form id="tradeIn-form" action="php/addTradeInBook.php" method="POST" enctype="multipart/form-data" target="iframe_hide"> <!-- don't want page to reload so going to have find a way to not do that -->
 		  <input type="hidden" name="CustID" id="setCust">
 		  <fieldset>
@@ -390,7 +390,7 @@
 		</div>
 		
 		<div id="ti-accept" style="display: none"> 
-		<script>getTradeInRequest("all", "ti-accept", "staff");</script>
+		<!--<script>getTradeInRequest("all", "ti-accept", "staff");</script>-->
 		shows list (if more than one) of ALL trade-in requests by status(new, accepted, rejected, pending, finalised),  tradeInID(link to detail), custName, title, author.
 		
 		staff can provisionally accept tradein and offer a price which triggers email to customer with offer details
