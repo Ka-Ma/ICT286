@@ -1,4 +1,6 @@
 <?php
+	header("Access-Control-Allow-Origin: http://localhost:8000");
+	
 	//put submitted in variables
 	$custE = $_GET['tiCustE'];
 	$sbj = $_GET['sbj'];
