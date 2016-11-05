@@ -822,22 +822,22 @@ function login(username, password) {
 				document.getElementById("logFail").innerHTML = "Successfully logged in as Staff.";
 				console.log("in staff if statement");
                                 
-				//navbar button visibility
-                                document.getElementById("tradeIn").style.display="block";
-                                document.getElementById("AED").style.display="block";
-                                document.getElementById("account").style.display="block";
+				//navbar button visibility (& sitemap)
+                document.getElementById("tradeIn").style.display="block";
+                document.getElementById("AED").style.display="block";
+                document.getElementById("account").style.display="block";
 				document.getElementById("LO").style.display="block";
-                                document.getElementById("LIR").style.display="none";
+                document.getElementById("LIR").style.display="none";
 
 				sessionStorage.setItem('user', user);
 
-                                //page parts visibility (add staff elements to account & trade in pages)
-								//accounts page
-								document.getElementById("accSearch").style.display="block";
-								document.getElementById("passwordChange").style.display="none";
-								document.getElementById("ti-request").style.display="none";
-								document.getElementById("ti-past").style.display="none";
-								document.getElementById("ti-accept").style.display="block";
+				//page parts visibility (add staff elements to account & trade in pages)
+				//accounts page
+				document.getElementById("accSearch").style.display="block";
+				document.getElementById("passwordChange").style.display="none";
+				document.getElementById("ti-request").style.display="none";
+				document.getElementById("ti-past").style.display="none";
+				document.getElementById("ti-accept").style.display="block";
 			}
 		}
 	}
@@ -1297,4 +1297,25 @@ function deleteBook(book) {
         }
         xhr.open("GET", "php/deleteBook.php?book=" + book, true);
         xhr.send();
+}
+
+function displaySitemap() {
+	loadPage("sitemap-page");
+	
+	document.getElementById("sitemap-page").innerHTML = "<h1>Sitemap</h1>"+"<ul><li><a id='shome' href='javascript:loadPage(\"home-page\")'>Home</a></li><li><a id='saboutUs' href='javascript:loadPage(\"aboutUs-page\")'>About Us</a></li><li><a id='ssearch' href='javascript:loadPage(\"search-page\")'>Search</a></li>"+
+	"<li>registered only: <a id='stradeIn' style='display: none' href='javascript:loadPage(\"tradeIn-page\")'>Trade-In Request</a></li>"+
+	"<li>staff only: <a id='sAED' style='display: none' href='javascript:loadPage(\"AED-page\")'>Add/Edit/Delete Books</a></li><li><a id='sLIR' href='javascript:loadPage(\"LIR-page\")'>Login/Register</a></li>"+
+	"<li>registered only: <a id='saccount' style='display: none' href='javascript:loadPage(\"account-page\")'>Account</a></li><li><a id='scart' href='javascript:loadPage(\"cart-page\")' onclick='javascript:displayCart()'>Cart</a></li></ul>";
+	
+	if(sessionStorage.user == "customer")
+	{
+		document.getElementById("stradeIn").style.display = "block";
+		document.getElementById("saccount").style.display = "block";
+	}
+	else if(sessionStorage.user == "staff")
+	{
+		document.getElementById("stradeIn").style.display = "block";
+		document.getElementById("sAED").style.display = "block";
+		document.getElementById("saccount").style.display = "block";
+	}
 }
