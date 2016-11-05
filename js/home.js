@@ -18,11 +18,9 @@ function carousel() {
 function loadPage(page) {
 	//finding old div's id
 	var oldDiv = document.getElementsByClassName("active");
+	if(oldDivID == "") {oldDivID = "home";}
 	var oldDivID = oldDiv[0].getAttribute("id") + "-page";
-	if(oldDivID == "")
-	{
-		oldDivID = "home";
-	}
+	
 	
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";
@@ -32,8 +30,12 @@ function loadPage(page) {
 	document.getElementById("purchase-page").style.display = "none";
 
 	//run particular scripts
-	if(page=="tradeIn-page")
+	if(page=="tradeIn-page" && sessionStorage.user =="customer"){
 		getTradeInRequest(sessionStorage.id, "",  "ti-past", "customer");
+	}
+	else{
+		getTradeInRequest("all","", "ti-accept", "staff");
+	}
 	
 	//make this div visible
 	document.getElementById(page).style.display = "block";
