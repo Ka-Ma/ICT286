@@ -19,6 +19,10 @@ function loadPage(page) {
 	//finding old div's id
 	var oldDiv = document.getElementsByClassName("active");
 	var oldDivID = oldDiv[0].getAttribute("id") + "-page";
+	if(oldDivID == "")
+	{
+		oldDivID = "home";
+	}
 	
 	//make old div invisible
 	document.getElementById(oldDivID).style.display = "none";

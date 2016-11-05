@@ -55,6 +55,17 @@ div.navigation li a:hover {
  background-color: teal;
 }
 
+/*footer*/
+footer {
+ position: fixed;
+ left: 0;
+ bottom: 0;
+ font-family: Tahoma, Geneva, sans-serif;
+ width: 100%;
+ background-color: grey;
+ text-align: center;
+}
+
 /*main content*/
 .main-content {
  background-color: white;
@@ -101,6 +112,8 @@ img.aQuote {
 
 table {
  width: 100%;
+ border-collapse: collapse;
+ 
 }
 
 /* titles and headers */

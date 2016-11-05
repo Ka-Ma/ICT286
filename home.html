@@ -34,6 +34,9 @@
 	  <li>
 	    <a id="AED" style="display: none" href="javascript:loadPage('AED-page')">Add/Edit/Delete Books</a>
 	  </li>
+	  <li>
+		<a id="sitemap" style="display: none" href="javascript:loadPage('sitemap-page')">Sitemap</a>
+	  </li>
 	  <li style="float: right">
 	    <a id="LO" style="display: none" href="">Logout</a> <!-- need to add this ability -->
 	  </li>
@@ -401,6 +404,40 @@
 		</div>
 
 	</div>
+	<div id="sitemap-page" style="display: none">
+		<h1>Sitemap</h1>
+		<ul>
+		  <li>
+			<a id="home" href="javascript:loadPage('home-page')">Home</a>
+		  </li>
+		  <li>
+			<a id="aboutUs" href="javascript:loadPage('aboutUs-page')">About Us</a>
+		  </li>
+		  <li>
+			<a id="search"  href="javascript:loadPage('search-page')">Search</a>
+		  </li>
+		  <li>
+			registered only: <a id="tradeIn" style="display: none" href="javascript:loadPage('tradeIn-page')">Trade-In Request</a>
+		  </li>
+		  <li>
+			staff only: <a id="AED" style="display: none" href="javascript:loadPage('AED-page')">Add/Edit/Delete Books</a>
+		  </li>
+		  <li>
+			<a id="LIR"  href="javascript:loadPage('LIR-page')">Login/Register</a>
+		  </li>
+		  <li>
+			registered only: <a id="account" style="display: none" href="javascript:loadPage('account-page')">Account</a>
+		  </li>
+		  <li>
+			<a id="cart"  href="javascript:loadPage('cart-page')" onclick = "javascript:displayCart()">Cart</a>
+		  </li>
+		</ul>
+	</div>
+  
   </div>
+  
+  <footer>
+	BMM: Books Matters, Mann! | 123 Pretend Street, Pretenderton, WA, 6210 | Ph: 9123 8765 | Email: <a href="'mailto:admin@bmm.com.au'">admin@bmm.com.au</a> | <a href="javascript:loadPage('sitemap-page')">sitemap</a>
+  </footer>
 </body>
 </html>
