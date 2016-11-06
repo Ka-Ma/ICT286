@@ -26,13 +26,15 @@ function loadPage(page) {
 	}
 	
 	//make old div invisible
+	console.log("old div to be made invisible: "+oldDivID);
 	if (oldDivID != "undefined") {
 		document.getElementById(oldDivID).style.display = "none";
 	}else{
-		//incase it's the book-page
+		//incase it a page not on the navbar
 		document.getElementById("book-page").style.display = "none";
-		//incase purchase page
 		document.getElementById("purchase-page").style.display = "none";
+		document.getElementById("help-page").style.display = "none";
+		document.getElementById("sitemap-page").style.display = "none";
 	}
 
 	//run particular scripts
