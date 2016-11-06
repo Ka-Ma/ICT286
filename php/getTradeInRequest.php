@@ -24,7 +24,7 @@
 	$qB = "SELECT * FROM TradeBook, Customer, Registered WHERE TradeBook.CustID = Customer.CustID AND Customer.Username = Registered.Username";
 	$qC0 = " AND Customer.CustID = '$criteria[0]'";
 	$qC1 = " AND TradeBookID = '$criteria[1]'";
-	$qE = " ORDER BY Date DESC";
+	$qE = " ORDER BY Status DESC";
 	$q = $qB;
 	
 	//build query
@@ -134,7 +134,7 @@
 				echo "<button type='button' id='statusChange' onclick='javascript:updateStatus(this.form)'>Update Status</button>";
 				echo "</form>";
 			}
-			if($access=="customer")
+			if($access=="customer" && $row['Status']=="pending")
 			{
 				echo "<form name = 'ti-accQuote'>";
 				echo "<input type='hidden' name='tiID' value='";

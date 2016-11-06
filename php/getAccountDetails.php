@@ -26,11 +26,11 @@
 		echo "Address: <input type='text' id='nSt' value='";
 		echo $row['Street'];
 		echo "'></br>";
-		echo "<input type='text' id='nSub' value='";
+		echo "<input type='text' id='nSub' class='short' value='";
 		echo $row['Suburb'];
-		echo "'><input type='text' id='nState' value='";
+		echo "'><input type='text' id='nState' class='short' value='";
 		echo $row['State'];
-		echo "'><input type ='text' id='nPC' value='";
+		echo "'><input type ='text' id='nPC' class='short' value='";
 		echo $row['PostCode'];
 		echo "'></br>Phone:<input type ='text' id='nPh' value='";
 		echo $row['phone'];
