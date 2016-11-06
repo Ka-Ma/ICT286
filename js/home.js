@@ -57,13 +57,13 @@ function updateActive(current) {
 
 //to make navbar collapsible
 function expandNav() {
-		var x = document.getElementById("navigation");
-		if (x.className === "navigation") {
-			x.className += " responsive";
-		} else {
-			x.className = "navigation";
-		}
+	var x = document.getElementById("navigation");
+	if (x.className === "navigation") {
+		x.className += " responsive";
+	} else {
+		x.className = "navigation";
 	}
+}
 
 //***** start functions for home page *****
 function showBookOfWk(bookID) {
