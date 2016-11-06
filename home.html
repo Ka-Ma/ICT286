@@ -23,31 +23,33 @@
 	    <a id="home" class="active" href="javascript:loadPage('home-page')">Home</a>
 	  </li>
 	  <li>
-	    <a id="aboutUs" href="javascript:loadPage('aboutUs-page')">About Us</a>
+	    <a id="aboutUs" href="javascript:loadPage('aboutUs-page');expandNav()">About Us</a>
 	  </li>
 	  <li>
-	    <a id="search"  href="javascript:loadPage('search-page')">Search</a>
+	    <a id="search"  href="javascript:loadPage('search-page');expandNav()">Search</a>
 	  </li>
 	  <li>
-	    <a id="tradeIn" style="display: none" href="javascript:loadPage('tradeIn-page')">Trade-In Request</a>
+	    <a id="tradeIn" style="display: none" href="javascript:loadPage('tradeIn-page');expandNav()">Trade-In Request</a>
 	  </li>
 	  <li>
-	    <a id="AED" style="display: none" href="javascript:loadPage('AED-page')">Add/Edit/Delete Books</a>
+	    <a id="AED" style="display: none" href="javascript:loadPage('AED-page');expandNav()">Add/Edit/Delete Books</a>
 	  </li>
 	  <li>
-		<a id="sitemap" style="display: none" href="javascript:loadPage('sitemap-page')">Sitemap</a>
+		<a id="sitemap" style="display: none" href="javascript:loadPage('sitemap-page');expandNav()">Sitemap</a>
 	  </li>
 	  <li style="float: right">
 	    <a id="LO" style="display: none" href="">Logout</a> <!-- need to add this ability -->
 	  </li>
 	  <li style="float: right">
-	    <a id="LIR"  href="javascript:loadPage('LIR-page')">Login/Register</a>
+	    <a id="LIR"  href="javascript:loadPage('LIR-page');expandNav()">Login/Register</a>
 	  </li>
 	  <li style="float: right">
-	    <a id="account" style="display: none" href="javascript:loadPage('account-page')">Account</a>
+	    <a id="account" style="display: none" href="javascript:loadPage('account-page');expandNav()">Account</a>
 	  </li>
 	  <li style="float: right">
-	    <a id="cart"  href="javascript:loadPage('cart-page')" onclick = "javascript:displayCart()">Cart</a>
+	    <a id="cart"  href="javascript:loadPage('cart-page')" onclick = "javascript:displayCart();expandNav()">Cart</a>
+	  </li>
+	  <li class="icon"><a href="javascript:void(0);" onclick="expandNav()">&#9776;</a>
 	  </li>
 	</ul>
   </div>
@@ -418,7 +420,7 @@
   </div>
   
   <footer>
-	BMM: Books Matters, Mann! | 123 Pretend Street, Pretenderton, WA, 6210 | Ph: 9123 8765 | Email: <a href="'mailto:admin@bmm.com.au'">admin@bmm.com.au</a> | <a href="javascript:displaySitemap()">sitemap</a> | <a href="javascript:loadPage("help-page")">Help</a>
+	BMM: Books Matters, Mann! | 123 Pretend Street, Pretenderton, WA, 6210 | Ph: 9123 8765 | Email: <a href="'mailto:admin@bmm.com.au'">admin@bmm.com.au</a> | <a href="javascript:displaySitemap()">sitemap</a> | <a href="javascript:loadPage('help-page')">Help</a>
   </footer>
 </body>
 </html>

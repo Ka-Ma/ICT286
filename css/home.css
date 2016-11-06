@@ -54,6 +54,36 @@ div.navigation li a:hover {
  background-color: teal;
 }
 
+/* stuff for small screen */
+div.navigation li.icon {
+ display: none;
+}
+
+@media screen and (max-width:680px) {
+  div.navigation li:not(:first-child) {display: none;}
+  div.navigation li.icon {
+    float: right;
+    display: inline-block;
+  }
+}
+
+@media screen and (max-width:680px) {
+  div.navigation.responsive ul {position: relative;}
+  div.navigation.responsive ul li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  div.navigation.responsive ul li {
+    float: none;
+    display: inline;
+  }
+  div.navigation.responsive ul li a {
+    display: block;
+    text-align: left;
+  }
+}
+
 /*footer*/
 footer {
  position: fixed;
