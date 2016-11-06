@@ -29,7 +29,7 @@ function loadPage(page) {
 	console.log("old div to be made invisible: "+oldDivID);
 	if (oldDivID != "undefined") {
 		document.getElementById(oldDivID).style.display = "none";
-	}else{
+	
 		//incase it a page not on the navbar
 		document.getElementById("book-page").style.display = "none";
 		document.getElementById("purchase-page").style.display = "none";
