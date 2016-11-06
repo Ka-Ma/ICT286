@@ -18,26 +18,29 @@ function carousel() {
 function loadPage(page) {
 	//finding old div's id
 	var oldDiv = document.getElementsByClassName("active");
-	if(oldDivID == "") {oldDivID = "home";}
-	var oldDivID = oldDiv[0].getAttribute("id") + "-page";
-	
+	console.log(oldDiv);
+	if(oldDiv.length == 0) {
+		var oldDivID = "undefined";
+	}else{
+		var oldDivID = oldDiv[0].getAttribute("id") + "-page";
+	}
 	
 	//make old div invisible
-	document.getElementById(oldDivID).style.display = "none";
-	//incase it's the book-page
-	document.getElementById("book-page").style.display = "none";
-	//incase purchase page
-	document.getElementById("purchase-page").style.display = "none";
+	if (oldDivID != "undefined") {
+		document.getElementById(oldDivID).style.display = "none";
+	}else{
+		//incase it's the book-page
+		document.getElementById("book-page").style.display = "none";
+		//incase purchase page
+		document.getElementById("purchase-page").style.display = "none";
+	}
 
 	//run particular scripts
-	if(page=="tradeIn-page" && sessionStorage.user =="customer"){
+	if(page=="tradeIn-page")
 		getTradeInRequest(sessionStorage.id, "",  "ti-past", "customer");
-	}
-	else{
-		getTradeInRequest("all","", "ti-accept", "staff");
-	}
 	
 	//make this div visible
+	console.log("this div to make visible "+page);
 	document.getElementById(page).style.display = "block";
 		
 	//need to take -page off the end to updateActive
@@ -47,12 +50,20 @@ function loadPage(page) {
 
 //to change the background color of navbar link to be current page
 function updateActive(current) {
+	var oldPgId;
 	var oldPg = document.getElementsByClassName("active");
-	var oldPgId = oldPg[0].getAttribute("id");
+	if (oldPg.length == 0) {
+		oldPgId = "undefined";
+	}else{
+		oldPgId = oldPg[0].getAttribute("id");
+	}
 	var curPg = document.getElementById(current);
 	
-	document.getElementById(oldPgId).removeAttribute("class");
-	curPg.setAttribute("class", "active");
+	if (oldPgId !== "undefined")
+		document.getElementById(oldPgId).removeAttribute("class");
+	if (curPg != null){
+		curPg.setAttribute("class", "active");
+	}
 }
 
 //to make navbar collapsible

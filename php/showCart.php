@@ -52,7 +52,7 @@
 			$book = $row['BookID'];
 			echo "<tr><td class = \"cart\">";
 			echo "<a href=\"javascript:getBookDetail('$book')\">";
-			echo "<img src=\"";
+			echo "<img class='book' src=\"";
 	                echo $row['CoverImage'];
         	        echo "\"</img></a>";
 			echo "</td><td class = \"cart\">";
