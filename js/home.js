@@ -611,31 +611,33 @@ function checkLogin(total){
 		checkout(total);
 	else{
 		alert("Please login as a Customer to continue with your purchase.");
+		if(name !== "staff")
+		{
+			//make cart invisible
+            document.getElementById("cart-page").style.display = "none";
 
-		//make cart invisible
-                document.getElementById("cart-page").style.display = "none";
-
-                //navigate to home page
-                document.getElementById("LIR-page").style.display = "block";
-                updateActive("LIR");
+            //navigate to home page
+            document.getElementById("LIR-page").style.display = "block";
+            updateActive("LIR");
+		}
 	}
 }
 
 //shows checkout/purchase page
 function checkout(totalPrice) {
 	//remove any previous notifications
-        document.getElementById("payError").innerHTML = "";
+    document.getElementById("payError").innerHTML = "";
 
 	//finding old div's id
-        var oldDiv = document.getElementsByClassName("active");
-        var oldDivID = oldDiv[0].getAttribute("id") + "-page";
-        //make old div invisible
-        document.getElementById(oldDivID).style.display = "none";
+    var oldDiv = document.getElementsByClassName("active");
+    var oldDivID = oldDiv[0].getAttribute("id") + "-page";
+    //make old div invisible
+    document.getElementById(oldDivID).style.display = "none";
 
-        //make this div visible
+    //make this div visible
 	document.getElementById("purchase-page").style.display = "block";
 	
-	document.getElementById("payForm").innerHTML = "Total price = $" + totalPrice;
+	document.getElementById("payForm").innerHTML = "Total price = $" + totalPrice + " OR " + totalPrice + " Credits";
 }
 
 //handles the payment form
@@ -713,7 +715,7 @@ function purchase() {
 	}
 
 	//show errors or success message and navigate back to home page
-	if(error.length > 12)//initial size of error
+	if(error.length > 12 && cardSelect !== "cred")//initial size of error
 		document.getElementById("payError").innerHTML = error;
 	else{
 		alert(success);
