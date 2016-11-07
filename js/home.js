@@ -39,8 +39,11 @@ function loadPage(page) {
 
 	//run particular scripts
 	if(page=="tradeIn-page")
-		getTradeInRequest(sessionStorage.id, "",  "ti-past", "customer");
-	
+		if(sessionStorage.user == "customer")
+			getTradeInRequest(sessionStorage.id, "",  "ti-past", "customer");
+		else 
+			getTradeInRequest("all", "", "ti-accept", "staff");
+		
 	//make this div visible
 	console.log("this div to make visible "+page);
 	document.getElementById(page).style.display = "block";
