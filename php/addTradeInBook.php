@@ -88,7 +88,7 @@
 	$q2 = "INSERT INTO TradeBook VALUES ('$tiID', '$custID', '$date', 'new', '$title', '$author', '$isbn', '$desc', '$form', '$filename[0]', '$filename[1]', '$filename[2]', '$filename[3]', '$filename[4]')";
 	$result2 = mysql_query($q2);
 	
-	echo $q2;
+	//echo $q2;
 	
 	if($result2)
 	{

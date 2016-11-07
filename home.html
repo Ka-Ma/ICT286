@@ -358,17 +358,17 @@
 		
 		<div id="ti-request"> <!-- hide if staff -->
 		<p>Please enter the details and photos of the book you would like to trade in. We will email you a price within 5 working days.</p>
-		<iframe src="" name="iframe_hide" width="100%" height="20"></iframe>
+		
 		<form id="tradeIn-form" action="php/addTradeInBook.php" method="POST" enctype="multipart/form-data" target="iframe_hide"> <!-- don't want page to reload so going to have find a way to not do that -->
 		  <input type="hidden" name="CustID" id="setCust">
 		  <fieldset>
 		    <legend>Publication Information</legend>
 			Title*<br>
-		    <input type="text" name="tititle" onblur="setCustomer()"><br>
+		    <input type="text" name="tititle" onblur="setCustomer()" required><br>
 			Author*<br>
-		    <input type="text" name="tiauthor"><br>
+		    <input type="text" name="tiauthor" required><br>
 			ISBN<br>
-		    <input type="text" name="tiisbn"><br>
+		    <input type="text" name="tiisbn" required><br>
 			Form*<br>
 			<input type="radio" name="tiform" value="Paperback" checked>Paperback<br>
 		    <input type="radio" name="tiform" value="Hardback">Hardback
@@ -378,19 +378,22 @@
 			Description<br>
 		    <textarea name="tidesc" rows="10" cols="40"></textarea><br>
 			Photo of the front of the book*<br>
-		    <input type="file" name="tifrontImage" id="tifrontImage" accept="image/*"><br>
+		    <input type="file" name="tifrontImage" id="tifrontImage" accept="image/*" required><br>
 			Photo of the back of the book*<br>
-		    <input type="file" name="tibackImage" id="tibackImage" accept="image/*"><br>
+		    <input type="file" name="tibackImage" id="tibackImage" accept="image/*" required><br>
 			Photo of the spine of the book*<br>
-		    <input type="file" name="tispineImage" id="tispineImage" accept="image/*"><br>
+		    <input type="file" name="tispineImage" id="tispineImage" accept="image/*" required><br>
 			Photo of the publication information page of the book*<br>
-		    <input type="file" name="tipubInfoImage" id="tipubInfoImage" accept="image/*" ><br>
+		    <input type="file" name="tipubInfoImage" id="tipubInfoImage" accept="image/*" required><br>
 		    Photo of any other notable feature of the book (please mention in description)<br>
 			<input type="file" name="tiotherImage" id="tiotherImage" accept="image/*">
 		  </fieldset>
 		  *required fields<br>
 		  <input type="submit" value="Submit Trade In Request" name="submit">
 		</form>
+		
+		<!--any errors appear here-->
+		<iframe src="" name="iframe_hide" width="100%" height="30"></iframe>
 		
 		</div>
 		
